@@ -7,7 +7,6 @@ public class Funcionario
 		Masculino = 0,
 		Feminino = 1
 	}
-
     public DateTime DataNascimento { get; set; }
     public string Nome { get; set; }
 	public double Salario { get; set;}
