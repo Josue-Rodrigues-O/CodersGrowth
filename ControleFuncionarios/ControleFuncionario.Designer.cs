@@ -1,6 +1,6 @@
 ﻿namespace ControleFuncionarios
 {
-    partial class Form1
+    partial class ControleFuncionario
     {
         /// <summary>
         ///  Required designer variable.
