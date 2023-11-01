@@ -2,14 +2,14 @@ using System.Globalization;
 
 namespace ControleFuncionarios
 {
-    public partial class ControleFuncionario : Form
+    public partial class TelaPrincipal : Form
     {
-        public ControleFuncionario()
+        public TelaPrincipal()
         {
             CultureInfo ci = CultureInfo.InvariantCulture;
             InitializeComponent();
             AtualizarGrid();
-            dataGrid.ReadOnly = true;
+            TelaListagem.ReadOnly = true;
         }
 
         private List<Funcionario> Lista()
@@ -45,7 +45,13 @@ namespace ControleFuncionarios
 
         private void AtualizarGrid()
         {
-            dataGrid.DataSource = Lista();
+            TelaListagem.DataSource = Lista();
+        }
+
+        private void btnAdicionar_Click(object sender, EventArgs e)
+        {
+            CadastroFuncionario frm2 = new CadastroFuncionario();
+            frm2.Show();
         }
     }
 }
