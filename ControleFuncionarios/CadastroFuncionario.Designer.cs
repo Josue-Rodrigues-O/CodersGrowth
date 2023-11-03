@@ -28,218 +28,304 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            textBox1 = new TextBox();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            monthCalendar1 = new MonthCalendar();
-            comboBox1 = new ComboBox();
-            button1 = new Button();
-            button2 = new Button();
+            LblNome = new Label();
+            TxtNome = new TextBox();
+            LblCpf = new Label();
+            LblTelefone = new Label();
+            LbllSalario = new Label();
+            LblEstadoCivil = new Label();
+            LblDataNascimento = new Label();
+            LblGenero = new Label();
+            TxtCpf = new TextBox();
+            TxtTelefone = new TextBox();
+            TxtSalario = new TextBox();
+            BtnAdicionar = new Button();
+            BtnCancelar = new Button();
+            tableLayout1 = new TableLayoutPanel();
+            tableLayoutEstadoCivil = new TableLayoutPanel();
+            RadCasado = new RadioButton();
+            RadSolteiro = new RadioButton();
+            ComboGenero = new ComboBox();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            Calendario = new MonthCalendar();
+            tableLayout1.SuspendLayout();
+            tableLayoutEstadoCivil.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // LblNome
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(40, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Nome";
+            LblNome.AutoSize = true;
+            LblNome.Location = new Point(3, 0);
+            LblNome.Name = "LblNome";
+            LblNome.Size = new Size(40, 15);
+            LblNome.TabIndex = 0;
+            LblNome.Text = "Nome";
             // 
-            // textBox1
+            // TxtNome
             // 
-            textBox1.Location = new Point(137, 6);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(651, 23);
-            textBox1.TabIndex = 1;
+            TxtNome.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtNome.Location = new Point(77, 3);
+            TxtNome.Name = "TxtNome";
+            TxtNome.Size = new Size(366, 23);
+            TxtNome.TabIndex = 1;
             // 
-            // label2
+            // LblCpf
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 53);
-            label2.Name = "label2";
-            label2.Size = new Size(28, 15);
-            label2.TabIndex = 2;
-            label2.Text = "CPF";
+            LblCpf.AutoSize = true;
+            LblCpf.Location = new Point(3, 71);
+            LblCpf.Name = "LblCpf";
+            LblCpf.Size = new Size(28, 15);
+            LblCpf.TabIndex = 2;
+            LblCpf.Text = "CPF";
             // 
-            // label3
+            // LblTelefone
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(12, 104);
-            label3.Name = "label3";
-            label3.Size = new Size(51, 15);
-            label3.TabIndex = 3;
-            label3.Text = "Telefone";
+            LblTelefone.AutoSize = true;
+            LblTelefone.Location = new Point(3, 142);
+            LblTelefone.Name = "LblTelefone";
+            LblTelefone.Size = new Size(51, 15);
+            LblTelefone.TabIndex = 3;
+            LblTelefone.Text = "Telefone";
             // 
-            // label4
+            // LbllSalario
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(12, 155);
-            label4.Name = "label4";
-            label4.Size = new Size(42, 15);
-            label4.TabIndex = 4;
-            label4.Text = "Salário";
+            LbllSalario.AutoSize = true;
+            LbllSalario.Location = new Point(3, 213);
+            LbllSalario.Name = "LbllSalario";
+            LbllSalario.Size = new Size(42, 15);
+            LbllSalario.TabIndex = 4;
+            LbllSalario.Text = "Salário";
             // 
-            // label5
+            // LblEstadoCivil
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(12, 208);
-            label5.Name = "label5";
-            label5.Size = new Size(66, 15);
-            label5.TabIndex = 5;
-            label5.Text = "Estado civil";
+            LblEstadoCivil.AutoSize = true;
+            LblEstadoCivil.Location = new Point(3, 284);
+            LblEstadoCivil.Name = "LblEstadoCivil";
+            LblEstadoCivil.Size = new Size(66, 15);
+            LblEstadoCivil.TabIndex = 5;
+            LblEstadoCivil.Text = "Estado civil";
             // 
-            // label6
+            // LblDataNascimento
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(436, 208);
-            label6.Name = "label6";
-            label6.Size = new Size(112, 15);
-            label6.TabIndex = 6;
-            label6.Text = "Data de nascimento";
+            LblDataNascimento.AutoSize = true;
+            LblDataNascimento.Location = new Point(3, 0);
+            LblDataNascimento.Name = "LblDataNascimento";
+            LblDataNascimento.Size = new Size(69, 30);
+            LblDataNascimento.TabIndex = 6;
+            LblDataNascimento.Text = "Data de nascimento";
             // 
-            // label7
+            // LblGenero
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(12, 258);
-            label7.Name = "label7";
-            label7.Size = new Size(45, 15);
-            label7.TabIndex = 7;
-            label7.Text = "Gênero";
+            LblGenero.AutoSize = true;
+            LblGenero.Location = new Point(3, 355);
+            LblGenero.Name = "LblGenero";
+            LblGenero.Size = new Size(45, 15);
+            LblGenero.TabIndex = 7;
+            LblGenero.Text = "Gênero";
             // 
-            // textBox2
+            // TxtCpf
             // 
-            textBox2.Location = new Point(137, 50);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(651, 23);
-            textBox2.TabIndex = 8;
+            TxtCpf.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtCpf.Location = new Point(77, 74);
+            TxtCpf.Name = "TxtCpf";
+            TxtCpf.Size = new Size(366, 23);
+            TxtCpf.TabIndex = 8;
             // 
-            // textBox3
+            // TxtTelefone
             // 
-            textBox3.Location = new Point(137, 101);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(651, 23);
-            textBox3.TabIndex = 9;
+            TxtTelefone.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtTelefone.Location = new Point(77, 145);
+            TxtTelefone.Name = "TxtTelefone";
+            TxtTelefone.Size = new Size(366, 23);
+            TxtTelefone.TabIndex = 9;
             // 
-            // textBox4
+            // TxtSalario
             // 
-            textBox4.Location = new Point(137, 152);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(651, 23);
-            textBox4.TabIndex = 10;
+            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtSalario.Location = new Point(77, 216);
+            TxtSalario.Name = "TxtSalario";
+            TxtSalario.Size = new Size(366, 23);
+            TxtSalario.TabIndex = 10;
             // 
-            // radioButton1
+            // BtnAdicionar
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(137, 206);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(64, 19);
-            radioButton1.TabIndex = 11;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Casado";
-            radioButton1.UseVisualStyleBackColor = true;
+            BtnAdicionar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnAdicionar.Location = new Point(3, 3);
+            BtnAdicionar.Name = "BtnAdicionar";
+            BtnAdicionar.Size = new Size(80, 25);
+            BtnAdicionar.TabIndex = 17;
+            BtnAdicionar.Text = "Adicionar";
+            BtnAdicionar.UseVisualStyleBackColor = true;
+            BtnAdicionar.Click += BtnAdicionar_Click;
             // 
-            // radioButton2
+            // BtnCancelar
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(218, 206);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(65, 19);
-            radioButton2.TabIndex = 12;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Solteiro";
-            radioButton2.UseVisualStyleBackColor = true;
+            BtnCancelar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnCancelar.Location = new Point(89, 3);
+            BtnCancelar.Name = "BtnCancelar";
+            BtnCancelar.Size = new Size(80, 25);
+            BtnCancelar.TabIndex = 18;
+            BtnCancelar.Text = "Cancelar";
+            BtnCancelar.UseVisualStyleBackColor = true;
             // 
-            // monthCalendar1
+            // tableLayout1
             // 
-            monthCalendar1.Location = new Point(561, 208);
-            monthCalendar1.Name = "monthCalendar1";
-            monthCalendar1.TabIndex = 13;
+            tableLayout1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            tableLayout1.ColumnCount = 2;
+            tableLayout1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayout1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 372F));
+            tableLayout1.Controls.Add(LblNome, 0, 0);
+            tableLayout1.Controls.Add(LblCpf, 0, 1);
+            tableLayout1.Controls.Add(LblTelefone, 0, 2);
+            tableLayout1.Controls.Add(TxtSalario, 1, 3);
+            tableLayout1.Controls.Add(LbllSalario, 0, 3);
+            tableLayout1.Controls.Add(TxtTelefone, 1, 2);
+            tableLayout1.Controls.Add(LblEstadoCivil, 0, 4);
+            tableLayout1.Controls.Add(TxtCpf, 1, 1);
+            tableLayout1.Controls.Add(LblGenero, 0, 5);
+            tableLayout1.Controls.Add(TxtNome, 1, 0);
+            tableLayout1.Controls.Add(tableLayoutEstadoCivil, 1, 4);
+            tableLayout1.Controls.Add(ComboGenero, 1, 5);
+            tableLayout1.Location = new Point(12, 12);
+            tableLayout1.Name = "tableLayout1";
+            tableLayout1.RowCount = 6;
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.Size = new Size(446, 426);
+            tableLayout1.TabIndex = 19;
             // 
-            // comboBox1
+            // tableLayoutEstadoCivil
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Masculino", "Feminino" });
-            comboBox1.Location = new Point(137, 255);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(146, 23);
-            comboBox1.TabIndex = 16;
+            tableLayoutEstadoCivil.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutEstadoCivil.ColumnCount = 2;
+            tableLayoutEstadoCivil.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutEstadoCivil.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutEstadoCivil.Controls.Add(RadCasado, 0, 0);
+            tableLayoutEstadoCivil.Controls.Add(RadSolteiro, 1, 0);
+            tableLayoutEstadoCivil.Location = new Point(77, 287);
+            tableLayoutEstadoCivil.Name = "tableLayoutEstadoCivil";
+            tableLayoutEstadoCivil.RowCount = 1;
+            tableLayoutEstadoCivil.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutEstadoCivil.Size = new Size(366, 65);
+            tableLayoutEstadoCivil.TabIndex = 11;
             // 
-            // button1
+            // RadCasado
             // 
-            button1.Location = new Point(12, 415);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 17;
-            button1.Text = "Adicionar";
-            button1.UseVisualStyleBackColor = true;
+            RadCasado.AutoSize = true;
+            RadCasado.Location = new Point(3, 3);
+            RadCasado.Name = "RadCasado";
+            RadCasado.Size = new Size(78, 19);
+            RadCasado.TabIndex = 0;
+            RadCasado.TabStop = true;
+            RadCasado.Text = "Casado(a)";
+            RadCasado.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // RadSolteiro
             // 
-            button2.Location = new Point(137, 415);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 18;
-            button2.Text = "Cancelar";
-            button2.UseVisualStyleBackColor = true;
+            RadSolteiro.AutoSize = true;
+            RadSolteiro.Location = new Point(186, 3);
+            RadSolteiro.Name = "RadSolteiro";
+            RadSolteiro.Size = new Size(79, 19);
+            RadSolteiro.TabIndex = 1;
+            RadSolteiro.TabStop = true;
+            RadSolteiro.Text = "Solteiro(a)";
+            RadSolteiro.UseVisualStyleBackColor = true;
+            // 
+            // ComboGenero
+            // 
+            ComboGenero.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ComboGenero.FormattingEnabled = true;
+            ComboGenero.Items.AddRange(new object[] { "Masculino", "Feminino" });
+            ComboGenero.Location = new Point(77, 358);
+            ComboGenero.Name = "ComboGenero";
+            ComboGenero.Size = new Size(366, 23);
+            ComboGenero.TabIndex = 12;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 2;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Controls.Add(BtnCancelar, 1, 0);
+            tableLayoutPanel4.Controls.Add(BtnAdicionar, 0, 0);
+            tableLayoutPanel4.Location = new Point(616, 407);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Size = new Size(172, 31);
+            tableLayoutPanel4.TabIndex = 20;
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            tableLayoutPanel5.ColumnCount = 2;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24.60064F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75.39936F));
+            tableLayoutPanel5.Controls.Add(LblDataNascimento, 0, 0);
+            tableLayoutPanel5.Controls.Add(Calendario, 1, 0);
+            tableLayoutPanel5.Location = new Point(464, 12);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 1;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel5.Size = new Size(324, 215);
+            tableLayoutPanel5.TabIndex = 21;
+            // 
+            // Calendario
+            // 
+            Calendario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            Calendario.Location = new Point(88, 9);
+            Calendario.Name = "Calendario";
+            Calendario.TabIndex = 7;
             // 
             // CadastroFuncionario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(comboBox1);
-            Controls.Add(monthCalendar1);
-            Controls.Add(radioButton2);
-            Controls.Add(radioButton1);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(label7);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(textBox1);
-            Controls.Add(label1);
+            Controls.Add(tableLayoutPanel5);
+            Controls.Add(tableLayoutPanel4);
+            Controls.Add(tableLayout1);
             Name = "CadastroFuncionario";
             Text = "CadastroFuncionario";
+            tableLayout1.ResumeLayout(false);
+            tableLayout1.PerformLayout();
+            tableLayoutEstadoCivil.ResumeLayout(false);
+            tableLayoutEstadoCivil.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
-        private TextBox textBox1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
-        private MonthCalendar monthCalendar1;
-        private CheckedListBox checkedListBox1;
-        private ComboBox comboBox1;
-        private Button button1;
-        private Button button2;
+        private Label LblNome;
+        private TextBox TxtNome;
+        private Label LblCpf;
+        private Label LblTelefone;
+        private Label LbllSalario;
+        private Label LblEstadoCivil;
+        private Label LblDataNascimento;
+        private Label LblGenero;
+        private TextBox TxtCpf;
+        private TextBox TxtTelefone;
+        private TextBox TxtSalario;
+        private Button BtnAdicionar;
+        private Button BtnCancelar;
+        private TableLayoutPanel tableLayout1;
+        private TableLayoutPanel tableLayoutEstadoCivil;
+        private RadioButton RadCasado;
+        private RadioButton RadSolteiro;
+        private TableLayoutPanel tableLayoutPanel4;
+        private TableLayoutPanel tableLayoutPanel5;
+        private MonthCalendar Calendario;
+        private ComboBox ComboGenero;
     }
 }

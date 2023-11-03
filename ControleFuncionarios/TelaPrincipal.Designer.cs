@@ -90,7 +90,7 @@
 
         #endregion
 
-        private DataGridView TelaListagem;
+        private static DataGridView TelaListagem;
         private Button btnAdicionar;
         private Button btnEditar;
         private Button btnRemover;
