@@ -39,7 +39,7 @@
             TxtCpf = new TextBox();
             TxtTelefone = new TextBox();
             TxtSalario = new TextBox();
-            BtnAdicionar = new Button();
+            BtnSalvar = new Button();
             BtnCancelar = new Button();
             tableLayout1 = new TableLayoutPanel();
             tableLayoutEstadoCivil = new TableLayoutPanel();
@@ -150,16 +150,16 @@
             TxtSalario.Size = new Size(366, 23);
             TxtSalario.TabIndex = 10;
             // 
-            // BtnAdicionar
+            // BtnSalvar
             // 
-            BtnAdicionar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            BtnAdicionar.Location = new Point(3, 3);
-            BtnAdicionar.Name = "BtnAdicionar";
-            BtnAdicionar.Size = new Size(80, 25);
-            BtnAdicionar.TabIndex = 17;
-            BtnAdicionar.Text = "Adicionar";
-            BtnAdicionar.UseVisualStyleBackColor = true;
-            BtnAdicionar.Click += BtnAdicionar_Click;
+            BtnSalvar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnSalvar.Location = new Point(3, 3);
+            BtnSalvar.Name = "BtnSalvar";
+            BtnSalvar.Size = new Size(80, 25);
+            BtnSalvar.TabIndex = 17;
+            BtnSalvar.Text = "Salvar";
+            BtnSalvar.UseVisualStyleBackColor = true;
+            BtnSalvar.Click += Ao_Clicar_Em_Salvar;
             // 
             // BtnCancelar
             // 
@@ -170,7 +170,7 @@
             BtnCancelar.TabIndex = 18;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.UseVisualStyleBackColor = true;
-            BtnCancelar.Click += BtnCancelar_Click;
+            BtnCancelar.Click += Ao_Clicar_Em_Cancelar;
             // 
             // tableLayout1
             // 
@@ -255,7 +255,7 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.Controls.Add(BtnCancelar, 1, 0);
-            tableLayoutPanel4.Controls.Add(BtnAdicionar, 0, 0);
+            tableLayoutPanel4.Controls.Add(BtnSalvar, 0, 0);
             tableLayoutPanel4.Location = new Point(616, 407);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 1;
@@ -293,7 +293,11 @@
             Controls.Add(tableLayoutPanel5);
             Controls.Add(tableLayoutPanel4);
             Controls.Add(tableLayout1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "CadastroFuncionario";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "CadastroFuncionario";
             tableLayout1.ResumeLayout(false);
             tableLayout1.PerformLayout();
@@ -318,7 +322,7 @@
         private TextBox TxtCpf;
         private TextBox TxtTelefone;
         private TextBox TxtSalario;
-        private Button BtnAdicionar;
+        private Button BtnSalvar;
         private Button BtnCancelar;
         private TableLayoutPanel tableLayout1;
         private TableLayoutPanel tableLayoutEstadoCivil;

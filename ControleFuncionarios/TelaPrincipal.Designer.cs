@@ -37,6 +37,7 @@
             // 
             // TelaListagem
             // 
+            TelaListagem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TelaListagem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             TelaListagem.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TelaListagem.Location = new Point(12, 12);
@@ -48,16 +49,20 @@
             // 
             // btnAdicionar
             // 
+            btnAdicionar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnAdicionar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnAdicionar.Location = new Point(551, 404);
             btnAdicionar.Name = "btnAdicionar";
             btnAdicionar.Size = new Size(75, 23);
             btnAdicionar.TabIndex = 1;
             btnAdicionar.Text = "Adicionar";
             btnAdicionar.UseVisualStyleBackColor = true;
-            btnAdicionar.Click += btnAdicionar_Click;
+            btnAdicionar.Click += Ao_Clicar_Em_Adicionar;
             // 
             // btnEditar
             // 
+            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnEditar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnEditar.Location = new Point(632, 404);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(75, 23);
@@ -67,6 +72,8 @@
             // 
             // btnRemover
             // 
+            btnRemover.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnRemover.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnRemover.Location = new Point(713, 404);
             btnRemover.Name = "btnRemover";
             btnRemover.Size = new Size(75, 23);

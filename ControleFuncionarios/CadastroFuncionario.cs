@@ -19,25 +19,29 @@ namespace ControleFuncionarios
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
         }
 
-        private void BtnAdicionar_Click(object sender, EventArgs e)
+        private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
-            Funcionario funcionario = new Funcionario();
-
-            funcionario.EhCasado = RadCasado.Checked;
-            funcionario.Nome = TxtNome.Text;
-            funcionario.Cpf = TxtCpf.Text;
-            funcionario.Telefone = TxtTelefone.Text;
-            funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
-            funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
-            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-
-            TelaPrincipal.Lista(funcionario);
+            TelaPrincipal.AtualizarLista(LerEntradasDoUsuario());
             this.Close();
         }
 
-        private void BtnCancelar_Click(object sender, EventArgs e)
+        private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private Funcionario LerEntradasDoUsuario()
+        {
+            return (new Funcionario
+            {
+                EhCasado = RadCasado.Checked,
+                Nome = TxtNome.Text,
+                Cpf = TxtCpf.Text,
+                Telefone = TxtTelefone.Text,
+                Salario = Convert.ToDecimal(TxtSalario.Text),
+                DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString()),
+                Genero = (GeneroEnum)ComboGenero.SelectedItem
+            });
         }
     }
 }
