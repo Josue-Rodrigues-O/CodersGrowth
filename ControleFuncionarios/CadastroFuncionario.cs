@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,13 +33,16 @@ namespace ControleFuncionarios
 
         private Funcionario LerEntradasDoUsuario()
         {
+            //Essalinha remove numeros e hifen - observar
+            MessageBox.Show(Regex.Replace(TxtNome.Text, "[0-9-!@#$%&*+_?:;.,\\|/°\"'()]", String.Empty));
+
             return (new Funcionario
             {
                 EhCasado = RadCasado.Checked,
                 Nome = TxtNome.Text,
                 Cpf = TxtCpf.Text,
                 Telefone = TxtTelefone.Text,
-                Salario = Convert.ToDecimal(TxtSalario.Text),
+                Salario = Convert.ToDecimal(TxtSalario.Text.ToString().Trim(new char[] { 'R', '$', ' ' })),
                 DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString()),
                 Genero = (GeneroEnum)ComboGenero.SelectedItem
             });

@@ -36,9 +36,6 @@
             LblEstadoCivil = new Label();
             LblDataNascimento = new Label();
             LblGenero = new Label();
-            TxtCpf = new TextBox();
-            TxtTelefone = new TextBox();
-            TxtSalario = new TextBox();
             BtnSalvar = new Button();
             BtnCancelar = new Button();
             tableLayout1 = new TableLayoutPanel();
@@ -46,6 +43,9 @@
             RadCasado = new RadioButton();
             RadSolteiro = new RadioButton();
             ComboGenero = new ComboBox();
+            TxtCpf = new MaskedTextBox();
+            TxtTelefone = new MaskedTextBox();
+            TxtSalario = new MaskedTextBox();
             tableLayoutPanel4 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             Calendario = new MonthCalendar();
@@ -126,30 +126,6 @@
             LblGenero.TabIndex = 7;
             LblGenero.Text = "Gênero";
             // 
-            // TxtCpf
-            // 
-            TxtCpf.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtCpf.Location = new Point(77, 74);
-            TxtCpf.Name = "TxtCpf";
-            TxtCpf.Size = new Size(366, 23);
-            TxtCpf.TabIndex = 8;
-            // 
-            // TxtTelefone
-            // 
-            TxtTelefone.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtTelefone.Location = new Point(77, 145);
-            TxtTelefone.Name = "TxtTelefone";
-            TxtTelefone.Size = new Size(366, 23);
-            TxtTelefone.TabIndex = 9;
-            // 
-            // TxtSalario
-            // 
-            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtSalario.Location = new Point(77, 216);
-            TxtSalario.Name = "TxtSalario";
-            TxtSalario.Size = new Size(366, 23);
-            TxtSalario.TabIndex = 10;
-            // 
             // BtnSalvar
             // 
             BtnSalvar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -181,15 +157,15 @@
             tableLayout1.Controls.Add(LblNome, 0, 0);
             tableLayout1.Controls.Add(LblCpf, 0, 1);
             tableLayout1.Controls.Add(LblTelefone, 0, 2);
-            tableLayout1.Controls.Add(TxtSalario, 1, 3);
             tableLayout1.Controls.Add(LbllSalario, 0, 3);
-            tableLayout1.Controls.Add(TxtTelefone, 1, 2);
             tableLayout1.Controls.Add(LblEstadoCivil, 0, 4);
-            tableLayout1.Controls.Add(TxtCpf, 1, 1);
             tableLayout1.Controls.Add(LblGenero, 0, 5);
             tableLayout1.Controls.Add(TxtNome, 1, 0);
             tableLayout1.Controls.Add(tableLayoutEstadoCivil, 1, 4);
             tableLayout1.Controls.Add(ComboGenero, 1, 5);
+            tableLayout1.Controls.Add(TxtCpf, 1, 1);
+            tableLayout1.Controls.Add(TxtTelefone, 1, 2);
+            tableLayout1.Controls.Add(TxtSalario, 1, 3);
             tableLayout1.Location = new Point(12, 12);
             tableLayout1.Name = "tableLayout1";
             tableLayout1.RowCount = 6;
@@ -248,6 +224,34 @@
             ComboGenero.Name = "ComboGenero";
             ComboGenero.Size = new Size(366, 23);
             ComboGenero.TabIndex = 12;
+            // 
+            // TxtCpf
+            // 
+            TxtCpf.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtCpf.Culture = new System.Globalization.CultureInfo("en-US");
+            TxtCpf.Location = new Point(77, 74);
+            TxtCpf.Mask = "000.000.000-00";
+            TxtCpf.Name = "TxtCpf";
+            TxtCpf.Size = new Size(366, 23);
+            TxtCpf.TabIndex = 13;
+            // 
+            // TxtTelefone
+            // 
+            TxtTelefone.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtTelefone.Location = new Point(77, 145);
+            TxtTelefone.Mask = "(00) 0 0000-0000";
+            TxtTelefone.Name = "TxtTelefone";
+            TxtTelefone.Size = new Size(366, 23);
+            TxtTelefone.TabIndex = 14;
+            // 
+            // TxtSalario
+            // 
+            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtSalario.Location = new Point(77, 216);
+            TxtSalario.Mask = "$000,000,000.00";
+            TxtSalario.Name = "TxtSalario";
+            TxtSalario.Size = new Size(366, 23);
+            TxtSalario.TabIndex = 15;
             // 
             // tableLayoutPanel4
             // 
@@ -319,9 +323,6 @@
         private Label LblEstadoCivil;
         private Label LblDataNascimento;
         private Label LblGenero;
-        private TextBox TxtCpf;
-        private TextBox TxtTelefone;
-        private TextBox TxtSalario;
         private Button BtnSalvar;
         private Button BtnCancelar;
         private TableLayoutPanel tableLayout1;
@@ -332,5 +333,8 @@
         private TableLayoutPanel tableLayoutPanel5;
         private MonthCalendar Calendario;
         private ComboBox ComboGenero;
+        private MaskedTextBox TxtCpf;
+        private MaskedTextBox TxtTelefone;
+        private MaskedTextBox TxtSalario;
     }
 }
