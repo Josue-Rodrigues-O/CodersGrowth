@@ -1,6 +1,6 @@
 ﻿namespace ControleFuncionarios
 {
-    partial class ControleFuncionario
+    partial class TelaPrincipal
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,34 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGrid = new DataGridView();
+            TelaListagem = new DataGridView();
             btnAdicionar = new Button();
             btnEditar = new Button();
             btnRemover = new Button();
-            ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TelaListagem).BeginInit();
             SuspendLayout();
             // 
-            // dataGrid
+            // TelaListagem
             // 
-            dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGrid.Location = new Point(12, 12);
-            dataGrid.Name = "dataGrid";
-            dataGrid.RowTemplate.Height = 25;
-            dataGrid.Size = new Size(776, 349);
-            dataGrid.TabIndex = 0;
+            TelaListagem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TelaListagem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            TelaListagem.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            TelaListagem.Location = new Point(12, 12);
+            TelaListagem.Name = "TelaListagem";
+            TelaListagem.ReadOnly = true;
+            TelaListagem.RowTemplate.Height = 25;
+            TelaListagem.Size = new Size(776, 349);
+            TelaListagem.TabIndex = 0;
             // 
             // btnAdicionar
             // 
+            btnAdicionar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnAdicionar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnAdicionar.Location = new Point(551, 404);
             btnAdicionar.Name = "btnAdicionar";
             btnAdicionar.Size = new Size(75, 23);
             btnAdicionar.TabIndex = 1;
             btnAdicionar.Text = "Adicionar";
             btnAdicionar.UseVisualStyleBackColor = true;
+            btnAdicionar.Click += Ao_Clicar_Em_Adicionar;
             // 
             // btnEditar
             // 
+            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnEditar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnEditar.Location = new Point(632, 404);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(75, 23);
@@ -65,6 +72,8 @@
             // 
             // btnRemover
             // 
+            btnRemover.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnRemover.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnRemover.Location = new Point(713, 404);
             btnRemover.Name = "btnRemover";
             btnRemover.Size = new Size(75, 23);
@@ -72,7 +81,7 @@
             btnRemover.Text = "Remover";
             btnRemover.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // TelaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -80,18 +89,17 @@
             Controls.Add(btnRemover);
             Controls.Add(btnEditar);
             Controls.Add(btnAdicionar);
-            Controls.Add(dataGrid);
-            Name = "Form1";
+            Controls.Add(TelaListagem);
+            Name = "TelaPrincipal";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)dataGrid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TelaListagem).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private DataGridView dataGrid;
         private Button btnAdicionar;
         private Button btnEditar;
         private Button btnRemover;
+        private static DataGridView TelaListagem;
     }
 }
