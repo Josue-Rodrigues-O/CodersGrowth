@@ -170,6 +170,7 @@
             BtnCancelar.TabIndex = 18;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.UseVisualStyleBackColor = true;
+            BtnCancelar.Click += BtnCancelar_Click;
             // 
             // tableLayout1
             // 
@@ -241,8 +242,8 @@
             // ComboGenero
             // 
             ComboGenero.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ComboGenero.DropDownStyle = ComboBoxStyle.DropDownList;
             ComboGenero.FormattingEnabled = true;
-            ComboGenero.Items.AddRange(new object[] { "Masculino", "Feminino" });
             ComboGenero.Location = new Point(77, 358);
             ComboGenero.Name = "ComboGenero";
             ComboGenero.Size = new Size(366, 23);

@@ -41,6 +41,7 @@
             TelaListagem.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TelaListagem.Location = new Point(12, 12);
             TelaListagem.Name = "TelaListagem";
+            TelaListagem.ReadOnly = true;
             TelaListagem.RowTemplate.Height = 25;
             TelaListagem.Size = new Size(776, 349);
             TelaListagem.TabIndex = 0;
@@ -73,7 +74,7 @@
             btnRemover.Text = "Remover";
             btnRemover.UseVisualStyleBackColor = true;
             // 
-            // ControleFuncionario
+            // TelaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -82,17 +83,16 @@
             Controls.Add(btnEditar);
             Controls.Add(btnAdicionar);
             Controls.Add(TelaListagem);
-            Name = "ControleFuncionario";
+            Name = "TelaPrincipal";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)TelaListagem).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private static DataGridView TelaListagem;
         private Button btnAdicionar;
         private Button btnEditar;
         private Button btnRemover;
+        private static DataGridView TelaListagem;
     }
 }
