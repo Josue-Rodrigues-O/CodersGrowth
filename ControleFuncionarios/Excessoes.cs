@@ -16,5 +16,6 @@ namespace ControleFuncionarios
         public const string NumeroIncorretoCasasDecimais = "O campo Salário deve conter duas casas decimais após a vírgula!";
         public const string IdadeInvalida = "O funcionário não pode ter menos de 18 anos!";
         public const string QuantidadeDeVirgulaInvalido = "O campo Salário não pode ter mais de uma virgula!";
+        public const string SalarioContemCaracteresEspeciais = "O campo Salário não pode conter caracteres especiais!";
     }
 }

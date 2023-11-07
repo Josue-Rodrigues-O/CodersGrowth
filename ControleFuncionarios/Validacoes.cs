@@ -41,7 +41,6 @@ namespace ControleFuncionarios
         }
         public bool ValidarSalario(string salario)
         {
-            int contVirgula = 0;
             if(String.IsNullOrWhiteSpace(salario))
             {
                 throw new Exception(message: Excessoes.SalarioNulo);
@@ -52,7 +51,8 @@ namespace ControleFuncionarios
             {
                 throw new Exception(message: Excessoes.NumeroIncorretoCasasDecimais);
             }
-            foreach(char index in salario)
+            int contVirgula = 0;
+            foreach (char index in salario)
             {
                 if (index == ',')
                 {
@@ -62,6 +62,10 @@ namespace ControleFuncionarios
             if(contVirgula > 1)
             {
                 throw new Exception(message: Excessoes.QuantidadeDeVirgulaInvalido);
+            }
+            if(Regex.IsMatch(salario, "[!@#$%¨&*()]"))
+            {
+                throw new Exception(message: Excessoes.SalarioContemCaracteresEspeciais);
             }
 
             return true;

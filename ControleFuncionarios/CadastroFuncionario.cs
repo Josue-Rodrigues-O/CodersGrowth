@@ -57,6 +57,8 @@ namespace ControleFuncionarios
                 {
                     funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
                 }
+                funcionario.EhCasado = RadCasado.Checked;
+                funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
                 TelaPrincipal.AtualizarLista(funcionario);
                 this.Close();
             }
@@ -100,8 +102,13 @@ namespace ControleFuncionarios
             int virgula = 188;
             int zero = 48;
             int nove = 57;
-            if (e.KeyValue >= zero && e.KeyValue <= nove
+            int NumZero = 96;
+            int NumNove = 105;
+            int NumVirgula = 110;
+            if (e.KeyValue >= zero && e.KeyValue <= nove 
+                || e.KeyValue >= NumZero && e.KeyValue <= NumNove
                 || e.KeyValue == virgula
+                || e.KeyValue == NumVirgula
                 || e.KeyValue == (int)Keys.Back)
             {
                 SalarioValido = true;
