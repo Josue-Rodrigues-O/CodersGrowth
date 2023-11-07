@@ -34,7 +34,6 @@ namespace ControleFuncionarios
 
         private void LerEntradasDoUsuario()
         {
-            //MessageBox.Show(Convert.ToString(String.IsNullOrWhiteSpace(TxtNome.Text)));
             Funcionario funcionario = new();
             try
             {
@@ -58,7 +57,6 @@ namespace ControleFuncionarios
                 {
                     funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
                 }
-                //Envia os dados para a listagem de funcionarios na tela principal
                 TelaPrincipal.AtualizarLista(funcionario);
                 this.Close();
             }
@@ -94,7 +92,7 @@ namespace ControleFuncionarios
             e.Handled = !NomeValido;
         }
         #endregion
-        //=====================================================================================
+
         #region Validar Salario
         private bool SalarioValido = true;
         private void TxtSalario_KeyDown(object sender, KeyEventArgs e)
@@ -119,6 +117,5 @@ namespace ControleFuncionarios
             e.Handled = !SalarioValido;
         }
         #endregion
-        //=====================================================================================
     }
 }
