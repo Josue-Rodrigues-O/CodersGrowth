@@ -39,13 +39,13 @@
             BtnSalvar = new Button();
             BtnCancelar = new Button();
             tableLayout1 = new TableLayoutPanel();
+            TxtSalario = new TextBox();
             tableLayoutEstadoCivil = new TableLayoutPanel();
-            RadCasado = new RadioButton();
             RadSolteiro = new RadioButton();
+            RadCasado = new RadioButton();
             ComboGenero = new ComboBox();
             TxtCpf = new MaskedTextBox();
             TxtTelefone = new MaskedTextBox();
-            TxtSalario = new MaskedTextBox();
             tableLayoutPanel4 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             Calendario = new MonthCalendar();
@@ -71,6 +71,8 @@
             TxtNome.Name = "TxtNome";
             TxtNome.Size = new Size(366, 23);
             TxtNome.TabIndex = 1;
+            TxtNome.KeyDown += TxtNome_KeyDown;
+            TxtNome.KeyPress += TxtNome_KeyPress;
             // 
             // LblCpf
             // 
@@ -154,6 +156,7 @@
             tableLayout1.ColumnCount = 2;
             tableLayout1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayout1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 372F));
+            tableLayout1.Controls.Add(TxtSalario, 1, 3);
             tableLayout1.Controls.Add(LblNome, 0, 0);
             tableLayout1.Controls.Add(LblCpf, 0, 1);
             tableLayout1.Controls.Add(LblTelefone, 0, 2);
@@ -165,7 +168,6 @@
             tableLayout1.Controls.Add(ComboGenero, 1, 5);
             tableLayout1.Controls.Add(TxtCpf, 1, 1);
             tableLayout1.Controls.Add(TxtTelefone, 1, 2);
-            tableLayout1.Controls.Add(TxtSalario, 1, 3);
             tableLayout1.Location = new Point(12, 12);
             tableLayout1.Name = "tableLayout1";
             tableLayout1.RowCount = 6;
@@ -175,8 +177,19 @@
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayout1.Size = new Size(446, 426);
             tableLayout1.TabIndex = 19;
+            // 
+            // TxtSalario
+            // 
+            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtSalario.Location = new Point(77, 216);
+            TxtSalario.Name = "TxtSalario";
+            TxtSalario.Size = new Size(366, 23);
+            TxtSalario.TabIndex = 15;
+            TxtSalario.KeyDown += TxtSalario_KeyDown;
+            TxtSalario.KeyPress += TxtSalario_KeyPress;
             // 
             // tableLayoutEstadoCivil
             // 
@@ -184,8 +197,8 @@
             tableLayoutEstadoCivil.ColumnCount = 2;
             tableLayoutEstadoCivil.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutEstadoCivil.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutEstadoCivil.Controls.Add(RadCasado, 0, 0);
-            tableLayoutEstadoCivil.Controls.Add(RadSolteiro, 1, 0);
+            tableLayoutEstadoCivil.Controls.Add(RadSolteiro, 0, 0);
+            tableLayoutEstadoCivil.Controls.Add(RadCasado, 1, 0);
             tableLayoutEstadoCivil.Location = new Point(77, 287);
             tableLayoutEstadoCivil.Name = "tableLayoutEstadoCivil";
             tableLayoutEstadoCivil.RowCount = 1;
@@ -193,27 +206,27 @@
             tableLayoutEstadoCivil.Size = new Size(366, 65);
             tableLayoutEstadoCivil.TabIndex = 11;
             // 
-            // RadCasado
-            // 
-            RadCasado.AutoSize = true;
-            RadCasado.Location = new Point(3, 3);
-            RadCasado.Name = "RadCasado";
-            RadCasado.Size = new Size(78, 19);
-            RadCasado.TabIndex = 0;
-            RadCasado.TabStop = true;
-            RadCasado.Text = "Casado(a)";
-            RadCasado.UseVisualStyleBackColor = true;
-            // 
             // RadSolteiro
             // 
             RadSolteiro.AutoSize = true;
-            RadSolteiro.Location = new Point(186, 3);
+            RadSolteiro.Checked = true;
+            RadSolteiro.Location = new Point(3, 3);
             RadSolteiro.Name = "RadSolteiro";
             RadSolteiro.Size = new Size(79, 19);
             RadSolteiro.TabIndex = 1;
             RadSolteiro.TabStop = true;
             RadSolteiro.Text = "Solteiro(a)";
             RadSolteiro.UseVisualStyleBackColor = true;
+            // 
+            // RadCasado
+            // 
+            RadCasado.AutoSize = true;
+            RadCasado.Location = new Point(186, 3);
+            RadCasado.Name = "RadCasado";
+            RadCasado.Size = new Size(78, 19);
+            RadCasado.TabIndex = 0;
+            RadCasado.Text = "Casado(a)";
+            RadCasado.UseVisualStyleBackColor = true;
             // 
             // ComboGenero
             // 
@@ -243,15 +256,6 @@
             TxtTelefone.Name = "TxtTelefone";
             TxtTelefone.Size = new Size(366, 23);
             TxtTelefone.TabIndex = 14;
-            // 
-            // TxtSalario
-            // 
-            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtSalario.Location = new Point(77, 216);
-            TxtSalario.Mask = "$000,000,000.00";
-            TxtSalario.Name = "TxtSalario";
-            TxtSalario.Size = new Size(366, 23);
-            TxtSalario.TabIndex = 15;
             // 
             // tableLayoutPanel4
             // 
@@ -335,6 +339,6 @@
         private ComboBox ComboGenero;
         private MaskedTextBox TxtCpf;
         private MaskedTextBox TxtTelefone;
-        private MaskedTextBox TxtSalario;
+        private TextBox TxtSalario;
     }
 }

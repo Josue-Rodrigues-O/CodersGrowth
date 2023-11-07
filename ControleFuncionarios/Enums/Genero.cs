@@ -8,6 +8,7 @@ namespace ControleFuncionarios.Enums
 {
     public enum GeneroEnum
     {
+        Indefinido,
         Masculino,
         Feminino
     }

@@ -9,17 +9,71 @@ namespace ControleFuncionarios
 {
     internal class Validacoes
     {
-        public void ValidarNome(string nome)
+        public bool ValidarNome(string nome)
         {
-            Regex rx = new Regex("[0-9]");
-            if (nome == null)
+            if (String.IsNullOrWhiteSpace(nome))
             {
-                throw new ArgumentNullException();
+                throw new Exception(message: Excessoes.NomeNulo);
             }
-            if (Regex.IsMatch(nome,"[0-9-]"))
+            if(nome.Length < 3)
             {
-                throw new Exception(message: "O nome não pode conter numeros");
+                throw new Exception(message: Excessoes.TamanhoNomeIncompativel);
             }
+            return true;
+        }
+        public bool ValidarCpf(MaskedTextBox cpf)
+        {
+            if (!cpf.MaskCompleted)
+            {
+                throw new Exception(message: Excessoes.CpfPreenchidoIncorrretamente);
+            }
+
+            return true;
+        }
+        public bool ValidarTelefone(MaskedTextBox telefone)
+        {
+            if (!telefone.MaskCompleted)
+            {
+                throw new Exception(message: Excessoes.TelefonePreenchidoIncorrretamente);
+            }
+
+            return true;
+        }
+        public bool ValidarSalario(string salario)
+        {
+            int contVirgula = 0;
+            if(String.IsNullOrWhiteSpace(salario))
+            {
+                throw new Exception(message: Excessoes.SalarioNulo);
+            }
+            if (!salario.Contains(',') 
+                || (salario.Split(',')[1].Length < 2) 
+                || (salario.Split(',')[1].Length > 2))
+            {
+                throw new Exception(message: Excessoes.NumeroIncorretoCasasDecimais);
+            }
+            foreach(char index in salario)
+            {
+                if (index == ',')
+                {
+                    contVirgula++;
+                }
+            }
+            if(contVirgula > 1)
+            {
+                throw new Exception(message: Excessoes.QuantidadeDeVirgulaInvalido);
+            }
+
+            return true;
+        }
+        public bool ValidarData(MonthCalendar calendario)
+        {
+            int anos = DateTime.Now.Year - calendario.SelectionStart.Year;
+            if(anos < 18)
+            {
+                throw new Exception(message: Excessoes.IdadeInvalida);
+            }
+            return true;
         }
     }
 }
