@@ -8,13 +8,11 @@ namespace ControleFuncionarios
         private static int ID = 0;
         public TelaPrincipal()
         {
-            CultureInfo ci = CultureInfo.InvariantCulture;
             InitializeComponent();
         }
         public static void AtualizarLista(Funcionario funcionario)
         {
             TelaListagem.DataSource = null;
-            funcionario.Id = IncrementarId();
             TelaPrincipal.funcionarios.Add(funcionario);
             TelaListagem.DataSource = funcionarios;
         }
@@ -25,7 +23,7 @@ namespace ControleFuncionarios
             cadastro.Show();
         }
 
-        private static int IncrementarId()
+        public static int IncrementarId()
         {
             ID++;
             return ID;

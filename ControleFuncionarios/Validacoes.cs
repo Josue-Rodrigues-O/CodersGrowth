@@ -9,47 +9,44 @@ namespace ControleFuncionarios
 {
     internal class Validacoes
     {
-        public bool ValidarNome(string nome)
+        private List<string> ListaErros = new();
+        public bool Validar(string nome, MaskedTextBox cpf, MaskedTextBox telefone, string salario, MonthCalendar calendario)
         {
+            #region Nome
             if (String.IsNullOrWhiteSpace(nome))
             {
-                throw new Exception(message: Excessoes.NomeNulo);
+                ListaErros.Add(Excessoes.NomeNulo);
             }
-            if(nome.Length < 3)
+            if (nome.Length < 3)
             {
-                throw new Exception(message: Excessoes.TamanhoNomeIncompativel);
+                ListaErros.Add(Excessoes.TamanhoNomeIncompativel);
             }
-            return true;
-        }
-        public bool ValidarCpf(MaskedTextBox cpf)
-        {
+            #endregion
+
+            #region CPF
             if (!cpf.MaskCompleted)
             {
-                throw new Exception(message: Excessoes.CpfPreenchidoIncorrretamente);
+                ListaErros.Add(Excessoes.CpfPreenchidoIncorrretamente);
             }
+            #endregion
 
-            return true;
-        }
-        public bool ValidarTelefone(MaskedTextBox telefone)
-        {
+            #region Telefone
             if (!telefone.MaskCompleted)
             {
-                throw new Exception(message: Excessoes.TelefonePreenchidoIncorrretamente);
+                ListaErros.Add(Excessoes.TelefonePreenchidoIncorrretamente);
             }
+            #endregion
 
-            return true;
-        }
-        public bool ValidarSalario(string salario)
-        {
-            if(String.IsNullOrWhiteSpace(salario))
+            #region Salario
+            if (String.IsNullOrWhiteSpace(salario))
             {
-                throw new Exception(message: Excessoes.SalarioNulo);
+                ListaErros.Add(Excessoes.SalarioNulo);
             }
-            if (!salario.Contains(',') 
-                || (salario.Split(',')[1].Length < 2) 
+            if (!salario.Contains(',')
+                || (salario.Split(',')[1].Length < 2)
                 || (salario.Split(',')[1].Length > 2))
             {
-                throw new Exception(message: Excessoes.NumeroIncorretoCasasDecimais);
+                ListaErros.Add(Excessoes.NumeroIncorretoCasasDecimais);
             }
             int contVirgula = 0;
             foreach (char index in salario)
@@ -59,23 +56,32 @@ namespace ControleFuncionarios
                     contVirgula++;
                 }
             }
-            if(contVirgula > 1)
+            if (contVirgula > 1)
             {
-                throw new Exception(message: Excessoes.QuantidadeDeVirgulaInvalido);
+                ListaErros.Add(Excessoes.QuantidadeDeVirgulaInvalido);
             }
-            if(Regex.IsMatch(salario, "[!@#$%¨&*()]"))
+            if (Regex.IsMatch(salario, "[!@#$%¨&*()]"))
             {
-                throw new Exception(message: Excessoes.SalarioContemCaracteresEspeciais);
+                ListaErros.Add(Excessoes.SalarioContemCaracteresEspeciais);
             }
+            #endregion
 
-            return true;
-        }
-        public bool ValidarData(MonthCalendar calendario)
-        {
+            #region Data de Nascimento
             int anos = DateTime.Now.Year - calendario.SelectionStart.Year;
-            if(anos < 18)
+            if (anos < 18)
             {
-                throw new Exception(message: Excessoes.IdadeInvalida);
+                ListaErros.Add(Excessoes.IdadeInvalida);
+            }
+            #endregion
+
+            if(ListaErros.Any())
+            {
+                string erros = "";
+                foreach(string index in ListaErros)
+                {
+                    erros += index+"\n";
+                }
+                throw new Exception(message: erros);
             }
             return true;
         }

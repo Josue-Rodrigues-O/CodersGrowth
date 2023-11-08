@@ -134,7 +134,7 @@
             BtnSalvar.Location = new Point(3, 3);
             BtnSalvar.Name = "BtnSalvar";
             BtnSalvar.Size = new Size(80, 25);
-            BtnSalvar.TabIndex = 17;
+            BtnSalvar.TabIndex = 12;
             BtnSalvar.Text = "Salvar";
             BtnSalvar.UseVisualStyleBackColor = true;
             BtnSalvar.Click += Ao_Clicar_Em_Salvar;
@@ -145,7 +145,7 @@
             BtnCancelar.Location = new Point(89, 3);
             BtnCancelar.Name = "BtnCancelar";
             BtnCancelar.Size = new Size(80, 25);
-            BtnCancelar.TabIndex = 18;
+            BtnCancelar.TabIndex = 13;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.UseVisualStyleBackColor = true;
             BtnCancelar.Click += Ao_Clicar_Em_Cancelar;
@@ -179,7 +179,7 @@
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayout1.Size = new Size(446, 426);
-            tableLayout1.TabIndex = 19;
+            tableLayout1.TabIndex = 1;
             // 
             // TxtSalario
             // 
@@ -187,7 +187,7 @@
             TxtSalario.Location = new Point(77, 216);
             TxtSalario.Name = "TxtSalario";
             TxtSalario.Size = new Size(366, 23);
-            TxtSalario.TabIndex = 15;
+            TxtSalario.TabIndex = 4;
             TxtSalario.KeyDown += TxtSalario_KeyDown;
             TxtSalario.KeyPress += TxtSalario_KeyPress;
             // 
@@ -204,7 +204,7 @@
             tableLayoutEstadoCivil.RowCount = 1;
             tableLayoutEstadoCivil.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutEstadoCivil.Size = new Size(366, 65);
-            tableLayoutEstadoCivil.TabIndex = 11;
+            tableLayoutEstadoCivil.TabIndex = 5;
             // 
             // RadSolteiro
             // 
@@ -213,7 +213,7 @@
             RadSolteiro.Location = new Point(3, 3);
             RadSolteiro.Name = "RadSolteiro";
             RadSolteiro.Size = new Size(79, 19);
-            RadSolteiro.TabIndex = 1;
+            RadSolteiro.TabIndex = 6;
             RadSolteiro.TabStop = true;
             RadSolteiro.Text = "Solteiro(a)";
             RadSolteiro.UseVisualStyleBackColor = true;
@@ -224,7 +224,7 @@
             RadCasado.Location = new Point(186, 3);
             RadCasado.Name = "RadCasado";
             RadCasado.Size = new Size(78, 19);
-            RadCasado.TabIndex = 0;
+            RadCasado.TabIndex = 7;
             RadCasado.Text = "Casado(a)";
             RadCasado.UseVisualStyleBackColor = true;
             // 
@@ -236,7 +236,7 @@
             ComboGenero.Location = new Point(77, 358);
             ComboGenero.Name = "ComboGenero";
             ComboGenero.Size = new Size(366, 23);
-            ComboGenero.TabIndex = 12;
+            ComboGenero.TabIndex = 8;
             // 
             // TxtCpf
             // 
@@ -246,7 +246,7 @@
             TxtCpf.Mask = "000.000.000-00";
             TxtCpf.Name = "TxtCpf";
             TxtCpf.Size = new Size(366, 23);
-            TxtCpf.TabIndex = 13;
+            TxtCpf.TabIndex = 2;
             // 
             // TxtTelefone
             // 
@@ -255,7 +255,7 @@
             TxtTelefone.Mask = "(00) 0 0000-0000";
             TxtTelefone.Name = "TxtTelefone";
             TxtTelefone.Size = new Size(366, 23);
-            TxtTelefone.TabIndex = 14;
+            TxtTelefone.TabIndex = 3;
             // 
             // tableLayoutPanel4
             // 
@@ -269,7 +269,7 @@
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.Size = new Size(172, 31);
-            tableLayoutPanel4.TabIndex = 20;
+            tableLayoutPanel4.TabIndex = 11;
             // 
             // tableLayoutPanel5
             // 
@@ -284,14 +284,14 @@
             tableLayoutPanel5.RowCount = 1;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel5.Size = new Size(324, 215);
-            tableLayoutPanel5.TabIndex = 21;
+            tableLayoutPanel5.TabIndex = 9;
             // 
             // Calendario
             // 
             Calendario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Calendario.Location = new Point(88, 9);
             Calendario.Name = "Calendario";
-            Calendario.TabIndex = 7;
+            Calendario.TabIndex = 10;
             // 
             // CadastroFuncionario
             // 
