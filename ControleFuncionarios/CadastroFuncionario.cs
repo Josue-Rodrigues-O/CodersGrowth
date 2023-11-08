@@ -21,6 +21,25 @@ namespace ControleFuncionarios
         {
             InitializeComponent();
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
+            
+            if (TelaPrincipal.Editar)
+            {
+                Funcionario funcionario = TelaPrincipal.ListaFuncionarios[TelaPrincipal.ItemSelecionado];
+                TxtNome.Text = funcionario.Nome;
+                TxtCpf.Text = funcionario.Cpf;
+                TxtTelefone.Text = funcionario.Telefone;
+                TxtSalario.Text = funcionario.Salario.ToString();
+                if (funcionario.EhCasado)
+                {
+                    RadCasado.Checked = true;
+                }
+                else
+                {
+                    RadSolteiro.Checked = true;
+                }
+                ComboGenero.SelectedItem = funcionario.Genero;
+                Calendario.SelectionStart = funcionario.DataNascimento;
+            }
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
@@ -36,7 +55,17 @@ namespace ControleFuncionarios
         private void LerEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            Funcionario funcionario = new();
+            Funcionario funcionario;
+            
+            if (TelaPrincipal.Editar)
+            {
+                funcionario = TelaPrincipal.ListaFuncionarios[TelaPrincipal.ItemSelecionado];
+            }
+            else
+            {
+                funcionario = new();
+                funcionario.Id = IncrementarId();
+            }
             try
             {
                 if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
@@ -49,8 +78,16 @@ namespace ControleFuncionarios
                 }
                 funcionario.EhCasado = RadCasado.Checked;
                 funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-                funcionario.Id = IncrementarId();
-                TelaPrincipal.AtualizarLista(funcionario);
+
+                if (TelaPrincipal.Editar)
+                {
+                    TelaPrincipal.AtualizarLista();
+                }
+                else
+                {
+                    TelaPrincipal.ListaFuncionarios.Add(funcionario);
+                    TelaPrincipal.AtualizarLista();
+                }
                 this.Close();
             }
             catch (Exception e)
@@ -102,6 +139,7 @@ namespace ControleFuncionarios
             int NumZero = 96;
             int NumNove = 105;
             int NumVirgula = 110;
+
             if (e.KeyValue >= zero && e.KeyValue <= nove
                 || e.KeyValue >= NumZero && e.KeyValue <= NumNove
                 || e.KeyValue == virgula
@@ -118,6 +156,11 @@ namespace ControleFuncionarios
 
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //if (e.KeyChar == ',')
+            //{
+            //    e.Handled = (TxtSalario.Text.Contains(','));
+            //}
+
             e.Handled = !SalarioValido;
         }
         #endregion
