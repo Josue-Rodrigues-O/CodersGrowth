@@ -5,7 +5,6 @@ namespace ControleFuncionarios
     public partial class TelaPrincipal : Form
     {
         private static readonly List<Funcionario> funcionarios = new();
-        private static int ID = 0;
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -16,17 +15,10 @@ namespace ControleFuncionarios
             TelaPrincipal.funcionarios.Add(funcionario);
             TelaListagem.DataSource = funcionarios;
         }
-
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
             CadastroFuncionario cadastro = new();
             cadastro.Show();
-        }
-
-        public static int IncrementarId()
-        {
-            ID++;
-            return ID;
         }
     }
 }

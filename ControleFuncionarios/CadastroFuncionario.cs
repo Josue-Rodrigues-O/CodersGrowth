@@ -16,6 +16,7 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
+        public static int IdTemp = 0;
         public CadastroFuncionario()
         {
             InitializeComponent();
@@ -48,7 +49,7 @@ namespace ControleFuncionarios
                 }
                 funcionario.EhCasado = RadCasado.Checked;
                 funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-                funcionario.Id = TelaPrincipal.IncrementarId();
+                funcionario.Id = IncrementarId();
                 TelaPrincipal.AtualizarLista(funcionario);
                 this.Close();
             }
@@ -56,6 +57,13 @@ namespace ControleFuncionarios
             {
                 MessageBox.Show(e.Message);
             }
+        }
+
+        private static int IncrementarId()
+        {
+            IdTemp++;
+            return IdTemp;
+
         }
 
         #region Validar Nome
