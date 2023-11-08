@@ -36,16 +36,16 @@
             LblEstadoCivil = new Label();
             LblDataNascimento = new Label();
             LblGenero = new Label();
-            TxtCpf = new TextBox();
-            TxtTelefone = new TextBox();
-            TxtSalario = new TextBox();
             BtnSalvar = new Button();
             BtnCancelar = new Button();
             tableLayout1 = new TableLayoutPanel();
+            TxtSalario = new TextBox();
             tableLayoutEstadoCivil = new TableLayoutPanel();
-            RadCasado = new RadioButton();
             RadSolteiro = new RadioButton();
+            RadCasado = new RadioButton();
             ComboGenero = new ComboBox();
+            TxtCpf = new MaskedTextBox();
+            TxtTelefone = new MaskedTextBox();
             tableLayoutPanel4 = new TableLayoutPanel();
             tableLayoutPanel5 = new TableLayoutPanel();
             Calendario = new MonthCalendar();
@@ -71,6 +71,8 @@
             TxtNome.Name = "TxtNome";
             TxtNome.Size = new Size(366, 23);
             TxtNome.TabIndex = 1;
+            TxtNome.KeyDown += TxtNome_KeyDown;
+            TxtNome.KeyPress += TxtNome_KeyPress;
             // 
             // LblCpf
             // 
@@ -126,37 +128,13 @@
             LblGenero.TabIndex = 7;
             LblGenero.Text = "Gênero";
             // 
-            // TxtCpf
-            // 
-            TxtCpf.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtCpf.Location = new Point(77, 74);
-            TxtCpf.Name = "TxtCpf";
-            TxtCpf.Size = new Size(366, 23);
-            TxtCpf.TabIndex = 8;
-            // 
-            // TxtTelefone
-            // 
-            TxtTelefone.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtTelefone.Location = new Point(77, 145);
-            TxtTelefone.Name = "TxtTelefone";
-            TxtTelefone.Size = new Size(366, 23);
-            TxtTelefone.TabIndex = 9;
-            // 
-            // TxtSalario
-            // 
-            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtSalario.Location = new Point(77, 216);
-            TxtSalario.Name = "TxtSalario";
-            TxtSalario.Size = new Size(366, 23);
-            TxtSalario.TabIndex = 10;
-            // 
             // BtnSalvar
             // 
             BtnSalvar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnSalvar.Location = new Point(3, 3);
             BtnSalvar.Name = "BtnSalvar";
             BtnSalvar.Size = new Size(80, 25);
-            BtnSalvar.TabIndex = 17;
+            BtnSalvar.TabIndex = 12;
             BtnSalvar.Text = "Salvar";
             BtnSalvar.UseVisualStyleBackColor = true;
             BtnSalvar.Click += Ao_Clicar_Em_Salvar;
@@ -167,7 +145,7 @@
             BtnCancelar.Location = new Point(89, 3);
             BtnCancelar.Name = "BtnCancelar";
             BtnCancelar.Size = new Size(80, 25);
-            BtnCancelar.TabIndex = 18;
+            BtnCancelar.TabIndex = 13;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.UseVisualStyleBackColor = true;
             BtnCancelar.Click += Ao_Clicar_Em_Cancelar;
@@ -178,18 +156,18 @@
             tableLayout1.ColumnCount = 2;
             tableLayout1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayout1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 372F));
+            tableLayout1.Controls.Add(TxtSalario, 1, 3);
             tableLayout1.Controls.Add(LblNome, 0, 0);
             tableLayout1.Controls.Add(LblCpf, 0, 1);
             tableLayout1.Controls.Add(LblTelefone, 0, 2);
-            tableLayout1.Controls.Add(TxtSalario, 1, 3);
             tableLayout1.Controls.Add(LbllSalario, 0, 3);
-            tableLayout1.Controls.Add(TxtTelefone, 1, 2);
             tableLayout1.Controls.Add(LblEstadoCivil, 0, 4);
-            tableLayout1.Controls.Add(TxtCpf, 1, 1);
             tableLayout1.Controls.Add(LblGenero, 0, 5);
             tableLayout1.Controls.Add(TxtNome, 1, 0);
             tableLayout1.Controls.Add(tableLayoutEstadoCivil, 1, 4);
             tableLayout1.Controls.Add(ComboGenero, 1, 5);
+            tableLayout1.Controls.Add(TxtCpf, 1, 1);
+            tableLayout1.Controls.Add(TxtTelefone, 1, 2);
             tableLayout1.Location = new Point(12, 12);
             tableLayout1.Name = "tableLayout1";
             tableLayout1.RowCount = 6;
@@ -199,8 +177,19 @@
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
             tableLayout1.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+            tableLayout1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayout1.Size = new Size(446, 426);
-            tableLayout1.TabIndex = 19;
+            tableLayout1.TabIndex = 1;
+            // 
+            // TxtSalario
+            // 
+            TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtSalario.Location = new Point(77, 216);
+            TxtSalario.Name = "TxtSalario";
+            TxtSalario.Size = new Size(366, 23);
+            TxtSalario.TabIndex = 4;
+            TxtSalario.KeyDown += TxtSalario_KeyDown;
+            TxtSalario.KeyPress += TxtSalario_KeyPress;
             // 
             // tableLayoutEstadoCivil
             // 
@@ -208,36 +197,36 @@
             tableLayoutEstadoCivil.ColumnCount = 2;
             tableLayoutEstadoCivil.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutEstadoCivil.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutEstadoCivil.Controls.Add(RadCasado, 0, 0);
-            tableLayoutEstadoCivil.Controls.Add(RadSolteiro, 1, 0);
+            tableLayoutEstadoCivil.Controls.Add(RadSolteiro, 0, 0);
+            tableLayoutEstadoCivil.Controls.Add(RadCasado, 1, 0);
             tableLayoutEstadoCivil.Location = new Point(77, 287);
             tableLayoutEstadoCivil.Name = "tableLayoutEstadoCivil";
             tableLayoutEstadoCivil.RowCount = 1;
             tableLayoutEstadoCivil.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutEstadoCivil.Size = new Size(366, 65);
-            tableLayoutEstadoCivil.TabIndex = 11;
-            // 
-            // RadCasado
-            // 
-            RadCasado.AutoSize = true;
-            RadCasado.Location = new Point(3, 3);
-            RadCasado.Name = "RadCasado";
-            RadCasado.Size = new Size(78, 19);
-            RadCasado.TabIndex = 0;
-            RadCasado.TabStop = true;
-            RadCasado.Text = "Casado(a)";
-            RadCasado.UseVisualStyleBackColor = true;
+            tableLayoutEstadoCivil.TabIndex = 5;
             // 
             // RadSolteiro
             // 
             RadSolteiro.AutoSize = true;
-            RadSolteiro.Location = new Point(186, 3);
+            RadSolteiro.Checked = true;
+            RadSolteiro.Location = new Point(3, 3);
             RadSolteiro.Name = "RadSolteiro";
             RadSolteiro.Size = new Size(79, 19);
-            RadSolteiro.TabIndex = 1;
+            RadSolteiro.TabIndex = 6;
             RadSolteiro.TabStop = true;
             RadSolteiro.Text = "Solteiro(a)";
             RadSolteiro.UseVisualStyleBackColor = true;
+            // 
+            // RadCasado
+            // 
+            RadCasado.AutoSize = true;
+            RadCasado.Location = new Point(186, 3);
+            RadCasado.Name = "RadCasado";
+            RadCasado.Size = new Size(78, 19);
+            RadCasado.TabIndex = 7;
+            RadCasado.Text = "Casado(a)";
+            RadCasado.UseVisualStyleBackColor = true;
             // 
             // ComboGenero
             // 
@@ -247,7 +236,26 @@
             ComboGenero.Location = new Point(77, 358);
             ComboGenero.Name = "ComboGenero";
             ComboGenero.Size = new Size(366, 23);
-            ComboGenero.TabIndex = 12;
+            ComboGenero.TabIndex = 8;
+            // 
+            // TxtCpf
+            // 
+            TxtCpf.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtCpf.Culture = new System.Globalization.CultureInfo("en-US");
+            TxtCpf.Location = new Point(77, 74);
+            TxtCpf.Mask = "000.000.000-00";
+            TxtCpf.Name = "TxtCpf";
+            TxtCpf.Size = new Size(366, 23);
+            TxtCpf.TabIndex = 2;
+            // 
+            // TxtTelefone
+            // 
+            TxtTelefone.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtTelefone.Location = new Point(77, 145);
+            TxtTelefone.Mask = "(00) 0 0000-0000";
+            TxtTelefone.Name = "TxtTelefone";
+            TxtTelefone.Size = new Size(366, 23);
+            TxtTelefone.TabIndex = 3;
             // 
             // tableLayoutPanel4
             // 
@@ -261,7 +269,7 @@
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.Size = new Size(172, 31);
-            tableLayoutPanel4.TabIndex = 20;
+            tableLayoutPanel4.TabIndex = 11;
             // 
             // tableLayoutPanel5
             // 
@@ -276,14 +284,14 @@
             tableLayoutPanel5.RowCount = 1;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel5.Size = new Size(324, 215);
-            tableLayoutPanel5.TabIndex = 21;
+            tableLayoutPanel5.TabIndex = 9;
             // 
             // Calendario
             // 
             Calendario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Calendario.Location = new Point(88, 9);
             Calendario.Name = "Calendario";
-            Calendario.TabIndex = 7;
+            Calendario.TabIndex = 10;
             // 
             // CadastroFuncionario
             // 
@@ -319,9 +327,6 @@
         private Label LblEstadoCivil;
         private Label LblDataNascimento;
         private Label LblGenero;
-        private TextBox TxtCpf;
-        private TextBox TxtTelefone;
-        private TextBox TxtSalario;
         private Button BtnSalvar;
         private Button BtnCancelar;
         private TableLayoutPanel tableLayout1;
@@ -332,5 +337,8 @@
         private TableLayoutPanel tableLayoutPanel5;
         private MonthCalendar Calendario;
         private ComboBox ComboGenero;
+        private MaskedTextBox TxtCpf;
+        private MaskedTextBox TxtTelefone;
+        private TextBox TxtSalario;
     }
 }
