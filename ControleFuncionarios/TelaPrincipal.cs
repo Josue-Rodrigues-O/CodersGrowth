@@ -43,11 +43,9 @@ namespace ControleFuncionarios
             else
             {
                 Editar = true;
-                //ItemSelecionado = TelaListagem.CurrentCell.RowIndex;
-                ItemSelecionado = Convert.ToInt32(TelaListagem.CurrentRow.Cells[0].Value);
-                MessageBox.Show(TelaPrincipal.ItemSelecionado.ToString());
-                //CadastroFuncionario cadastro = new();
-                //cadastro.Show();
+                ItemSelecionado = Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value);
+                CadastroFuncionario cadastro = new();
+                cadastro.Show();
             }
         }
     }

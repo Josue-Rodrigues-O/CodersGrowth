@@ -30,7 +30,11 @@
         {
             components = new System.ComponentModel.Container();
             TelaListagem = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            funcionarioBindingSource = new BindingSource(components);
+            btnAdicionar = new Button();
+            btnEditar = new Button();
+            btnRemover = new Button();
+            ID = new DataGridViewTextBoxColumn();
             nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             cpfDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             telefoneDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -38,10 +42,6 @@
             ehCasadoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             dataNascimentoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             generoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            funcionarioBindingSource = new BindingSource(components);
-            btnAdicionar = new Button();
-            btnEditar = new Button();
-            btnRemover = new Button();
             ((System.ComponentModel.ISupportInitialize)TelaListagem).BeginInit();
             ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource).BeginInit();
             SuspendLayout();
@@ -52,7 +52,7 @@
             TelaListagem.AutoGenerateColumns = false;
             TelaListagem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             TelaListagem.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            TelaListagem.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nomeDataGridViewTextBoxColumn, cpfDataGridViewTextBoxColumn, telefoneDataGridViewTextBoxColumn, salarioDataGridViewTextBoxColumn, ehCasadoDataGridViewCheckBoxColumn, dataNascimentoDataGridViewTextBoxColumn, generoDataGridViewTextBoxColumn });
+            TelaListagem.Columns.AddRange(new DataGridViewColumn[] { ID, nomeDataGridViewTextBoxColumn, cpfDataGridViewTextBoxColumn, telefoneDataGridViewTextBoxColumn, salarioDataGridViewTextBoxColumn, ehCasadoDataGridViewCheckBoxColumn, dataNascimentoDataGridViewTextBoxColumn, generoDataGridViewTextBoxColumn });
             TelaListagem.DataSource = funcionarioBindingSource;
             TelaListagem.Location = new Point(12, 12);
             TelaListagem.Name = "TelaListagem";
@@ -61,12 +61,51 @@
             TelaListagem.Size = new Size(937, 349);
             TelaListagem.TabIndex = 0;
             // 
-            // idDataGridViewTextBoxColumn
+            // funcionarioBindingSource
             // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            idDataGridViewTextBoxColumn.HeaderText = "ID";
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
+            funcionarioBindingSource.DataSource = typeof(Funcionario);
+            // 
+            // btnAdicionar
+            // 
+            btnAdicionar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnAdicionar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnAdicionar.Location = new Point(712, 404);
+            btnAdicionar.Name = "btnAdicionar";
+            btnAdicionar.Size = new Size(75, 23);
+            btnAdicionar.TabIndex = 1;
+            btnAdicionar.Text = "Adicionar";
+            btnAdicionar.UseVisualStyleBackColor = true;
+            btnAdicionar.Click += Ao_Clicar_Em_Adicionar;
+            // 
+            // btnEditar
+            // 
+            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnEditar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnEditar.Location = new Point(793, 404);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(75, 23);
+            btnEditar.TabIndex = 2;
+            btnEditar.Text = "Editar";
+            btnEditar.UseVisualStyleBackColor = true;
+            btnEditar.Click += Ao_Clicar_Em_Editar;
+            // 
+            // btnRemover
+            // 
+            btnRemover.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnRemover.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnRemover.Location = new Point(874, 404);
+            btnRemover.Name = "btnRemover";
+            btnRemover.Size = new Size(75, 23);
+            btnRemover.TabIndex = 3;
+            btnRemover.Text = "Remover";
+            btnRemover.UseVisualStyleBackColor = true;
+            // 
+            // ID
+            // 
+            ID.DataPropertyName = "Id";
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            ID.ReadOnly = true;
             // 
             // nomeDataGridViewTextBoxColumn
             // 
@@ -117,45 +156,6 @@
             generoDataGridViewTextBoxColumn.Name = "generoDataGridViewTextBoxColumn";
             generoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // funcionarioBindingSource
-            // 
-            funcionarioBindingSource.DataSource = typeof(Funcionario);
-            // 
-            // btnAdicionar
-            // 
-            btnAdicionar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnAdicionar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnAdicionar.Location = new Point(712, 404);
-            btnAdicionar.Name = "btnAdicionar";
-            btnAdicionar.Size = new Size(75, 23);
-            btnAdicionar.TabIndex = 1;
-            btnAdicionar.Text = "Adicionar";
-            btnAdicionar.UseVisualStyleBackColor = true;
-            btnAdicionar.Click += Ao_Clicar_Em_Adicionar;
-            // 
-            // btnEditar
-            // 
-            btnEditar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnEditar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnEditar.Location = new Point(793, 404);
-            btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(75, 23);
-            btnEditar.TabIndex = 2;
-            btnEditar.Text = "Editar";
-            btnEditar.UseVisualStyleBackColor = true;
-            btnEditar.Click += Ao_Clicar_Em_Editar;
-            // 
-            // btnRemover
-            // 
-            btnRemover.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnRemover.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnRemover.Location = new Point(874, 404);
-            btnRemover.Name = "btnRemover";
-            btnRemover.Size = new Size(75, 23);
-            btnRemover.TabIndex = 3;
-            btnRemover.Text = "Remover";
-            btnRemover.UseVisualStyleBackColor = true;
-            // 
             // TelaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -177,7 +177,7 @@
         private Button btnEditar;
         private Button btnRemover;
         private BindingSource funcionarioBindingSource;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn cpfDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn telefoneDataGridViewTextBoxColumn;

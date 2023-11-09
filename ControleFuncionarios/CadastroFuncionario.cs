@@ -21,10 +21,11 @@ namespace ControleFuncionarios
         {
             InitializeComponent();
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
-            
+            Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18,12,31);
+
             if (TelaPrincipal.Editar)
             {
-                Funcionario funcionario = TelaPrincipal.ListaFuncionarios[TelaPrincipal.ItemSelecionado];
+                Funcionario funcionario = TelaPrincipal.ListaFuncionarios.Find(x => x.Id == TelaPrincipal.ItemSelecionado);
                 TxtNome.Text = funcionario.Nome;
                 TxtCpf.Text = funcionario.Cpf;
                 TxtTelefone.Text = funcionario.Telefone;
@@ -56,15 +57,16 @@ namespace ControleFuncionarios
         {
             Validacoes validacao = new();
             Funcionario funcionario;
-            
-            if (TelaPrincipal.Editar)
+
+            switch (TelaPrincipal.Editar)
             {
-                funcionario = TelaPrincipal.ListaFuncionarios[TelaPrincipal.ItemSelecionado];
-            }
-            else
-            {
-                funcionario = new();
-                funcionario.Id = IncrementarId();
+                case true:
+                    funcionario = TelaPrincipal.ListaFuncionarios.Find(x => x.Id == TelaPrincipal.ItemSelecionado);
+                    break;
+                case false:
+                    funcionario = new();
+                    funcionario.Id = IncrementarId();
+                    break;
             }
             try
             {
@@ -139,7 +141,6 @@ namespace ControleFuncionarios
             int NumZero = 96;
             int NumNove = 105;
             int NumVirgula = 110;
-
             if (e.KeyValue >= zero && e.KeyValue <= nove
                 || e.KeyValue >= NumZero && e.KeyValue <= NumNove
                 || e.KeyValue == virgula
@@ -156,10 +157,6 @@ namespace ControleFuncionarios
 
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //if (e.KeyChar == ',')
-            //{
-            //    e.Handled = (TxtSalario.Text.Contains(','));
-            //}
 
             e.Handled = !SalarioValido;
         }
