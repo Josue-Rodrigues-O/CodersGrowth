@@ -16,31 +16,43 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
-        public static int IdTemp = 0;
+        Funcionario funcionario = null;
+        private static int IdTemp = 0;
+        private readonly bool Editar = false;
         public CadastroFuncionario()
         {
             InitializeComponent();
+            Editar = false;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
+            funcionario = new();
+        }
+        public CadastroFuncionario(Funcionario func)
+        {
+            InitializeComponent();
+            Editar = true;
+            ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
+            funcionario = func;
 
-            if (TelaPrincipal.Editar)
+            Atribuir_Valores();
+        }
+
+        private void Atribuir_Valores()
+        {
+            TxtNome.Text = funcionario.Nome;
+            TxtCpf.Text = funcionario.Cpf;
+            TxtTelefone.Text = funcionario.Telefone;
+            TxtSalario.Text = funcionario.Salario.ToString();
+            if (funcionario.EhCasado)
             {
-                Funcionario funcionario = TelaPrincipal.ListaFuncionarios.Find(x => x.Id == TelaPrincipal.ItemSelecionado);
-                TxtNome.Text = funcionario.Nome;
-                TxtCpf.Text = funcionario.Cpf;
-                TxtTelefone.Text = funcionario.Telefone;
-                TxtSalario.Text = funcionario.Salario.ToString();
-                if (funcionario.EhCasado)
-                {
-                    RadCasado.Checked = true;
-                }
-                else
-                {
-                    RadSolteiro.Checked = true;
-                }
-                ComboGenero.SelectedItem = funcionario.Genero;
-                Calendario.SelectionStart = funcionario.DataNascimento;
+                RadCasado.Checked = true;
             }
+            else
+            {
+                RadSolteiro.Checked = true;
+            }
+            ComboGenero.SelectedItem = funcionario.Genero;
+            Calendario.SelectionStart = funcionario.DataNascimento;
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
@@ -56,17 +68,6 @@ namespace ControleFuncionarios
         private void LerEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            Funcionario funcionario;
-
-            switch (TelaPrincipal.Editar)
-            {
-                case true:
-                    funcionario = TelaPrincipal.ListaFuncionarios.Find(x => x.Id == TelaPrincipal.ItemSelecionado);
-                    break;
-                case false:
-                    funcionario = new();
-                    break;
-            }
             try
             {
                 if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
@@ -79,8 +80,7 @@ namespace ControleFuncionarios
                 }
                 funcionario.EhCasado = RadCasado.Checked;
                 funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-
-                if (TelaPrincipal.Editar)
+                if (Editar)
                 {
                     TelaPrincipal.AtualizarLista();
                 }

@@ -4,9 +4,6 @@ namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
     {
-        public static bool Editar = false;
-        public static int ItemSelecionado;
-
         public static readonly List<Funcionario> ListaFuncionarios = new();
         public TelaPrincipal()
         {
@@ -19,9 +16,8 @@ namespace ControleFuncionarios
         }
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
-            Editar = false;
             CadastroFuncionario cadastro = new();
-            cadastro.Show();
+            cadastro.ShowDialog();
         }
 
         private void Ao_Clicar_Em_Editar(object sender, EventArgs e)
@@ -42,10 +38,9 @@ namespace ControleFuncionarios
             }
             else
             {
-                Editar = true;
-                ItemSelecionado = Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value);
-                CadastroFuncionario cadastro = new();
-                cadastro.Show();
+                Funcionario funcionario = ListaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
+                CadastroFuncionario cadastro = new(funcionario);
+                cadastro.ShowDialog();
             }
         }
     }
