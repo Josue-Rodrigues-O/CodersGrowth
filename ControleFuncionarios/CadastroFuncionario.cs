@@ -21,7 +21,7 @@ namespace ControleFuncionarios
         {
             InitializeComponent();
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
-            Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18,12,31);
+            Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
 
             if (TelaPrincipal.Editar)
             {
@@ -65,7 +65,6 @@ namespace ControleFuncionarios
                     break;
                 case false:
                     funcionario = new();
-                    funcionario.Id = IncrementarId();
                     break;
             }
             try
@@ -87,6 +86,7 @@ namespace ControleFuncionarios
                 }
                 else
                 {
+                    funcionario.Id = IncrementarId();
                     TelaPrincipal.ListaFuncionarios.Add(funcionario);
                     TelaPrincipal.AtualizarLista();
                 }
@@ -102,7 +102,6 @@ namespace ControleFuncionarios
         {
             IdTemp++;
             return IdTemp;
-
         }
 
         #region Validar Nome
@@ -157,7 +156,6 @@ namespace ControleFuncionarios
 
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             e.Handled = !SalarioValido;
         }
         #endregion
