@@ -19,15 +19,15 @@ namespace ControleFuncionarios
         private Funcionario funcionario;
         private static int IdTemp = 0;
 
-        public CadastroFuncionario(Funcionario func = null)
+        public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
 
-            funcionario = func;
-            if(func != null)
+            if (func != null)
             {
+                funcionario = func;
                 Atribuir_Valores();
             }
         }
@@ -54,20 +54,33 @@ namespace ControleFuncionarios
         {
             if (funcionario == null)
             {
-                funcionario = new()
+                try
                 {
-                    Id = IncrementarId()
-                };
-                LerEntradasDoUsuario();
-                TelaPrincipal.ListaFuncionarios.Add(funcionario);
-                TelaPrincipal.AtualizarLista();
-                this.Close();
+                    funcionario = new();
+                    LerEntradasDoUsuario();
+                    funcionario.Id = IncrementarId();
+
+                    TelaPrincipal.ListaFuncionarios.Add(funcionario);
+                    TelaPrincipal.AtualizarLista();
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {
-                LerEntradasDoUsuario();
-                TelaPrincipal.AtualizarLista();
-                this.Close();
+                try
+                {
+                    LerEntradasDoUsuario();
+                    TelaPrincipal.AtualizarLista();
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -79,23 +92,17 @@ namespace ControleFuncionarios
         private void LerEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            try
+
+            if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
             {
-                if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
-                {
-                    funcionario.Nome = TxtNome.Text;
-                    funcionario.Cpf = TxtCpf.Text;
-                    funcionario.Telefone = TxtTelefone.Text;
-                    funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
-                    funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
-                }
-                funcionario.EhCasado = RadCasado.Checked;
-                funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
+                funcionario.Nome = TxtNome.Text;
+                funcionario.Cpf = TxtCpf.Text;
+                funcionario.Telefone = TxtTelefone.Text;
+                funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
+                funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            funcionario.EhCasado = RadCasado.Checked;
+            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
         }
 
         private static int IncrementarId()
