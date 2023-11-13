@@ -16,25 +16,20 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
-        Funcionario funcionario = null;
+        private Funcionario funcionario;
         private static int IdTemp = 0;
-        private readonly bool Editar = false;
-        public CadastroFuncionario()
+
+        public CadastroFuncionario(Funcionario func = null)
         {
             InitializeComponent();
-            Editar = false;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
-            funcionario = new();
-        }
-        public CadastroFuncionario(Funcionario func)
-        {
-            InitializeComponent();
-            Editar = true;
-            ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
-            funcionario = func;
 
-            Atribuir_Valores();
+            funcionario = func;
+            if(func != null)
+            {
+                Atribuir_Valores();
+            }
         }
 
         private void Atribuir_Valores()
@@ -57,7 +52,23 @@ namespace ControleFuncionarios
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
-            LerEntradasDoUsuario();
+            if (funcionario == null)
+            {
+                funcionario = new()
+                {
+                    Id = IncrementarId()
+                };
+                LerEntradasDoUsuario();
+                TelaPrincipal.ListaFuncionarios.Add(funcionario);
+                TelaPrincipal.AtualizarLista();
+                this.Close();
+            }
+            else
+            {
+                LerEntradasDoUsuario();
+                TelaPrincipal.AtualizarLista();
+                this.Close();
+            }
         }
 
         private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
@@ -80,17 +91,6 @@ namespace ControleFuncionarios
                 }
                 funcionario.EhCasado = RadCasado.Checked;
                 funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-                if (Editar)
-                {
-                    TelaPrincipal.AtualizarLista();
-                }
-                else
-                {
-                    funcionario.Id = IncrementarId();
-                    TelaPrincipal.ListaFuncionarios.Add(funcionario);
-                    TelaPrincipal.AtualizarLista();
-                }
-                this.Close();
             }
             catch (Exception e)
             {
