@@ -22,7 +22,6 @@ namespace ControleFuncionarios
         public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
-            BtnCancelar.DialogResult = DialogResult.Cancel;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
 
@@ -65,19 +64,19 @@ namespace ControleFuncionarios
                     funcionario.Id = IncrementarId();
                     TelaPrincipal.ListaFuncionarios.Add(funcionario);
                     TelaPrincipal.AtualizarLista();
-                    MessageBox.Show("Funcionário adicionado com sucesso!");
+                    MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     LerEntradasDoUsuario();
                     TelaPrincipal.AtualizarLista();
-                    MessageBox.Show("Funcionário alterado com sucesso!");
+                    MessageBox.Show("Funcionário alterado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -101,6 +100,16 @@ namespace ControleFuncionarios
         {
             IdTemp++;
             return IdTemp;
+        }
+
+        private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
+        {
+            DialogResult cancelar;
+            cancelar = MessageBox.Show("Deseja mesmo cancelar a operação?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (cancelar.Equals(DialogResult.Yes))
+            {
+                this.Close();
+            }
         }
 
         #region Validar Nome
@@ -158,5 +167,6 @@ namespace ControleFuncionarios
             e.Handled = !SalarioValido;
         }
         #endregion
+
     }
 }
