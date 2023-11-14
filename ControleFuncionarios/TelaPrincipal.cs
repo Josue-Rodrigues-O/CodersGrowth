@@ -50,26 +50,15 @@ namespace ControleFuncionarios
         }
         private bool LinhaValida()
         {
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1)
-            {
-                MessageBox.Show("Selecione só uma linha!");
-                return false;
-            }
-            else
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1)
-            {
-                MessageBox.Show("Selecione pelo menos uma linha!");
-                return false;
-            }
-            else
-            if (!ListaFuncionarios.Any())
-            {
-                MessageBox.Show("A lista está vazia!");
-                return false;
-            }
-            else
+
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && ListaFuncionarios.Any())
             {
                 return true;
+            }
+            else
+            {
+                MessageBox.Show("Você deve selecionar uma linha!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
             }
         }
     }
