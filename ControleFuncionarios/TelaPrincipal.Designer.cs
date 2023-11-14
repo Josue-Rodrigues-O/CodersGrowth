@@ -197,6 +197,7 @@
             Controls.Add(TelaListagem);
             Name = "TelaPrincipal";
             Text = "Tela Principal";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)TelaListagem).EndInit();
             ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource).EndInit();
             ResumeLayout(false);

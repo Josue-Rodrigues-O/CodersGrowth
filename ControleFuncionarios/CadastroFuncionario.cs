@@ -16,12 +16,13 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
-        private Funcionario funcionario;
+        private readonly Funcionario funcionario;
         private static int IdTemp = 0;
-
+        private readonly int IdNulo = 0;
         public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
+            BtnCancelar.DialogResult = DialogResult.Cancel;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
 
@@ -29,6 +30,10 @@ namespace ControleFuncionarios
             {
                 funcionario = func;
                 Atribuir_Valores();
+            }
+            else
+            {
+                funcionario = new();
             }
         }
 
@@ -52,42 +57,28 @@ namespace ControleFuncionarios
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
-            if (funcionario is null)
+            try
             {
-                try
+                if (funcionario.Id == IdNulo)
                 {
-                    funcionario = new();
                     LerEntradasDoUsuario();
                     funcionario.Id = IncrementarId();
-
                     TelaPrincipal.ListaFuncionarios.Add(funcionario);
                     TelaPrincipal.AtualizarLista();
-                    this.Close();
+                    MessageBox.Show("Funcionário adicionado com sucesso!");
                 }
-                catch (Exception ex)
-                {
-                    funcionario = null;
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else
-            {
-                try
+                else
                 {
                     LerEntradasDoUsuario();
                     TelaPrincipal.AtualizarLista();
-                    this.Close();
+                    MessageBox.Show("Funcionário alterado com sucesso!");
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                DialogResult = DialogResult.OK;
             }
-        }
-
-        private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
-        {
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void LerEntradasDoUsuario()
