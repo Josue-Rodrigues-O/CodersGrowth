@@ -22,25 +22,54 @@ namespace ControleFuncionarios
 
         private void Ao_Clicar_Em_Editar(object sender, EventArgs e)
         {
+            if (LinhaValida())
+            {
+                CadastroFuncionario cadastro = new(PegarFuncionario());
+                cadastro.ShowDialog();
+            }
+        }
+
+        private void Ao_Clicar_Em_Remover(object sender, EventArgs e)
+        {
+            if (LinhaValida())
+            {
+                Funcionario funcionario = PegarFuncionario();
+                DialogResult remover;
+                remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (remover.Equals(DialogResult.Yes))
+                {
+                    ListaFuncionarios.Remove(funcionario);
+                    AtualizarLista();
+                }
+            }
+        }
+
+        private Funcionario PegarFuncionario()
+        {
+            return ListaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
+        }
+        private bool LinhaValida()
+        {
             if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1)
             {
                 MessageBox.Show("Selecione só uma linha!");
+                return false;
             }
             else
             if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1)
             {
                 MessageBox.Show("Selecione pelo menos uma linha!");
+                return false;
             }
             else
             if (!ListaFuncionarios.Any())
             {
                 MessageBox.Show("A lista está vazia!");
+                return false;
             }
             else
             {
-                Funcionario funcionario = ListaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
-                CadastroFuncionario cadastro = new(funcionario);
-                cadastro.ShowDialog();
+                return true;
             }
         }
     }
