@@ -9,7 +9,7 @@ namespace ControleFuncionarios
 {
     internal class Validacoes
     {
-        private List<string> ListaErros = new();
+        private readonly List<string> ListaErros = new();
         public bool Validar(string nome, MaskedTextBox cpf, MaskedTextBox telefone, string salario, MonthCalendar calendario)
         {
             #region Nome
@@ -38,7 +38,7 @@ namespace ControleFuncionarios
             #endregion
 
             #region Salario
-            if (String.IsNullOrWhiteSpace(salario))
+            if (string.IsNullOrWhiteSpace(salario))
             {
                 ListaErros.Add(Excessoes.SalarioNulo);
             }

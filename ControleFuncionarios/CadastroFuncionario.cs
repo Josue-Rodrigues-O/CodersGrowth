@@ -16,54 +16,100 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
-        public static int IdTemp = 0;
-        public CadastroFuncionario()
+        private readonly Funcionario funcionario;
+        private static int IdTemp = 0;
+        private readonly int IdNulo = 0;
+        public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
+            Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
+
+            if (func != null)
+            {
+                funcionario = func;
+                Atribuir_Valores();
+            }
+            else
+            {
+                funcionario = new();
+            }
+        }
+
+        private void Atribuir_Valores()
+        {
+            TxtNome.Text = funcionario.Nome;
+            TxtCpf.Text = funcionario.Cpf;
+            TxtTelefone.Text = funcionario.Telefone;
+            TxtSalario.Text = funcionario.Salario.ToString();
+            if (funcionario.EhCasado)
+            {
+                RadCasado.Checked = true;
+            }
+            else
+            {
+                RadSolteiro.Checked = true;
+            }
+            ComboGenero.SelectedItem = funcionario.Genero;
+            Calendario.SelectionStart = funcionario.DataNascimento;
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
-            LerEntradasDoUsuario();
-        }
-
-        private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
-        {
-            this.Close();
+            try
+            {
+                if (funcionario.Id == IdNulo)
+                {
+                    LerEntradasDoUsuario();
+                    funcionario.Id = IncrementarId();
+                    TelaPrincipal.ListaFuncionarios.Add(funcionario);
+                    TelaPrincipal.AtualizarLista();
+                    MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    LerEntradasDoUsuario();
+                    TelaPrincipal.AtualizarLista();
+                    MessageBox.Show("Funcionário alterado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LerEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            Funcionario funcionario = new();
-            try
+
+            if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
             {
-                if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
-                {
-                    funcionario.Nome = TxtNome.Text;
-                    funcionario.Cpf = TxtCpf.Text;
-                    funcionario.Telefone = TxtTelefone.Text;
-                    funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
-                    funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
-                }
-                funcionario.EhCasado = RadCasado.Checked;
-                funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-                funcionario.Id = IncrementarId();
-                TelaPrincipal.AtualizarLista(funcionario);
-                this.Close();
+                funcionario.Nome = TxtNome.Text;
+                funcionario.Cpf = TxtCpf.Text;
+                funcionario.Telefone = TxtTelefone.Text;
+                funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
+                funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
             }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            funcionario.EhCasado = RadCasado.Checked;
+            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
         }
 
         private static int IncrementarId()
         {
             IdTemp++;
             return IdTemp;
+        }
 
+        private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
+        {
+            DialogResult cancelar;
+            cancelar = MessageBox.Show("Deseja mesmo cancelar a operação?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (cancelar.Equals(DialogResult.Yes))
+            {
+                this.Close();
+            }
         }
 
         #region Validar Nome
@@ -121,5 +167,6 @@ namespace ControleFuncionarios
             e.Handled = !SalarioValido;
         }
         #endregion
+
     }
 }
