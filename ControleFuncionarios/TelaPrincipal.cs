@@ -22,25 +22,43 @@ namespace ControleFuncionarios
 
         private void Ao_Clicar_Em_Editar(object sender, EventArgs e)
         {
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1)
+            if (LinhaValida())
             {
-                MessageBox.Show("Selecione só uma linha!");
-            }
-            else
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) < 1)
-            {
-                MessageBox.Show("Selecione pelo menos uma linha!");
-            }
-            else
-            if (!ListaFuncionarios.Any())
-            {
-                MessageBox.Show("A lista está vazia!");
-            }
-            else
-            {
-                Funcionario funcionario = ListaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
-                CadastroFuncionario cadastro = new(funcionario);
+                CadastroFuncionario cadastro = new(PegarFuncionario());
                 cadastro.ShowDialog();
+            }
+        }
+
+        private void Ao_Clicar_Em_Remover(object sender, EventArgs e)
+        {
+            if (LinhaValida())
+            {
+                Funcionario funcionario = PegarFuncionario();
+                DialogResult remover;
+                remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (remover.Equals(DialogResult.Yes))
+                {
+                    ListaFuncionarios.Remove(funcionario);
+                    AtualizarLista();
+                }
+            }
+        }
+
+        private Funcionario PegarFuncionario()
+        {
+            return ListaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
+        }
+        private bool LinhaValida()
+        {
+
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && ListaFuncionarios.Any())
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Você deve selecionar uma linha!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
             }
         }
     }

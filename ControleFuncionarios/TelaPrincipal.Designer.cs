@@ -52,6 +52,7 @@
             // 
             // TelaListagem
             // 
+            TelaListagem.AllowUserToAddRows = false;
             TelaListagem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TelaListagem.AutoGenerateColumns = false;
             TelaListagem.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -185,6 +186,7 @@
             btnRemover.TabIndex = 3;
             btnRemover.Text = "Remover";
             btnRemover.UseVisualStyleBackColor = true;
+            btnRemover.Click += Ao_Clicar_Em_Remover;
             // 
             // TelaPrincipal
             // 
