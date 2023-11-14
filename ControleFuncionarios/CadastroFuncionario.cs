@@ -52,7 +52,7 @@ namespace ControleFuncionarios
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
-            if (funcionario == null)
+            if (funcionario is null)
             {
                 try
                 {
@@ -66,6 +66,7 @@ namespace ControleFuncionarios
                 }
                 catch (Exception ex)
                 {
+                    funcionario = null;
                     MessageBox.Show(ex.Message);
                 }
             }
