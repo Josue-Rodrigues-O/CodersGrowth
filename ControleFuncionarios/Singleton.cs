@@ -7,27 +7,21 @@ using System.Threading.Tasks;
 
 namespace ControleFuncionarios
 {
-    public sealed class Singleton
+    public class Singleton
     {
-        public List<Funcionario> ListaFuncionarios { get; }
-        private int _id;
-        private Singleton()
+        private static List<Funcionario> ListaFuncionario;
+
+        public static List<Funcionario> listaFuncionario()
         {
-            ListaFuncionarios = new();
-        }
-        private static Singleton instance;
-        public static Singleton Instance
-        {
-            get
+            if(ListaFuncionario == null)
             {
-                if (instance == null)
-                {
-                    instance = new Singleton();
-                }
-                return instance;
+                ListaFuncionario = new();
             }
+            return ListaFuncionario;
         }
-        public int IncrementarId()
+
+        private static int _id;
+        public static int IncrementarId()
         {
             _id++;
             return _id;
