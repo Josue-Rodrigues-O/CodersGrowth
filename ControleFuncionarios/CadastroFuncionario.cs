@@ -16,8 +16,7 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
-        static readonly List<Funcionario> listaFuncionarios = Singleton<List<Funcionario>>.Instance();
-        private static Id IdTemp = Singleton<Id>.Instance();
+        static readonly Singleton singleton = Singleton.Instance;
 
         private readonly Funcionario funcionario;
         private readonly int IdNulo = 0;
@@ -63,8 +62,8 @@ namespace ControleFuncionarios
                 if (funcionario.Id == IdNulo)
                 {
                     LerEntradasDoUsuario();
-                    funcionario.Id = IdTemp.IncrementarId();
-                    listaFuncionarios.Add(funcionario);
+                    funcionario.Id = singleton.IncrementarId();
+                    singleton.ListaFuncionarios.Add(funcionario);
                     TelaPrincipal.AtualizarLista();
                     MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

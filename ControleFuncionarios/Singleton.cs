@@ -1,29 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ControleFuncionarios
 {
-    public sealed class Singleton<T> where T : class, new()
+    public sealed class Singleton
     {
-        private static T instance;
-        public static T Instance()
+        public List<Funcionario> ListaFuncionarios { get; }
+        private int _id;
+        private Singleton()
         {
-
-            lock (typeof(T))
+            ListaFuncionarios = new();
+        }
+        private static Singleton instance;
+        public static Singleton Instance
+        {
+            get
+            {
                 if (instance == null)
                 {
-                    instance = new T();
+                    instance = new Singleton();
                 }
-            return instance;
+                return instance;
+            }
         }
-    }
-    public class Id
-    {
-        private int _id { get; set; }
-
         public int IncrementarId()
         {
             _id++;

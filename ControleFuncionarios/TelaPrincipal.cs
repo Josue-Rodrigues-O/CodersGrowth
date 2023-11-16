@@ -4,7 +4,7 @@ namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
     {
-        static readonly List<Funcionario> listaFuncionarios = Singleton<List<Funcionario>>.Instance();
+        static readonly Singleton singleton = Singleton.Instance;
         public TelaPrincipal()
         {
             InitializeComponent();
@@ -12,7 +12,7 @@ namespace ControleFuncionarios
         public static void AtualizarLista()
         {
             TelaListagem.DataSource = null;
-            TelaListagem.DataSource = listaFuncionarios;
+            TelaListagem.DataSource = singleton.ListaFuncionarios;
         }
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
@@ -38,7 +38,7 @@ namespace ControleFuncionarios
                 remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (remover.Equals(DialogResult.Yes))
                 {
-                    listaFuncionarios.Remove(funcionario);
+                    singleton.ListaFuncionarios.Remove(funcionario);
                     AtualizarLista();
                 }
             }
@@ -46,12 +46,12 @@ namespace ControleFuncionarios
 
         private Funcionario PegarFuncionario()
         {
-            return listaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
+            return singleton.ListaFuncionarios.Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
         }
         private bool LinhaValida()
         {
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && listaFuncionarios.Any())
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && singleton.ListaFuncionarios.Any())
             {
                 return true;
             }
