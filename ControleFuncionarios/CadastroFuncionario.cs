@@ -17,7 +17,6 @@ namespace ControleFuncionarios
     public partial class CadastroFuncionario : Form
     {
         private readonly Funcionario funcionario;
-        private readonly int IdNulo = 0;
         public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
@@ -57,7 +56,7 @@ namespace ControleFuncionarios
         {
             try
             {
-                if (funcionario.Id == IdNulo)
+                if (funcionario.Id == 0)
                 {
                     LerEntradasDoUsuario();
                     funcionario.Id = Singleton.IncrementarId();
