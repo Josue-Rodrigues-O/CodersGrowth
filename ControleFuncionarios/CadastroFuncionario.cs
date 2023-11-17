@@ -17,8 +17,6 @@ namespace ControleFuncionarios
     public partial class CadastroFuncionario : Form
     {
         private readonly Funcionario funcionario;
-        private static int IdTemp = 0;
-        private readonly int IdNulo = 0;
         public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
@@ -58,11 +56,11 @@ namespace ControleFuncionarios
         {
             try
             {
-                if (funcionario.Id == IdNulo)
+                if (funcionario.Id == null)
                 {
                     LerEntradasDoUsuario();
-                    funcionario.Id = IncrementarId();
-                    TelaPrincipal.ListaFuncionarios.Add(funcionario);
+                    funcionario.Id = Singleton.IncrementarId();
+                    Singleton.listaFuncionario().Add(funcionario);
                     TelaPrincipal.AtualizarLista();
                     MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -94,12 +92,6 @@ namespace ControleFuncionarios
             }
             funcionario.EhCasado = RadCasado.Checked;
             funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
-        }
-
-        private static int IncrementarId()
-        {
-            IdTemp++;
-            return IdTemp;
         }
 
         private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
