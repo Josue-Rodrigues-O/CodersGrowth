@@ -10,6 +10,7 @@ namespace ControleFuncionarios
     public class Singleton
     {
         private static List<Funcionario> ListaFuncionario;
+        private static int _id;
 
         public static List<Funcionario> listaFuncionario()
         {
@@ -20,7 +21,6 @@ namespace ControleFuncionarios
             return ListaFuncionario;
         }
 
-        private static int _id;
         public static int IncrementarId()
         {
             _id++;
