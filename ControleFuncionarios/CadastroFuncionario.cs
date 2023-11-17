@@ -56,7 +56,7 @@ namespace ControleFuncionarios
         {
             try
             {
-                if (funcionario.Id == 0)
+                if (funcionario.Id == null)
                 {
                     LerEntradasDoUsuario();
                     funcionario.Id = Singleton.IncrementarId();
