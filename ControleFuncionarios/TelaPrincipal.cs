@@ -14,6 +14,7 @@ namespace ControleFuncionarios
             TelaListagem.DataSource = null;
             TelaListagem.DataSource = repositorio.ObterTodos(); 
         }
+
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
             CadastroFuncionario cadastro = new();
@@ -24,7 +25,10 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
+                Funcionario funcionario = new();
+                    
+                funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
+
                 CadastroFuncionario cadastro = new(funcionario);
                 cadastro.ShowDialog();
             }
