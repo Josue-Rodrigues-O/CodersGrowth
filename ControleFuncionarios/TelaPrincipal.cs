@@ -4,15 +4,17 @@ namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
     {
+        private static readonly IRepositorio repositorio = new Repositorio();
         public TelaPrincipal()
         {
             InitializeComponent();
         }
-        public static void AtualizarLista()
+        public static void AtualizarDataGrid()
         {
             TelaListagem.DataSource = null;
-            TelaListagem.DataSource = Singleton.listaFuncionario(); 
+            TelaListagem.DataSource = repositorio.ObterTodos(); 
         }
+
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
             CadastroFuncionario cadastro = new();
@@ -23,7 +25,9 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                CadastroFuncionario cadastro = new(PegarFuncionario());
+                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
+
+                CadastroFuncionario cadastro = new(funcionario);
                 cadastro.ShowDialog();
             }
         }
@@ -32,20 +36,10 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = PegarFuncionario();
-                DialogResult remover;
-                remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (remover.Equals(DialogResult.Yes))
-                {
-                    Singleton.listaFuncionario().Remove(funcionario);
-                    AtualizarLista();
-                }
+                Funcionario funcionario = repositorio.ObterPorId((int) TelaListagem.CurrentRow.Cells["ID"].Value);
+                repositorio.Remover(funcionario);
+                AtualizarDataGrid();
             }
-        }
-
-        private Funcionario PegarFuncionario()
-        {
-            return Singleton.listaFuncionario().Find(x => x.Id == Convert.ToInt32(TelaListagem.CurrentRow.Cells["ID"].Value));
         }
         private bool LinhaValida()
         {

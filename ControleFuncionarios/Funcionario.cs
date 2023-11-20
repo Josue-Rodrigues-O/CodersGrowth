@@ -11,5 +11,9 @@ public class Funcionario
     public bool EhCasado { get; set; }
     public DateTime DataNascimento { get; set; }
     public GeneroEnum Genero { get; set; }
-    
+
+    public object ShallowCopy()
+    {
+        return this.MemberwiseClone();
+    }
 }

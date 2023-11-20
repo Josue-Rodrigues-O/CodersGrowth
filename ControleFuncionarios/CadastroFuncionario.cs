@@ -16,7 +16,10 @@ namespace ControleFuncionarios
 {
     public partial class CadastroFuncionario : Form
     {
+        #region Variaveis e Objetos
         private readonly Funcionario funcionario;
+        private readonly IRepositorio repositorio = new Repositorio();
+        #endregion
         public CadastroFuncionario(Funcionario? func = null)
         {
             InitializeComponent();
@@ -25,8 +28,8 @@ namespace ControleFuncionarios
 
             if (func != null)
             {
-                funcionario = func;
-                Atribuir_Valores();
+                funcionario = (Funcionario) func.ShallowCopy();
+                Atribuir_Valores_Ao_Form();
             }
             else
             {
@@ -34,7 +37,7 @@ namespace ControleFuncionarios
             }
         }
 
-        private void Atribuir_Valores()
+        private void Atribuir_Valores_Ao_Form()
         {
             TxtNome.Text = funcionario.Nome;
             TxtCpf.Text = funcionario.Cpf;
@@ -52,22 +55,42 @@ namespace ControleFuncionarios
             Calendario.SelectionStart = funcionario.DataNascimento;
         }
 
+        private void Atribuir_Valores_Ao_Objeto()
+        {
+            funcionario.Nome = TxtNome.Text;
+            funcionario.Cpf = TxtCpf.Text;
+            funcionario.Telefone = TxtTelefone.Text;
+            funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
+            funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
+            funcionario.EhCasado = RadCasado.Checked;
+            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
+        }
+
+        private void Validar_Entradas_Do_Usuario()
+        {
+            Validacoes validacao = new();
+            validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario);
+        }
+
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
             try
             {
                 if (funcionario.Id == null)
                 {
-                    LerEntradasDoUsuario();
+                    Validar_Entradas_Do_Usuario();
+                    Atribuir_Valores_Ao_Objeto();
                     funcionario.Id = Singleton.IncrementarId();
-                    Singleton.listaFuncionario().Add(funcionario);
-                    TelaPrincipal.AtualizarLista();
+                    repositorio.Criar(funcionario);
+                    TelaPrincipal.AtualizarDataGrid();
                     MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    LerEntradasDoUsuario();
-                    TelaPrincipal.AtualizarLista();
+                    Validar_Entradas_Do_Usuario();
+                    Atribuir_Valores_Ao_Objeto();
+                    repositorio.Atualizar(funcionario);
+                    TelaPrincipal.AtualizarDataGrid();
                     MessageBox.Show("Funcionário alterado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 DialogResult = DialogResult.OK;
@@ -76,22 +99,6 @@ namespace ControleFuncionarios
             {
                 MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void LerEntradasDoUsuario()
-        {
-            Validacoes validacao = new();
-
-            if (validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario))
-            {
-                funcionario.Nome = TxtNome.Text;
-                funcionario.Cpf = TxtCpf.Text;
-                funcionario.Telefone = TxtTelefone.Text;
-                funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
-                funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
-            }
-            funcionario.EhCasado = RadCasado.Checked;
-            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
         }
 
         private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
@@ -103,6 +110,7 @@ namespace ControleFuncionarios
                 this.Close();
             }
         }
+
 
         #region Validar Nome
         private bool NomeValido = true;

@@ -10,7 +10,7 @@ namespace ControleFuncionarios
     internal class Validacoes
     {
         private readonly List<string> ListaErros = new();
-        public bool Validar(string nome, MaskedTextBox cpf, MaskedTextBox telefone, string salario, MonthCalendar calendario)
+        public void Validar(string nome, MaskedTextBox cpf, MaskedTextBox telefone, string salario, MonthCalendar calendario)
         {
             #region Nome
             if (String.IsNullOrWhiteSpace(nome))
@@ -83,7 +83,6 @@ namespace ControleFuncionarios
                 }
                 throw new Exception(message: erros);
             }
-            return true;
         }
     }
 }
