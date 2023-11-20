@@ -2,7 +2,7 @@
 {
     internal class Repositorio : IRepositorio
     {
-        protected List<Funcionario> ListaFuncionarios = Singleton.listaFuncionario();
+        protected List<Funcionario> ListaFuncionarios = Singleton.ListaFuncionario();
 
         public void Criar(Funcionario funcionario)
         {

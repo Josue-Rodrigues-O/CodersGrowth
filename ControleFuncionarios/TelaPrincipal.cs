@@ -44,7 +44,7 @@ namespace ControleFuncionarios
         private bool LinhaValida()
         {
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && Singleton.listaFuncionario().Any())
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && Singleton.ListaFuncionario().Any())
             {
                 return true;
             }
