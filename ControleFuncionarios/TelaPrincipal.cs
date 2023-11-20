@@ -25,9 +25,7 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = new();
-                    
-                funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
+                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
 
                 CadastroFuncionario cadastro = new(funcionario);
                 cadastro.ShowDialog();

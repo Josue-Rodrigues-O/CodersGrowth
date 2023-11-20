@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ControleFuncionarios
+﻿namespace ControleFuncionarios
 {
     internal class Repositorio : IRepositorio
     {
         protected List<Funcionario> ListaFuncionarios = Singleton.listaFuncionario();
-        
+
         public void Criar(Funcionario funcionario)
         {
             ListaFuncionarios.Add(funcionario);
@@ -32,6 +26,12 @@ namespace ControleFuncionarios
             {
                 ListaFuncionarios.Remove(funcionario);
             }
+        }
+
+        public void Atualizar(Funcionario funcionarioEditado)
+        {
+            var indice = ListaFuncionarios.FindIndex(funcionario => funcionario.Id == funcionarioEditado.Id);
+            ListaFuncionarios[indice] = funcionarioEditado;
         }
     }
 }
