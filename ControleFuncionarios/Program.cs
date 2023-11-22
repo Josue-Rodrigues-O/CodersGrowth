@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using ControleFuncionarios.Migrations;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Initialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace ControleFuncionarios
             {
                 UpdateDatabase(scope.ServiceProvider);
             }
+
             ApplicationConfiguration.Initialize();
             Application.Run(new TelaPrincipal());
         }
@@ -31,14 +33,16 @@ namespace ControleFuncionarios
                     ///Define a string de conexão
                     .WithGlobalConnectionString(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString)
                     ///Define o assembly que contém as migrações
-                    .ScanIn(typeof(AddFuncionariosTable).Assembly).For.Migrations())
+                    .ScanIn(typeof(_20231121103000_AddFuncionariosTable).Assembly).For.Migrations())
                 ///Habilita o log para console no modo FluentMigrator
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 ///Constrói o provedor de serviços
                 .BuildServiceProvider(false);
         }
+
         private static void UpdateDatabase(IServiceProvider serviceProvider)
         {
+            //GetRequiredService<IMigrationRunner>() obtem um serviço do tipo IMigrationRunner
             var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
 
             runner.MigrateUp();

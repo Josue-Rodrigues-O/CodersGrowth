@@ -1,14 +1,9 @@
 ﻿using FluentMigrator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ControleFuncionarios
+namespace ControleFuncionarios.Migrations
 {
     [Migration(20231121103000)]
-    public class AddFuncionariosTable : Migration
+    public class _20231121103000_AddFuncionariosTable : Migration
     {
         public override void Up()
         {
