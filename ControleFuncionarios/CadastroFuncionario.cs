@@ -18,7 +18,7 @@ namespace ControleFuncionarios
     {
         #region Variaveis e Objetos
         private readonly Funcionario funcionario;
-        private readonly IRepositorio repositorio = new Repositorio();
+        private readonly IRepositorio repositorio = new RepositorioBD();
         #endregion
         public CadastroFuncionario(Funcionario? func = null)
         {
@@ -42,7 +42,7 @@ namespace ControleFuncionarios
             TxtNome.Text = funcionario.Nome;
             TxtCpf.Text = funcionario.Cpf;
             TxtTelefone.Text = funcionario.Telefone;
-            TxtSalario.Text = funcionario.Salario.ToString();
+            TxtSalario.Text = funcionario.Salario.ToString("N2");
             if (funcionario.EhCasado)
             {
                 RadCasado.Checked = true;
@@ -142,6 +142,8 @@ namespace ControleFuncionarios
         private bool SalarioValido = true;
         private void TxtSalario_KeyDown(object sender, KeyEventArgs e)
         {
+            int Ponto = 190;
+            int NumPonto = 194;
             int virgula = 188;
             int zero = 48;
             int nove = 57;

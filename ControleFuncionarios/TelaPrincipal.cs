@@ -4,10 +4,11 @@ namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
     {
-        private static readonly IRepositorio repositorio = new Repositorio();
+        private static readonly IRepositorio repositorio = new RepositorioBD();
         public TelaPrincipal()
         {
             InitializeComponent();
+            AtualizarDataGrid();
         }
         public static void AtualizarDataGrid()
         {
@@ -44,7 +45,7 @@ namespace ControleFuncionarios
         private bool LinhaValida()
         {
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && Singleton.ListaFuncionario().Any())
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1)
             {
                 return true;
             }

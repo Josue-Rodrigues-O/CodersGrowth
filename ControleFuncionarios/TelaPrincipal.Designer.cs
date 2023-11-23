@@ -42,11 +42,13 @@
             ehCasadoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
             dataNascimentoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             generoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            funcionarioBindingSource1 = new BindingSource(components);
             funcionarioBindingSource = new BindingSource(components);
             btnAdicionar = new Button();
             btnEditar = new Button();
             btnRemover = new Button();
             ((System.ComponentModel.ISupportInitialize)TelaListagem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource).BeginInit();
             SuspendLayout();
             // 
@@ -148,6 +150,10 @@
             generoDataGridViewTextBoxColumn.Name = "generoDataGridViewTextBoxColumn";
             generoDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // funcionarioBindingSource1
+            // 
+            funcionarioBindingSource1.DataSource = typeof(Funcionario);
+            // 
             // funcionarioBindingSource
             // 
             funcionarioBindingSource.DataSource = typeof(Funcionario);
@@ -201,6 +207,7 @@
             Text = "Tela Principal";
             WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)TelaListagem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource).EndInit();
             ResumeLayout(false);
         }
@@ -218,6 +225,7 @@
         private DataGridViewCheckBoxColumn ehCasadoDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn dataNascimentoDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn generoDataGridViewTextBoxColumn;
+        private BindingSource funcionarioBindingSource1;
         private static DataGridView TelaListagem;
     }
 }

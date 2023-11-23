@@ -33,7 +33,7 @@ namespace ControleFuncionarios
                     ///Define a string de conexão
                     .WithGlobalConnectionString(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString)
                     ///Define o assembly que contém as migrações
-                    .ScanIn(typeof(_20231121103000_AddFuncionariosTable).Assembly).For.Migrations())
+                    .ScanIn(typeof(_20231123140000_AddFuncionariosTable).Assembly).For.Migrations())
                 ///Habilita o log para console no modo FluentMigrator
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 ///Constrói o provedor de serviços
