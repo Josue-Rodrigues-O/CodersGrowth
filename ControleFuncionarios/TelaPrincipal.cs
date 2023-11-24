@@ -16,9 +16,7 @@ namespace ControleFuncionarios
         {
             TelaListagem.DataSource = null;
             if (repositorio.ObterTodos().Any())
-            {
                 TelaListagem.DataSource = repositorio.ObterTodos();
-            }
         }
 
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
