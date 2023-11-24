@@ -2,8 +2,8 @@
 
 namespace ControleFuncionarios.Migrations
 {
-    [Migration(20231121103000)]
-    public class _20231121103000_AddFuncionariosTable : Migration
+    [Migration(20231123140000)]
+    public class _20231123140000_AddFuncionariosTable : Migration
     {
         public override void Up()
         {
@@ -14,7 +14,7 @@ namespace ControleFuncionarios.Migrations
                 .WithColumn("Telefone").AsString().NotNullable()
                 .WithColumn("Salario").AsDecimal().NotNullable()
                 .WithColumn("EhCasado").AsBoolean().NotNullable()
-                .WithColumn("DataNascimeno").AsDate().NotNullable()
+                .WithColumn("DataNascimento").AsDate().NotNullable()
                 .WithColumn("Genero").AsString().NotNullable();
         }
 

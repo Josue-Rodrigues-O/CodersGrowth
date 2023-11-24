@@ -28,10 +28,10 @@
             }
         }
 
-        public void Atualizar(Funcionario funcionarioEditado)
+        public void Atualizar(Funcionario funcionario)
         {
-            var indice = ListaFuncionarios.FindIndex(funcionario => funcionario.Id == funcionarioEditado.Id);
-            ListaFuncionarios[indice] = funcionarioEditado;
+            var indice = ListaFuncionarios.FindIndex(func => func.Id == funcionario.Id);
+            ListaFuncionarios[indice] = funcionario;
         }
     }
 }
