@@ -1,4 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace ControleFuncionarios
 {
@@ -13,7 +15,10 @@ namespace ControleFuncionarios
         public static void AtualizarDataGrid()
         {
             TelaListagem.DataSource = null;
-            TelaListagem.DataSource = repositorio.ObterTodos(); 
+            if (repositorio.ObterTodos().Any())
+            {
+                TelaListagem.DataSource = repositorio.ObterTodos();
+            }
         }
 
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
@@ -27,7 +32,6 @@ namespace ControleFuncionarios
             if (LinhaValida())
             {
                 Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-
                 CadastroFuncionario cadastro = new(funcionario);
                 cadastro.ShowDialog();
             }
@@ -42,7 +46,7 @@ namespace ControleFuncionarios
                 AtualizarDataGrid();
             }
         }
-        private bool LinhaValida()
+        private static bool LinhaValida()
         {
 
             if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1)

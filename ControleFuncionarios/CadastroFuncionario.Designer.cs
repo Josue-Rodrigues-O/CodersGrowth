@@ -188,7 +188,6 @@
             TxtSalario.Name = "TxtSalario";
             TxtSalario.Size = new Size(366, 23);
             TxtSalario.TabIndex = 4;
-            TxtSalario.KeyDown += TxtSalario_KeyDown;
             TxtSalario.KeyPress += TxtSalario_KeyPress;
             // 
             // tableLayoutEstadoCivil
