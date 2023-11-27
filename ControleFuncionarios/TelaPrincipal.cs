@@ -6,9 +6,10 @@ namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
     {
-        private static readonly IRepositorio repositorio = new RepositorioBD();
-        public TelaPrincipal()
+        private static IRepositorio repositorio;
+        public TelaPrincipal(IRepositorio repos)
         {
+            repositorio = repos;
             InitializeComponent();
             AtualizarDataGrid();
         }
@@ -21,7 +22,7 @@ namespace ControleFuncionarios
 
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
-            CadastroFuncionario cadastro = new();
+            CadastroFuncionario cadastro = new(repositorio);
             cadastro.ShowDialog();
         }
 
@@ -30,7 +31,7 @@ namespace ControleFuncionarios
             if (LinhaValida())
             {
                 Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-                CadastroFuncionario cadastro = new(funcionario);
+                CadastroFuncionario cadastro = new(repositorio, funcionario);
                 cadastro.ShowDialog();
             }
         }
