@@ -35,19 +35,21 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             TelaListagem = new DataGridView();
             ID = new DataGridViewTextBoxColumn();
-            nomeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            cpfDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            telefoneDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            salarioDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ehCasadoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            dataNascimentoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            generoDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewCheckBoxColumn1 = new DataGridViewCheckBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             funcionarioBindingSource = new BindingSource(components);
+            funcionarioBindingSource1 = new BindingSource(components);
             btnAdicionar = new Button();
             btnEditar = new Button();
             btnRemover = new Button();
             ((System.ComponentModel.ISupportInitialize)TelaListagem).BeginInit();
             ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource1).BeginInit();
             SuspendLayout();
             // 
             // TelaListagem
@@ -60,10 +62,10 @@
             TelaListagem.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             TelaListagem.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             TelaListagem.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            TelaListagem.Columns.AddRange(new DataGridViewColumn[] { ID, nomeDataGridViewTextBoxColumn, cpfDataGridViewTextBoxColumn, telefoneDataGridViewTextBoxColumn, salarioDataGridViewTextBoxColumn, ehCasadoDataGridViewCheckBoxColumn, dataNascimentoDataGridViewTextBoxColumn, generoDataGridViewTextBoxColumn });
+            TelaListagem.Columns.AddRange(new DataGridViewColumn[] { ID, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewCheckBoxColumn1, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
             TelaListagem.DataSource = funcionarioBindingSource;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
@@ -99,58 +101,62 @@
             ID.Name = "ID";
             ID.ReadOnly = true;
             // 
-            // nomeDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn1
             // 
-            nomeDataGridViewTextBoxColumn.DataPropertyName = "Nome";
-            nomeDataGridViewTextBoxColumn.HeaderText = "Nome";
-            nomeDataGridViewTextBoxColumn.Name = "nomeDataGridViewTextBoxColumn";
-            nomeDataGridViewTextBoxColumn.ReadOnly = true;
+            dataGridViewTextBoxColumn1.DataPropertyName = "Nome";
+            dataGridViewTextBoxColumn1.HeaderText = "Nome";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // cpfDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn2
             // 
-            cpfDataGridViewTextBoxColumn.DataPropertyName = "Cpf";
-            cpfDataGridViewTextBoxColumn.HeaderText = "CPF";
-            cpfDataGridViewTextBoxColumn.Name = "cpfDataGridViewTextBoxColumn";
-            cpfDataGridViewTextBoxColumn.ReadOnly = true;
+            dataGridViewTextBoxColumn2.DataPropertyName = "Cpf";
+            dataGridViewTextBoxColumn2.HeaderText = "CPF";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
-            // telefoneDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn3
             // 
-            telefoneDataGridViewTextBoxColumn.DataPropertyName = "Telefone";
-            telefoneDataGridViewTextBoxColumn.HeaderText = "Telefone";
-            telefoneDataGridViewTextBoxColumn.Name = "telefoneDataGridViewTextBoxColumn";
-            telefoneDataGridViewTextBoxColumn.ReadOnly = true;
+            dataGridViewTextBoxColumn3.DataPropertyName = "Telefone";
+            dataGridViewTextBoxColumn3.HeaderText = "Telefone";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // salarioDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn4
             // 
-            salarioDataGridViewTextBoxColumn.DataPropertyName = "Salario";
-            salarioDataGridViewTextBoxColumn.HeaderText = "Salário";
-            salarioDataGridViewTextBoxColumn.Name = "salarioDataGridViewTextBoxColumn";
-            salarioDataGridViewTextBoxColumn.ReadOnly = true;
+            dataGridViewTextBoxColumn4.DataPropertyName = "Salario";
+            dataGridViewTextBoxColumn4.HeaderText = "Salário";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
-            // ehCasadoDataGridViewCheckBoxColumn
+            // dataGridViewCheckBoxColumn1
             // 
-            ehCasadoDataGridViewCheckBoxColumn.DataPropertyName = "EhCasado";
-            ehCasadoDataGridViewCheckBoxColumn.HeaderText = "É Casado";
-            ehCasadoDataGridViewCheckBoxColumn.Name = "ehCasadoDataGridViewCheckBoxColumn";
-            ehCasadoDataGridViewCheckBoxColumn.ReadOnly = true;
+            dataGridViewCheckBoxColumn1.DataPropertyName = "EhCasado";
+            dataGridViewCheckBoxColumn1.HeaderText = "É Casado(a)?";
+            dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            dataGridViewCheckBoxColumn1.ReadOnly = true;
             // 
-            // dataNascimentoDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn5
             // 
-            dataNascimentoDataGridViewTextBoxColumn.DataPropertyName = "DataNascimento";
-            dataNascimentoDataGridViewTextBoxColumn.HeaderText = "Data de nascimento";
-            dataNascimentoDataGridViewTextBoxColumn.Name = "dataNascimentoDataGridViewTextBoxColumn";
-            dataNascimentoDataGridViewTextBoxColumn.ReadOnly = true;
+            dataGridViewTextBoxColumn5.DataPropertyName = "DataNascimento";
+            dataGridViewTextBoxColumn5.HeaderText = "Data de nascimento";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
             // 
-            // generoDataGridViewTextBoxColumn
+            // dataGridViewTextBoxColumn6
             // 
-            generoDataGridViewTextBoxColumn.DataPropertyName = "Genero";
-            generoDataGridViewTextBoxColumn.HeaderText = "Gênero";
-            generoDataGridViewTextBoxColumn.Name = "generoDataGridViewTextBoxColumn";
-            generoDataGridViewTextBoxColumn.ReadOnly = true;
+            dataGridViewTextBoxColumn6.DataPropertyName = "Genero";
+            dataGridViewTextBoxColumn6.HeaderText = "Gênero";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
             // funcionarioBindingSource
             // 
             funcionarioBindingSource.DataSource = typeof(Funcionario);
+            // 
+            // funcionarioBindingSource1
+            // 
+            funcionarioBindingSource1.DataSource = typeof(Funcionario);
             // 
             // btnAdicionar
             // 
@@ -202,6 +208,7 @@
             WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)TelaListagem).EndInit();
             ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)funcionarioBindingSource1).EndInit();
             ResumeLayout(false);
         }
 
@@ -218,6 +225,14 @@
         private DataGridViewCheckBoxColumn ehCasadoDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn dataNascimentoDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn generoDataGridViewTextBoxColumn;
+        private BindingSource funcionarioBindingSource1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private static DataGridView TelaListagem;
     }
 }

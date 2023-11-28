@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace ControleFuncionarios
 {
@@ -47,6 +42,10 @@ namespace ControleFuncionarios
                 || (salario.Split(',')[1].Length > 2))
             {
                 ListaErros.Add(Excessoes.NumeroIncorretoCasasDecimais);
+            }
+            if (salario.Length > 13)
+            {
+                ListaErros.Add(Excessoes.SalarioAbsurdo);
             }
             int contVirgula = 0;
             foreach (char index in salario)

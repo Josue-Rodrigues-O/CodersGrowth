@@ -1,23 +1,24 @@
-using System.Globalization;
-
 namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
     {
-        private static readonly IRepositorio repositorio = new Repositorio();
-        public TelaPrincipal()
+        private static IRepositorio repositorio;
+        public TelaPrincipal(IRepositorio repos)
         {
+            repositorio = repos;
             InitializeComponent();
+            AtualizarDataGrid();
         }
         public static void AtualizarDataGrid()
         {
             TelaListagem.DataSource = null;
-            TelaListagem.DataSource = repositorio.ObterTodos(); 
+            if (repositorio.ObterTodos().Any())
+                TelaListagem.DataSource = repositorio.ObterTodos();
         }
 
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
-            CadastroFuncionario cadastro = new();
+            CadastroFuncionario cadastro = new(repositorio);
             cadastro.ShowDialog();
         }
 
@@ -26,8 +27,7 @@ namespace ControleFuncionarios
             if (LinhaValida())
             {
                 Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-
-                CadastroFuncionario cadastro = new(funcionario);
+                CadastroFuncionario cadastro = new(repositorio, funcionario);
                 cadastro.ShowDialog();
             }
         }
@@ -36,15 +36,15 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int) TelaListagem.CurrentRow.Cells["ID"].Value);
+                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
                 repositorio.Remover(funcionario);
                 AtualizarDataGrid();
             }
         }
-        private bool LinhaValida()
+        private static bool LinhaValida()
         {
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1 && Singleton.listaFuncionario().Any())
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1)
             {
                 return true;
             }

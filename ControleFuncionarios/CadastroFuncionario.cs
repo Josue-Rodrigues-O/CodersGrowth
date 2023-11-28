@@ -1,16 +1,4 @@
 ﻿using ControleFuncionarios.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ControleFuncionarios
 {
@@ -18,11 +6,12 @@ namespace ControleFuncionarios
     {
         #region Variaveis e Objetos
         private readonly Funcionario funcionario;
-        private readonly IRepositorio repositorio = new Repositorio();
+        private readonly IRepositorio repositorio;
         #endregion
-        public CadastroFuncionario(Funcionario? func = null)
+        public CadastroFuncionario(IRepositorio repos, Funcionario? func = null)
         {
             InitializeComponent();
+            repositorio = repos;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
 
@@ -107,6 +96,7 @@ namespace ControleFuncionarios
             cancelar = MessageBox.Show("Deseja mesmo cancelar a operação?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (cancelar.Equals(DialogResult.Yes))
             {
+                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
@@ -139,34 +129,28 @@ namespace ControleFuncionarios
         #endregion
 
         #region Validar Salario
-        private bool SalarioValido = true;
-        private void TxtSalario_KeyDown(object sender, KeyEventArgs e)
-        {
-            int virgula = 188;
-            int zero = 48;
-            int nove = 57;
-            int NumZero = 96;
-            int NumNove = 105;
-            int NumVirgula = 110;
-            if (e.KeyValue >= zero && e.KeyValue <= nove
-                || e.KeyValue >= NumZero && e.KeyValue <= NumNove
-                || e.KeyValue == virgula
-                || e.KeyValue == NumVirgula
-                || e.KeyValue == (int)Keys.Back)
-            {
-                SalarioValido = true;
-            }
-            else
-            {
-                SalarioValido = false;
-            }
-        }
-
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !SalarioValido;
+            bool PossuiVirgula = TxtSalario.Text.Contains(',');
+
+            if (e.KeyChar == ',')
+            {
+                e.Handled = PossuiVirgula;
+                return;
+            }
+            if (PossuiVirgula)
+            {
+                int IndexCasasDecimais = 1, MaxCasasDecimais = 2;
+                string[] preco = TxtSalario.Text.Split(',');
+                string CasasDecimais = preco[IndexCasasDecimais];
+                bool Possui2CasasDecimais = CasasDecimais.Length == MaxCasasDecimais;
+                e.Handled = Possui2CasasDecimais && !char.IsControl(e.KeyChar);
+            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
         #endregion
-
     }
 }

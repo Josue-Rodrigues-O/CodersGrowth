@@ -2,7 +2,7 @@
 {
     internal class Repositorio : IRepositorio
     {
-        protected List<Funcionario> ListaFuncionarios = Singleton.listaFuncionario();
+        protected List<Funcionario> ListaFuncionarios = Singleton.ListaFuncionario();
 
         public void Criar(Funcionario funcionario)
         {
@@ -25,13 +25,18 @@
             if (remover.Equals(DialogResult.Yes))
             {
                 ListaFuncionarios.Remove(funcionario);
+                MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        public void Atualizar(Funcionario funcionarioEditado)
+        public void Atualizar(Funcionario funcionario)
         {
-            var indice = ListaFuncionarios.FindIndex(funcionario => funcionario.Id == funcionarioEditado.Id);
-            ListaFuncionarios[indice] = funcionarioEditado;
+            var indice = ListaFuncionarios.FindIndex(func => func.Id == funcionario.Id);
+            ListaFuncionarios[indice] = funcionario;
         }
     }
 }

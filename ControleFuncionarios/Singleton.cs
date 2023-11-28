@@ -9,16 +9,16 @@ namespace ControleFuncionarios
 {
     public class Singleton
     {
-        private static List<Funcionario> ListaFuncionario;
+        private static List<Funcionario> ListaFuncionarios;
         private static int _id;
 
-        public static List<Funcionario> listaFuncionario()
+        public static List<Funcionario> ListaFuncionario()
         {
-            if(ListaFuncionario == null)
+            if(ListaFuncionarios == null)
             {
-                ListaFuncionario = new();
+                ListaFuncionarios = new();
             }
-            return ListaFuncionario;
+            return ListaFuncionarios;
         }
 
         public static int IncrementarId()
