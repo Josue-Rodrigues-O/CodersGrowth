@@ -25,6 +25,11 @@
             if (remover.Equals(DialogResult.Yes))
             {
                 ListaFuncionarios.Remove(funcionario);
+                MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

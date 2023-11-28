@@ -1,7 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Windows.Forms;
-
 namespace ControleFuncionarios
 {
     public partial class TelaPrincipal : Form
@@ -40,7 +36,7 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int) TelaListagem.CurrentRow.Cells["ID"].Value);
+                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
                 repositorio.Remover(funcionario);
                 AtualizarDataGrid();
             }

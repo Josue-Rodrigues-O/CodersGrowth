@@ -96,6 +96,7 @@ namespace ControleFuncionarios
             cancelar = MessageBox.Show("Deseja mesmo cancelar a operação?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (cancelar.Equals(DialogResult.Yes))
             {
+                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }

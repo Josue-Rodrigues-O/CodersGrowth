@@ -46,7 +46,7 @@ namespace ControleFuncionarios
         {
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
-                    services.AddScoped<IRepositorio, Repositorio>();
+                    services.AddScoped<IRepositorio, RepositorioBD>();
                 });
         }
     }
