@@ -6,12 +6,17 @@ namespace ControleFuncionarios
     public class RepositorioBD : IRepositorio
     {
         private static readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString;
-        private readonly SqlConnection connection = new(connectionString);
-
+        private static SqlConnection Connection()
+        {
+            SqlConnection connection = new(connectionString);
+            connection.Open();
+            return connection;
+        }
         public void Atualizar(Funcionario funcionario)
         {
-            connection.Open();
-            SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
+            using (var conn = Connection())
+            {
+                SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
                                     Nome='{funcionario.Nome}',
                                     Cpf='{funcionario.Cpf}',
                                     Telefone='{funcionario.Telefone}',
@@ -19,15 +24,16 @@ namespace ControleFuncionarios
                                     DataNascimento='{funcionario.DataNascimento.Date:yyyy-MM-dd}',
                                     EhCasado={Convert.ToByte(funcionario.EhCasado)},
                                     Genero='{funcionario.Genero}' 
-                                    WHERE Id={funcionario.Id}", connection);
-            cmd.ExecuteReader();
-            connection.Close();
+                                    WHERE Id={funcionario.Id}", conn);
+                cmd.ExecuteReader();
+            }
         }
 
         public void Criar(Funcionario funcionario)
         {
-            connection.Open();
-            SqlCommand cmd = new($@"INSERT INTO TabFuncionarios (Nome,Cpf,Telefone,Salario,DataNascimento,EhCasado,Genero) 
+            using (var conn = Connection())
+            {
+                SqlCommand cmd = new($@"INSERT INTO TabFuncionarios (Nome,Cpf,Telefone,Salario,DataNascimento,EhCasado,Genero) 
                                     VALUES (
                                     '{funcionario.Nome}',
                                     '{funcionario.Cpf}',
@@ -35,36 +41,38 @@ namespace ControleFuncionarios
                                     {funcionario.Salario.ToString().Replace(",", ".")},
                                     '{funcionario.DataNascimento.Date:yyyy-MM-dd}',
                                     {Convert.ToByte(funcionario.EhCasado)},
-                                    '{funcionario.Genero}')", connection);
-            cmd.ExecuteReader();
-            connection.Close();
+                                    '{funcionario.Genero}')", conn);
+                cmd.ExecuteReader();
+            }
         }
 
         public Funcionario ObterPorId(int id)
         {
             Funcionario? funcionario = null;
-            connection.Open();
-            SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", connection);
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.Read())
+            using (var conn = Connection())
             {
-                funcionario = NovoFuncionario(reader);
+                SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    funcionario = NovoFuncionario(reader);
+                }
             }
-            connection.Close();
             return funcionario;
         }
 
         public List<Funcionario> ObterTodos()
         {
             List<Funcionario> lista = new();
-            connection.Open();
-            SqlCommand cmd = new("SELECT * FROM TabFuncionarios", connection);
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            using (var conn = Connection())
             {
-                lista.Add(NovoFuncionario(reader));
+                SqlCommand cmd = new("SELECT * FROM TabFuncionarios", conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(NovoFuncionario(reader));
+                }
             }
-            connection.Close();
             return lista;
         }
 
@@ -73,10 +81,11 @@ namespace ControleFuncionarios
             var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (remover.Equals(DialogResult.Yes))
             {
-                connection.Open();
-                SqlCommand cmd = new SqlCommand($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", connection);
-                cmd.ExecuteReader();
-                connection.Close();
+                using (var conn = Connection())
+                {
+                    SqlCommand cmd = new SqlCommand($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
+                    cmd.ExecuteReader();
+                }
             }
         }
 
@@ -88,7 +97,7 @@ namespace ControleFuncionarios
                 Nome = reader["Nome"].ToString(),
                 Cpf = reader["Cpf"].ToString(),
                 Telefone = reader["Telefone"].ToString(),
-                Salario = Math.Round(Convert.ToDecimal(reader["Salario"]), 2),
+                Salario = Convert.ToDecimal(reader["Salario"]),
                 DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
                 EhCasado = Convert.ToBoolean(reader["EhCasado"]),
                 Genero = (GeneroEnum)Enum.Parse(typeof(GeneroEnum), reader["Genero"].ToString())

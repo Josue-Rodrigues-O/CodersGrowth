@@ -1,6 +1,7 @@
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.Hosting;
 
 namespace ControleFuncionarios
 {
@@ -14,9 +15,12 @@ namespace ControleFuncionarios
             {
                 UpdateDatabase(scope.ServiceProvider);
             }
+            var builder = CriaHostBuilder();
+            var servicesProvider = builder.Build().Services;
+            var repositorio = servicesProvider.GetService<IRepositorio>();
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new TelaPrincipal());
+            Application.Run(new TelaPrincipal(repositorio));
         }
 
         private static ServiceProvider CreateServices()
@@ -36,6 +40,14 @@ namespace ControleFuncionarios
             var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
 
             runner.MigrateUp();
+        }
+
+        static IHostBuilder CriaHostBuilder()
+        {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) => {
+                    services.AddScoped<IRepositorio, Repositorio>();
+                });
         }
     }
 }

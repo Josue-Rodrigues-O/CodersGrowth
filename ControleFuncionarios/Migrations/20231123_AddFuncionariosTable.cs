@@ -2,8 +2,8 @@
 
 namespace ControleFuncionarios.Migrations
 {
-    [Migration(20231123140000)]
-    public class _20231123140000_AddFuncionariosTable : Migration
+    [Migration(20231124130000)]
+    public class _20231124130000_AddFuncionariosTable : Migration
     {
         public override void Up()
         {

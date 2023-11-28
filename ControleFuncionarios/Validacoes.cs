@@ -48,6 +48,10 @@ namespace ControleFuncionarios
             {
                 ListaErros.Add(Excessoes.NumeroIncorretoCasasDecimais);
             }
+            if (salario.Length > 13)
+            {
+                ListaErros.Add(Excessoes.SalarioAbsurdo);
+            }
             int contVirgula = 0;
             foreach (char index in salario)
             {

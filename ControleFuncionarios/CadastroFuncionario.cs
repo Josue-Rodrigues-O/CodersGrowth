@@ -6,11 +6,12 @@ namespace ControleFuncionarios
     {
         #region Variaveis e Objetos
         private readonly Funcionario funcionario;
-        private readonly IRepositorio repositorio = new RepositorioBD();
+        private readonly IRepositorio repositorio;
         #endregion
-        public CadastroFuncionario(Funcionario? func = null)
+        public CadastroFuncionario(IRepositorio repos, Funcionario? func = null)
         {
             InitializeComponent();
+            repositorio = repos;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
 
@@ -127,7 +128,6 @@ namespace ControleFuncionarios
         #endregion
 
         #region Validar Salario
-
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
             bool PossuiVirgula = TxtSalario.Text.Contains(',');
@@ -151,6 +151,5 @@ namespace ControleFuncionarios
             }
         }
         #endregion
-
     }
 }
