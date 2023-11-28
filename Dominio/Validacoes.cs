@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ControleFuncionarios
+namespace Dominio
 {
-    internal class Validacoes
+    public class Validacoes
     {
         private readonly List<string> ListaErros = new();
-        public void Validar(string nome, MaskedTextBox cpf, MaskedTextBox telefone, string salario, MonthCalendar calendario)
+        public void Validar(string nome, string cpf, string telefone, string salario, DateTime calendario)
         {
             #region Nome
             if (String.IsNullOrWhiteSpace(nome))
@@ -19,14 +19,14 @@ namespace ControleFuncionarios
             #endregion
 
             #region CPF
-            if (!cpf.MaskCompleted)
+            if (cpf.Length < 14)
             {
                 ListaErros.Add(Excessoes.CpfPreenchidoIncorrretamente);
             }
             #endregion
 
             #region Telefone
-            if (!telefone.MaskCompleted)
+            if (telefone.Length < 16)
             {
                 ListaErros.Add(Excessoes.TelefonePreenchidoIncorrretamente);
             }
@@ -66,7 +66,7 @@ namespace ControleFuncionarios
             #endregion
 
             #region Data de Nascimento
-            int anos = DateTime.Now.Year - calendario.SelectionStart.Year;
+            int anos = DateTime.Now.Year - calendario.Date.Year;
             if (anos < 18)
             {
                 ListaErros.Add(Excessoes.IdadeInvalida);

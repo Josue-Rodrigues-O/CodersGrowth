@@ -1,7 +1,7 @@
-﻿using ControleFuncionarios.Enums;
+﻿using Dominio;
 using Microsoft.Data.SqlClient;
 
-namespace ControleFuncionarios
+namespace Infraestrutura
 {
     public class RepositorioBD : IRepositorio
     {

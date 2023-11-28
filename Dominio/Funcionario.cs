@@ -1,5 +1,4 @@
-﻿using ControleFuncionarios.Enums;
-using System;
+﻿using Dominio.Enums;
 
 public class Funcionario
 {

@@ -1,4 +1,7 @@
-namespace ControleFuncionarios
+using Dominio;
+using Infraestrutura;
+
+namespace Interacao
 {
     public partial class TelaPrincipal : Form
     {

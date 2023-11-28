@@ -2,8 +2,10 @@ using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
+using Dominio;
+using Infraestrutura;
 
-namespace ControleFuncionarios
+namespace Interacao
 {
     internal static class Program
     {
@@ -45,8 +47,9 @@ namespace ControleFuncionarios
         static IHostBuilder CriaHostBuilder()
         {
             return Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) => {
-                    services.AddScoped<IRepositorio, Repositorio>();
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddScoped<IRepositorio, RepositorioBD>();
                 });
         }
     }

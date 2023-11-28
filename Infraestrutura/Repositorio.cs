@@ -1,6 +1,8 @@
-﻿namespace ControleFuncionarios
+﻿using Interacao;
+
+namespace Infraestrutura
 {
-    internal class Repositorio : IRepositorio
+    public class Repositorio : IRepositorio
     {
         protected List<Funcionario> ListaFuncionarios = Singleton.ListaFuncionario();
 

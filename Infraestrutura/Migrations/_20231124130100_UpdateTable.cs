@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace ControleFuncionarios.Migrations
+namespace Interacao.Migrations
 {
     [Migration (20231124132500)]
     public class _20231124132500_UpdateTable : Migration

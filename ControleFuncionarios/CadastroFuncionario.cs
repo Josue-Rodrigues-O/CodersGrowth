@@ -1,6 +1,8 @@
-﻿using ControleFuncionarios.Enums;
+﻿using Interacao.Enums;
+using Infraestrutura;
+using Dominio;
 
-namespace ControleFuncionarios
+namespace Interacao
 {
     public partial class CadastroFuncionario : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace ControleFuncionarios
+﻿namespace Interacao
 {
     partial class CadastroFuncionario
     {
