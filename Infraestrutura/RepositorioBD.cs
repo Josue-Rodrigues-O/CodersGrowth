@@ -49,7 +49,7 @@ namespace Infraestrutura
 
         public Funcionario ObterPorId(int id)
         {
-            Funcionario? funcionario = null;
+            Funcionario funcionario = null;
             using (var conn = Connection())
             {
                 SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);

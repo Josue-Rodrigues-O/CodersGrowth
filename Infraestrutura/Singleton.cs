@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using Dominio;
+﻿using Dominio;
 
 namespace Infraestrutura
 {
     public class Singleton
     {
-        private static List<Funcionario> ListaFuncionarios;
+        private static List<Funcionario> _listaFuncionarios;
         private static int _id;
 
         public static List<Funcionario> ListaFuncionario()
         {
-            if(ListaFuncionarios == null)
+            if (_listaFuncionarios == null)
             {
-                ListaFuncionarios = new();
+                _listaFuncionarios = new();
             }
-            return ListaFuncionarios;
+            return _listaFuncionarios;
         }
 
         public static int IncrementarId()

@@ -1,28 +1,26 @@
-using Dominio;
 using Infraestrutura;
-using Microsoft.Data.SqlClient;
 
 namespace Interacao
 {
     public partial class TelaPrincipal : Form
     {
-        private static IRepositorio repositorio;
-        public TelaPrincipal(IRepositorio repos)
+        private static IRepositorio _repositorio;
+        public TelaPrincipal(IRepositorio repositorio)
         {
-            repositorio = repos;
+            _repositorio = repositorio;
             InitializeComponent();
             AtualizarDataGrid();
         }
         public static void AtualizarDataGrid()
         {
             TelaListagem.DataSource = null;
-            if (repositorio.ObterTodos().Any())
-                TelaListagem.DataSource = repositorio.ObterTodos();
+            if (_repositorio.ObterTodos().Any())
+                TelaListagem.DataSource = _repositorio.ObterTodos();
         }
 
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
-            CadastroFuncionario cadastro = new(repositorio);
+            CadastroFuncionario cadastro = new(_repositorio);
             cadastro.ShowDialog();
         }
 
@@ -30,8 +28,8 @@ namespace Interacao
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-                CadastroFuncionario cadastro = new(repositorio, funcionario);
+                var funcionario = _repositorio.ObterPorId(ObterIdDaLinha());
+                CadastroFuncionario cadastro = new(_repositorio, funcionario);
                 cadastro.ShowDialog();
             }
         }
@@ -40,12 +38,12 @@ namespace Interacao
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-                
+                var funcionario = _repositorio.ObterPorId(ObterIdDaLinha());
+
                 var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (remover.Equals(DialogResult.Yes))
                 {
-                    repositorio.Remover(funcionario);
+                    _repositorio.Remover(funcionario);
                     AtualizarDataGrid();
                     MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -67,6 +65,11 @@ namespace Interacao
                 MessageBox.Show("Você deve selecionar uma linha!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
+        }
+
+        private static int ObterIdDaLinha()
+        {
+            return (int)TelaListagem.CurrentRow.Cells["ID"].Value;
         }
     }
 }

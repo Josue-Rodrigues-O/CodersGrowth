@@ -4,32 +4,37 @@ namespace Infraestrutura
 {
     public class Repositorio : IRepositorio
     {
-        protected List<Funcionario> ListaFuncionarios = Singleton.ListaFuncionario();
+        protected List<Funcionario> _listaFuncionarios;
+
+        public Repositorio()
+        {
+            _listaFuncionarios = Singleton.ListaFuncionario();
+        }
 
         public void Criar(Funcionario funcionario)
         {
-            ListaFuncionarios.Add(funcionario);
+            _listaFuncionarios.Add(funcionario);
         }
 
         public Funcionario ObterPorId(int id)
         {
-            return ListaFuncionarios.Find(x => x.Id == id);
+            return _listaFuncionarios.Find(x => x.Id == id);
         }
 
         public List<Funcionario> ObterTodos()
         {
-            return ListaFuncionarios;
+            return _listaFuncionarios;
         }
 
         public void Remover(Funcionario funcionario)
         {
-            ListaFuncionarios.Remove(funcionario);
+            _listaFuncionarios.Remove(funcionario);
         }
 
         public void Atualizar(Funcionario funcionario)
         {
-            var indice = ListaFuncionarios.FindIndex(func => func.Id == funcionario.Id);
-            ListaFuncionarios[indice] = funcionario;
+            var indice = _listaFuncionarios.FindIndex(func => func.Id == funcionario.Id);
+            _listaFuncionarios[indice] = funcionario;
         }
     }
 }

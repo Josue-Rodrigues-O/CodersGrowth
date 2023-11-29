@@ -1,51 +1,55 @@
 ﻿using System.Text.RegularExpressions;
-
+using Dominio.Enums;
 namespace Dominio
 {
     public class Validacoes
     {
-        private readonly List<string> ListaErros = new();
-        public void Validar(string nome, string cpf, string telefone, string salario, DateTime calendario)
+        private readonly List<string> _listaErros;
+        public Validacoes()
+        {
+            _listaErros = new();
+        }
+        public void ValidarCampos(string nome, string cpf, string telefone, string salario, DateTime calendario)
         {
             #region Nome
             if (String.IsNullOrWhiteSpace(nome))
             {
-                ListaErros.Add(Excessoes.NomeNulo);
+                _listaErros.Add(Excessoes.NOME_NULO);
             }
-            if (nome.Length < 3)
+            if (nome.Length < (int)ValoresValidacaoEnum.TamanhoMinNome)
             {
-                ListaErros.Add(Excessoes.TamanhoNomeIncompativel);
+                _listaErros.Add(Excessoes.TAMANHO_NOME_INCOMPATIVEL);
             }
             #endregion
 
             #region CPF
-            if (cpf.Length < 14)
+            if (cpf.Length < (int)ValoresValidacaoEnum.TamanhoCorretoCpf)
             {
-                ListaErros.Add(Excessoes.CpfPreenchidoIncorrretamente);
+                _listaErros.Add(Excessoes.CPF_PREENCHIDO_INCORRETAMENTE);
             }
             #endregion
 
             #region Telefone
-            if (telefone.Length < 16)
+            if (telefone.Length < (int)ValoresValidacaoEnum.TamanhoCorretoTelefone)
             {
-                ListaErros.Add(Excessoes.TelefonePreenchidoIncorrretamente);
+                _listaErros.Add(Excessoes.TELEFONE_PREENCHIDO_INCORRETAMENTE);
             }
             #endregion
 
             #region Salario
             if (string.IsNullOrWhiteSpace(salario))
             {
-                ListaErros.Add(Excessoes.SalarioNulo);
+                _listaErros.Add(Excessoes.SALARIO_NULO);
             }
             if (!salario.Contains(',')
-                || (salario.Split(',')[1].Length < 2)
-                || (salario.Split(',')[1].Length > 2))
+                || (salario.Split(',')[1].Length < (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario)
+                || (salario.Split(',')[1].Length > (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario))
             {
-                ListaErros.Add(Excessoes.NumeroIncorretoCasasDecimais);
+                _listaErros.Add(Excessoes.NUMERO_INCORRETO_DE_CASAS_DECIMAIS);
             }
-            if (salario.Length > 13)
+            if (salario.Length > (int)ValoresValidacaoEnum.TamanhoMaxSalario)
             {
-                ListaErros.Add(Excessoes.SalarioAbsurdo);
+                _listaErros.Add(Excessoes.VALOR_DO_SALARIO_MUITO_ALTO);
             }
             int contVirgula = 0;
             foreach (char index in salario)
@@ -55,30 +59,30 @@ namespace Dominio
                     contVirgula++;
                 }
             }
-            if (contVirgula > 1)
+            if (contVirgula > (int)ValoresValidacaoEnum.QuantidadeDeVirgulaMax)
             {
-                ListaErros.Add(Excessoes.QuantidadeDeVirgulaInvalido);
+                _listaErros.Add(Excessoes.QUANTIDADE_DE_VIRGULAS_INVALIDAS);
             }
             if (Regex.IsMatch(salario, "[!@#$%¨&*()]"))
             {
-                ListaErros.Add(Excessoes.SalarioContemCaracteresEspeciais);
+                _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
             }
             #endregion
 
             #region Data de Nascimento
             int anos = DateTime.Now.Year - calendario.Date.Year;
-            if (anos < 18)
+            if (anos < (int)ValoresValidacaoEnum.IdadeMinima)
             {
-                ListaErros.Add(Excessoes.IdadeInvalida);
+                _listaErros.Add(Excessoes.IDADE_INVALIDA);
             }
             #endregion
 
-            if(ListaErros.Any())
+            if (_listaErros.Any())
             {
                 string erros = "";
-                foreach(string index in ListaErros)
+                foreach (string index in _listaErros)
                 {
-                    erros += index+"\n";
+                    erros += index + "\n";
                 }
                 throw new Exception(message: erros);
             }

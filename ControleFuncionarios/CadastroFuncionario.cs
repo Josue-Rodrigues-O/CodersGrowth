@@ -1,40 +1,38 @@
-﻿using Dominio.Enums;
+﻿using Dominio;
+using Dominio.Enums;
 using Infraestrutura;
-using Dominio;
 
 namespace Interacao
 {
     public partial class CadastroFuncionario : Form
     {
-        #region Variaveis e Objetos
-        private readonly Funcionario funcionario;
-        private readonly IRepositorio repositorio;
-        #endregion
-        public CadastroFuncionario(IRepositorio repos, Funcionario? func = null)
+        private readonly Funcionario _funcionario;
+        private readonly IRepositorio _repositorio;
+        public CadastroFuncionario(IRepositorio repositorio, Funcionario? funcionario = null)
         {
             InitializeComponent();
-            repositorio = repos;
+            _repositorio = repositorio;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
-            Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
+            Calendario.MaxDate = new DateTime(DateTime.Now.Year - (int)ValoresValidacaoEnum.IdadeMinima, DateTime.Now.Month, DateTime.Now.Day);
 
-            if (func != null)
+            if (funcionario != null)
             {
-                funcionario = (Funcionario) func.ShallowCopy();
-                Atribuir_Valores_Ao_Form();
+                _funcionario = (Funcionario)funcionario.ShallowCopy();
+                AtribuirValoresAoForm();
             }
             else
             {
-                funcionario = new();
+                _funcionario = new();
             }
         }
 
-        private void Atribuir_Valores_Ao_Form()
+        private void AtribuirValoresAoForm()
         {
-            TxtNome.Text = funcionario.Nome;
-            TxtCpf.Text = funcionario.Cpf;
-            TxtTelefone.Text = funcionario.Telefone;
-            TxtSalario.Text = funcionario.Salario.ToString();
-            if (funcionario.EhCasado)
+            TxtNome.Text = _funcionario.Nome;
+            TxtCpf.Text = _funcionario.Cpf;
+            TxtTelefone.Text = _funcionario.Telefone;
+            TxtSalario.Text = _funcionario.Salario.ToString();
+            if (_funcionario.EhCasado)
             {
                 RadCasado.Checked = true;
             }
@@ -42,45 +40,45 @@ namespace Interacao
             {
                 RadSolteiro.Checked = true;
             }
-            ComboGenero.SelectedItem = funcionario.Genero;
-            Calendario.SelectionStart = funcionario.DataNascimento;
+            ComboGenero.SelectedItem = _funcionario.Genero;
+            Calendario.SelectionStart = _funcionario.DataNascimento;
         }
 
-        private void Atribuir_Valores_Ao_Objeto()
+        private void AtribuirValoresAoObjeto()
         {
-            funcionario.Nome = TxtNome.Text;
-            funcionario.Cpf = TxtCpf.Text;
-            funcionario.Telefone = TxtTelefone.Text;
-            funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
-            funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
-            funcionario.EhCasado = RadCasado.Checked;
-            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
+            _funcionario.Nome = TxtNome.Text;
+            _funcionario.Cpf = TxtCpf.Text;
+            _funcionario.Telefone = TxtTelefone.Text;
+            _funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
+            _funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
+            _funcionario.EhCasado = RadCasado.Checked;
+            _funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
         }
 
-        private void Validar_Entradas_Do_Usuario()
+        private void ValidarEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            validacao.Validar(TxtNome.Text, TxtCpf.Text, TxtTelefone.Text, TxtSalario.Text, Calendario.SelectionStart);
+            validacao.ValidarCampos(TxtNome.Text, TxtCpf.Text, TxtTelefone.Text, TxtSalario.Text, Calendario.SelectionStart);
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
             try
             {
-                if (funcionario.Id == null)
+                if (_funcionario.Id == null)
                 {
-                    Validar_Entradas_Do_Usuario();
-                    Atribuir_Valores_Ao_Objeto();
-                    funcionario.Id = Singleton.IncrementarId();
-                    repositorio.Criar(funcionario);
+                    ValidarEntradasDoUsuario();
+                    AtribuirValoresAoObjeto();
+                    _funcionario.Id = Singleton.IncrementarId();
+                    _repositorio.Criar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
                     MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    Validar_Entradas_Do_Usuario();
-                    Atribuir_Valores_Ao_Objeto();
-                    repositorio.Atualizar(funcionario);
+                    ValidarEntradasDoUsuario();
+                    AtribuirValoresAoObjeto();
+                    _repositorio.Atualizar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
                     MessageBox.Show("Funcionário alterado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
