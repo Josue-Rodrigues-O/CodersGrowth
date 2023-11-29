@@ -4,6 +4,7 @@ using System.Reflection;
 using Microsoft.Extensions.Hosting;
 using Dominio;
 using Infraestrutura;
+using Infraestrutura.Migrations;
 
 namespace Interacao
 {
@@ -32,7 +33,8 @@ namespace Interacao
                 .ConfigureRunner(rb => rb
                     .AddSqlServer()
                     .WithGlobalConnectionString(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString)
-                    .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
+                    //.ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
+                    .ScanIn(typeof(_20231124130000_AddFuncionariosTable).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
         }
@@ -49,7 +51,7 @@ namespace Interacao
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddScoped<IRepositorio, RepositorioBD>();
+                    services.AddScoped<IRepositorio, Repositorio>();
                 });
         }
     }

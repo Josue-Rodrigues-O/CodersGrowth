@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace Interacao.Migrations
+namespace Infraestrutura.Migrations
 {
     [Migration (20231124132500)]
     public class _20231124132500_UpdateTable : Migration

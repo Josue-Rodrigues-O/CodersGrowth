@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Dominio.Enums;
 using Microsoft.Data.SqlClient;
 
 namespace Infraestrutura
@@ -78,19 +79,10 @@ namespace Infraestrutura
 
         public void Remover(Funcionario funcionario)
         {
-            var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (remover.Equals(DialogResult.Yes))
+            using (var conn = Connection())
             {
-                using (var conn = Connection())
-                {
-                    SqlCommand cmd = new SqlCommand($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
-                    cmd.ExecuteReader();
-                    MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Opereção cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SqlCommand cmd = new($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
+                cmd.ExecuteReader();
             }
         }
 
