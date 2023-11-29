@@ -1,4 +1,4 @@
-﻿using Interacao.Enums;
+﻿using Dominio.Enums;
 using Infraestrutura;
 using Dominio;
 
@@ -60,7 +60,7 @@ namespace Interacao
         private void Validar_Entradas_Do_Usuario()
         {
             Validacoes validacao = new();
-            validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario);
+            validacao.Validar(TxtNome.Text, TxtCpf.Text, TxtTelefone.Text, TxtSalario.Text, Calendario.SelectionStart);
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)

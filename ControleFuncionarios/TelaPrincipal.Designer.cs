@@ -1,4 +1,6 @@
-﻿namespace Interacao
+﻿using Dominio;
+
+namespace Interacao
 {
     partial class TelaPrincipal
     {

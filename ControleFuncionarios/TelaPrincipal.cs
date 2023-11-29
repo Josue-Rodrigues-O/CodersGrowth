@@ -1,5 +1,6 @@
 using Dominio;
 using Infraestrutura;
+using Microsoft.Data.SqlClient;
 
 namespace Interacao
 {
@@ -40,8 +41,18 @@ namespace Interacao
             if (LinhaValida())
             {
                 Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-                repositorio.Remover(funcionario);
-                AtualizarDataGrid();
+                
+                var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (remover.Equals(DialogResult.Yes))
+                {
+                    repositorio.Remover(funcionario);
+                    AtualizarDataGrid();
+                    MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Opereção cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
         private static bool LinhaValida()

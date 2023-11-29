@@ -1,4 +1,4 @@
-﻿using Interacao;
+﻿using Dominio;
 
 namespace Infraestrutura
 {
@@ -23,16 +23,7 @@ namespace Infraestrutura
 
         public void Remover(Funcionario funcionario)
         {
-            var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (remover.Equals(DialogResult.Yes))
-            {
-                ListaFuncionarios.Remove(funcionario);
-                MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            ListaFuncionarios.Remove(funcionario);
         }
 
         public void Atualizar(Funcionario funcionario)
