@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Dominio.Enums;
 using Infraestrutura;
+using System.Text.RegularExpressions;
 
 namespace Interacao
 {
@@ -103,50 +104,33 @@ namespace Interacao
 
 
         #region Validar Nome
-        private bool NomeValido = true;
-        private void TxtNome_KeyDown(object sender, KeyEventArgs e)
+        private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
         {
-            int aA = 65;
-            int zZ = 90;
-            int cedilha = 186;
-            if (e.KeyValue >= aA && e.KeyValue <= zZ
-                || e.KeyValue == (int)Keys.Back
-                || e.KeyValue == (int)Keys.Space
-                || e.KeyValue == cedilha)
+            if (Regex.IsMatch(e.KeyChar.ToString(), "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]")
+                || (int)e.KeyChar == (int)Keys.Back
+                || (int)e.KeyChar == (int)Keys.Space)
             {
-                NomeValido = true;
+                e.Handled = false;
             }
             else
             {
-                NomeValido = false;
+                e.Handled = true;
             }
-        }
-
-        private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !NomeValido;
         }
         #endregion
 
         #region Validar Salario
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-            bool PossuiVirgula = TxtSalario.Text.Contains(',');
+            var PossuiVirgula = TxtSalario.Text.Contains(',');
 
-            if (e.KeyChar == ',')
+            if ((Regex.IsMatch(e.KeyChar.ToString(), "[0-9]") || (!PossuiVirgula && e.KeyChar.Equals(','))) 
+                && !(PossuiVirgula && TxtSalario.Text.Split(',')[1].Length == 2) 
+                || (int)e.KeyChar == (int)Keys.Back)
             {
-                e.Handled = PossuiVirgula;
-                return;
+                e.Handled = false;
             }
-            if (PossuiVirgula)
-            {
-                int IndexCasasDecimais = 1, MaxCasasDecimais = 2;
-                string[] preco = TxtSalario.Text.Split(',');
-                string CasasDecimais = preco[IndexCasasDecimais];
-                bool Possui2CasasDecimais = CasasDecimais.Length == MaxCasasDecimais;
-                e.Handled = Possui2CasasDecimais && !char.IsControl(e.KeyChar);
-            }
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            else
             {
                 e.Handled = true;
             }

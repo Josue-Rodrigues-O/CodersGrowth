@@ -20,6 +20,14 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.TAMANHO_NOME_INCOMPATIVEL);
             }
+            foreach (char index in nome)
+            {
+                if (!Regex.IsMatch(index.ToString(), "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]"))
+                {
+                    _listaErros.Add(Excessoes.NOME_CONTEM_CARACTERES_ESPECIAIS);
+                    break;
+                }
+            }
             #endregion
 
             #region CPF
@@ -63,7 +71,7 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.QUANTIDADE_DE_VIRGULAS_INVALIDAS);
             }
-            if (Regex.IsMatch(salario, "[!@#$%¨&*()]"))
+            if (!Regex.IsMatch(salario, "[0-9,]"))
             {
                 _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
             }

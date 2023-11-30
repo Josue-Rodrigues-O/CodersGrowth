@@ -71,7 +71,6 @@
             TxtNome.Name = "TxtNome";
             TxtNome.Size = new Size(366, 23);
             TxtNome.TabIndex = 1;
-            TxtNome.KeyDown += TxtNome_KeyDown;
             TxtNome.KeyPress += TxtNome_KeyPress;
             // 
             // LblCpf
