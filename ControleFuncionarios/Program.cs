@@ -1,6 +1,6 @@
 using FluentMigrator.Runner;
 using Infraestrutura;
-using Infraestrutura.Migrations;
+using Infraestrutura.Extensoes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -11,34 +11,26 @@ namespace Interacao
         [STAThread]
         static void Main()
         {
-            using (var serviceProvider = CreateServices())
-            using (var scope = serviceProvider.CreateScope())
-            {
-                UpdateDatabase(scope.ServiceProvider);
-            }
-            var builder = CriaHostBuilder();
-            var servicesProvider = builder.Build().Services;
-            var repositorio = servicesProvider.GetService<IRepositorio>();
-
             ApplicationConfiguration.Initialize();
-            Application.Run(new TelaPrincipal(repositorio));
-        }
 
-        private static ServiceProvider CreateServices()
-        {
-            return new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(rb => rb
-                    .AddSqlServer()
-                    .WithGlobalConnectionString(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString)
-                    .ScanIn(typeof(_20231124130000_AddFuncionariosTable).Assembly).For.Migrations())
-                .AddLogging(lb => lb.AddFluentMigratorConsole())
-                .BuildServiceProvider(false);
+            var builder = CriaHostBuilder();
+            using var build = builder.Build();
+
+            var servicesProvider = build.Services;
+            using var scope = servicesProvider.CreateScope();
+            
+            UpdateDatabase(scope.ServiceProvider);
+
+            var form = servicesProvider
+                .GetRequiredService<TelaPrincipal>();
+
+            Application.Run(form);
         }
 
         private static void UpdateDatabase(IServiceProvider serviceProvider)
         {
-            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            var runner = serviceProvider
+                .GetRequiredService<IMigrationRunner>();
 
             runner.MigrateUp();
         }
@@ -48,7 +40,9 @@ namespace Interacao
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
+                    services.AddScoped<TelaPrincipal>();
                     services.AddScoped<IRepositorio, RepositorioBD>();
+                    services.ExecutarMigracoes();
                 });
         }
     }

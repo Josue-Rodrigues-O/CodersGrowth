@@ -22,7 +22,7 @@ namespace Dominio
             }
             foreach (char index in nome)
             {
-                if (!Regex.IsMatch(index.ToString(), "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]"))
+                if (!Regex.IsMatch(index.ToString(), "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]"))
                 {
                     _listaErros.Add(Excessoes.NOME_CONTEM_CARACTERES_ESPECIAIS);
                     break;

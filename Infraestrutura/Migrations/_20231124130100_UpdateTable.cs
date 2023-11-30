@@ -2,8 +2,8 @@
 
 namespace Infraestrutura.Migrations
 {
-    [Migration(20231124132500)]
-    public class _20231124132500_UpdateTable : Migration
+    [Migration(20231130111200)]
+    public class _20231130111200_UpdateTable : Migration
     {
         public override void Up()
         {
