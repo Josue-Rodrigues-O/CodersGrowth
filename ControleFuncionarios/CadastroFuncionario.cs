@@ -125,7 +125,7 @@ namespace Interacao
             var PossuiVirgula = TxtSalario.Text.Contains(',');
 
             if ((Regex.IsMatch(e.KeyChar.ToString(), "[0-9]") || (!PossuiVirgula && e.KeyChar.Equals(','))) 
-                && !(PossuiVirgula && TxtSalario.Text.Split(',')[1].Length == 2) 
+                && !(PossuiVirgula && TxtSalario.Text.Split(',')[1].Length == (int)ValoresValidacaoEnum.QuantidadeDeVirgulaMax) 
                 || (int)e.KeyChar == (int)Keys.Back)
             {
                 e.Handled = false;

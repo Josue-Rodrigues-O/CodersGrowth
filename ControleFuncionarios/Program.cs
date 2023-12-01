@@ -1,14 +1,12 @@
-using Interacao;
+using FluentMigrator.Runner;
 using Infraestrutura;
-using Dominio;
+using Infraestrutura.Extensoes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FluentMigrator.Runner;
-using Infraestrutura.Extensoes;
 
 namespace Interacao
 {
-    internal static class Program
+    internal class Program
     {
         [STAThread]
         static void Main()
@@ -18,11 +16,14 @@ namespace Interacao
             var builder = CriaHostBuilder();
             using var build = builder.Build();
             var servicesProvider = build.Services;
+            
             UpdateDataBase(servicesProvider);
 
-            var form = servicesProvider.GetService<TelaPrincipal>();
-            Application.Run(form);
+            var forms = servicesProvider.GetService<TelaPrincipal>();
+
+            Application.Run(forms);
         }
+
         private static void UpdateDataBase(IServiceProvider servicesProvider)
         {
             var runner = servicesProvider.GetRequiredService<IMigrationRunner>();
@@ -33,11 +34,11 @@ namespace Interacao
         private static IHostBuilder CriaHostBuilder()
         {
             return Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) =>
+                .ConfigureContainer<IServiceCollection>((context, services) =>
                 {
                     services.AddScoped<TelaPrincipal>();
                     services.AddScoped<IRepositorio, RepositorioBD>();
-                    services.ExecutarMigations(); //=======================
+                    services.ExecutarMigracoes();
                 });
         }
     }

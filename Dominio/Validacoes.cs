@@ -71,9 +71,14 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.QUANTIDADE_DE_VIRGULAS_INVALIDAS);
             }
-            if (!Regex.IsMatch(salario, "[0-9,]"))
+            
+            foreach (char index in salario)
             {
-                _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
+                if (!Regex.IsMatch(index.ToString(), "[0-9,]"))
+                {
+                    _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
+                    break;
+                }
             }
             #endregion
 
