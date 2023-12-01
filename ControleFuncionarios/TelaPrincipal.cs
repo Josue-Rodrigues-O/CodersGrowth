@@ -1,24 +1,28 @@
-namespace ControleFuncionarios
+using Infraestrutura;
+using InterfaceUsuario.Constantes;
+
+namespace InterfaceUsuario
 {
     public partial class TelaPrincipal : Form
     {
-        private static IRepositorio repositorio;
-        public TelaPrincipal(IRepositorio repos)
+        private const byte SoUmaLinha = 1;
+        private static IRepositorio _repositorio;
+        public TelaPrincipal(IRepositorio repositorio)
         {
-            repositorio = repos;
+            _repositorio = repositorio;
             InitializeComponent();
             AtualizarDataGrid();
         }
         public static void AtualizarDataGrid()
         {
-            TelaListagem.DataSource = null;
-            if (repositorio.ObterTodos().Any())
-                TelaListagem.DataSource = repositorio.ObterTodos();
+            TelaListagem.DataSource = new();
+            if (_repositorio.ObterTodos().Any())
+                TelaListagem.DataSource = _repositorio.ObterTodos();
         }
 
         private void Ao_Clicar_Em_Adicionar(object sender, EventArgs e)
         {
-            CadastroFuncionario cadastro = new(repositorio);
+            CadastroFuncionario cadastro = new(_repositorio);
             cadastro.ShowDialog();
         }
 
@@ -26,8 +30,8 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-                CadastroFuncionario cadastro = new(repositorio, funcionario);
+                var funcionario = _repositorio.ObterPorId(ObterIdDaLinha());
+                CadastroFuncionario cadastro = new(_repositorio, funcionario);
                 cadastro.ShowDialog();
             }
         }
@@ -36,23 +40,39 @@ namespace ControleFuncionarios
         {
             if (LinhaValida())
             {
-                Funcionario funcionario = repositorio.ObterPorId((int)TelaListagem.CurrentRow.Cells["ID"].Value);
-                repositorio.Remover(funcionario);
-                AtualizarDataGrid();
+                var funcionario = _repositorio.ObterPorId(ObterIdDaLinha());
+
+                var remover = MessageBox.Show(MensagensDoMessageBox.DesejaRemoverFuncionario(funcionario), MensagensDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (remover.Equals(DialogResult.Yes))
+                {
+                    _repositorio.Remover(funcionario);
+                    AtualizarDataGrid();
+                    MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_REMOVIDO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
         private static bool LinhaValida()
         {
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1)
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == SoUmaLinha)
             {
                 return true;
             }
             else
             {
-                MessageBox.Show("Você deve selecionar uma linha!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(MensagensDoMessageBox.SELECIONE_UMA_LINHA, MensagensDoMessageBox.ATENCAO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
+        }
+
+        private static uint ObterIdDaLinha()
+        {
+            const string ID = "ID";
+            return (uint)TelaListagem.CurrentRow.Cells[ID].Value;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ControleFuncionarios
+﻿using Dominio;
+
+namespace InterfaceUsuario
 {
     partial class TelaPrincipal
     {
