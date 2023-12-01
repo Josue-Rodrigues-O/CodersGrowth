@@ -1,52 +1,44 @@
 using FluentMigrator.Runner;
+using Infraestrutura;
+using Infraestrutura.Extensoes;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using Microsoft.Extensions.Hosting;
 
-namespace ControleFuncionarios
+namespace InterfaceUsuario
 {
-    internal static class Program
+    internal class Program
     {
         [STAThread]
         static void Main()
         {
-            using (var serviceProvider = CreateServices())
-            using (var scope = serviceProvider.CreateScope())
-            {
-                UpdateDatabase(scope.ServiceProvider);
-            }
-            var builder = CriaHostBuilder();
-            var servicesProvider = builder.Build().Services;
-            var repositorio = servicesProvider.GetService<IRepositorio>();
-
             ApplicationConfiguration.Initialize();
-            Application.Run(new TelaPrincipal(repositorio));
+
+            var builder = CriaHostBuilder();
+            using var build = builder.Build();
+            var servicesProvider = build.Services;
+            
+            UpdateDataBase(servicesProvider);
+
+            var forms = servicesProvider.GetService<TelaPrincipal>();
+
+            Application.Run(forms);
         }
 
-        private static ServiceProvider CreateServices()
+        private static void UpdateDataBase(IServiceProvider servicesProvider)
         {
-            return new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(rb => rb
-                    .AddSqlServer()
-                    .WithGlobalConnectionString(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString)
-                    .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
-                .AddLogging(lb => lb.AddFluentMigratorConsole())
-                .BuildServiceProvider(false);
-        }
-
-        private static void UpdateDatabase(IServiceProvider serviceProvider)
-        {
-            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            var runner = servicesProvider.GetRequiredService<IMigrationRunner>();
 
             runner.MigrateUp();
         }
 
-        static IHostBuilder CriaHostBuilder()
+        private static IHostBuilder CriaHostBuilder()
         {
             return Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) => {
+                .ConfigureContainer<IServiceCollection>((context, services) =>
+                {
+                    services.AddScoped<TelaPrincipal>();
                     services.AddScoped<IRepositorio, RepositorioBD>();
+                    services.ExecutarMigracoes();
                 });
         }
     }

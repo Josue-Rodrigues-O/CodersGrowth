@@ -1,38 +1,41 @@
-﻿using ControleFuncionarios.Enums;
+﻿using Dominio;
+using Dominio.Constantes;
+using Dominio.Enums;
+using Infraestrutura;
+using InterfaceUsuario.Constantes;
+using System.Text.RegularExpressions;
 
-namespace ControleFuncionarios
+namespace InterfaceUsuario
 {
     public partial class CadastroFuncionario : Form
     {
-        #region Variaveis e Objetos
-        private readonly Funcionario funcionario;
-        private readonly IRepositorio repositorio;
-        #endregion
-        public CadastroFuncionario(IRepositorio repos, Funcionario? func = null)
+        private readonly Funcionario _funcionario;
+        private readonly IRepositorio _repositorio;
+        public CadastroFuncionario(IRepositorio repositorio, Funcionario? funcionario = null)
         {
             InitializeComponent();
-            repositorio = repos;
+            _repositorio = repositorio;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
-            Calendario.MaxDate = new DateTime(DateTime.Now.Year - 18, 12, 31);
+            Calendario.MaxDate = new DateTime(DateTime.Now.Year - (int)ValoresValidacaoEnum.IdadeMinima, DateTime.Now.Month, DateTime.Now.Day);
 
-            if (func != null)
+            if (funcionario != null)
             {
-                funcionario = (Funcionario) func.ShallowCopy();
-                Atribuir_Valores_Ao_Form();
+                _funcionario = (Funcionario)funcionario.ShallowCopy();
+                AtribuirValoresAoForm();
             }
             else
             {
-                funcionario = new();
+                _funcionario = new();
             }
         }
 
-        private void Atribuir_Valores_Ao_Form()
+        private void AtribuirValoresAoForm()
         {
-            TxtNome.Text = funcionario.Nome;
-            TxtCpf.Text = funcionario.Cpf;
-            TxtTelefone.Text = funcionario.Telefone;
-            TxtSalario.Text = funcionario.Salario.ToString();
-            if (funcionario.EhCasado)
+            TxtNome.Text = _funcionario.Nome;
+            TxtCpf.Text = _funcionario.Cpf;
+            TxtTelefone.Text = _funcionario.Telefone;
+            TxtSalario.Text = _funcionario.Salario.ToString();
+            if (_funcionario.EhCasado)
             {
                 RadCasado.Checked = true;
             }
@@ -40,113 +43,98 @@ namespace ControleFuncionarios
             {
                 RadSolteiro.Checked = true;
             }
-            ComboGenero.SelectedItem = funcionario.Genero;
-            Calendario.SelectionStart = funcionario.DataNascimento;
+            ComboGenero.SelectedItem = _funcionario.Genero;
+            Calendario.SelectionStart = _funcionario.DataNascimento;
         }
 
-        private void Atribuir_Valores_Ao_Objeto()
+        private void AtribuirValoresAoObjeto()
         {
-            funcionario.Nome = TxtNome.Text;
-            funcionario.Cpf = TxtCpf.Text;
-            funcionario.Telefone = TxtTelefone.Text;
-            funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
-            funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
-            funcionario.EhCasado = RadCasado.Checked;
-            funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
+            _funcionario.Nome = TxtNome.Text;
+            _funcionario.Cpf = TxtCpf.Text;
+            _funcionario.Telefone = TxtTelefone.Text;
+            _funcionario.Salario = Convert.ToDecimal(TxtSalario.Text);
+            _funcionario.DataNascimento = Convert.ToDateTime(Calendario.SelectionStart.ToShortDateString());
+            _funcionario.EhCasado = RadCasado.Checked;
+            _funcionario.Genero = (GeneroEnum)ComboGenero.SelectedItem;
         }
 
-        private void Validar_Entradas_Do_Usuario()
+        private void ValidarEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            validacao.Validar(TxtNome.Text, TxtCpf, TxtTelefone, TxtSalario.Text, Calendario);
+            validacao.ValidarCampos(TxtNome.Text, TxtCpf.Text, TxtTelefone.Text, TxtSalario.Text, Calendario.SelectionStart);
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)
         {
             try
             {
-                if (funcionario.Id == null)
+                if (_funcionario.Id == uint.MinValue)
                 {
-                    Validar_Entradas_Do_Usuario();
-                    Atribuir_Valores_Ao_Objeto();
-                    funcionario.Id = Singleton.IncrementarId();
-                    repositorio.Criar(funcionario);
+                    ValidarEntradasDoUsuario();
+                    AtribuirValoresAoObjeto();
+                    _funcionario.Id = Singleton.IncrementarId();
+                    _repositorio.Criar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
-                    MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_ADICIONADO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    Validar_Entradas_Do_Usuario();
-                    Atribuir_Valores_Ao_Objeto();
-                    repositorio.Atualizar(funcionario);
+                    ValidarEntradasDoUsuario();
+                    AtribuirValoresAoObjeto();
+                    _repositorio.Atualizar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
-                    MessageBox.Show("Funcionário alterado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_ALTERADO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, MensagensDoMessageBox.ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
         {
             DialogResult cancelar;
-            cancelar = MessageBox.Show("Deseja mesmo cancelar a operação?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            cancelar = MessageBox.Show(MensagensDoMessageBox.CANCELAR_OPERACAO, MensagensDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (cancelar.Equals(DialogResult.Yes))
             {
-                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
 
 
         #region Validar Nome
-        private bool NomeValido = true;
-        private void TxtNome_KeyDown(object sender, KeyEventArgs e)
+        private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
         {
-            int aA = 65;
-            int zZ = 90;
-            int cedilha = 186;
-            if (e.KeyValue >= aA && e.KeyValue <= zZ
-                || e.KeyValue == (int)Keys.Back
-                || e.KeyValue == (int)Keys.Space
-                || e.KeyValue == cedilha)
+            if (Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_NOME)
+                || (int)e.KeyChar == (int)Keys.Back
+                || (int)e.KeyChar == (int)Keys.Space)
             {
-                NomeValido = true;
+                e.Handled = false;
             }
             else
             {
-                NomeValido = false;
+                e.Handled = true;
             }
-        }
-
-        private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !NomeValido;
         }
         #endregion
 
         #region Validar Salario
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-            bool PossuiVirgula = TxtSalario.Text.Contains(',');
+            const char Virgula = ',';
+            const byte SegundoValorVetor = 1;
+            bool PossuiVirgula = TxtSalario.Text.Contains(Virgula);
 
-            if (e.KeyChar == ',')
+            if ((Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_SALARIO) || (!PossuiVirgula && e.KeyChar.Equals(Virgula)))
+                && !(PossuiVirgula && TxtSalario.Text.Split(Virgula)[SegundoValorVetor].Length == (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario)
+                || (int)e.KeyChar == (int)Keys.Back)
             {
-                e.Handled = PossuiVirgula;
-                return;
+                e.Handled = false;
             }
-            if (PossuiVirgula)
-            {
-                int IndexCasasDecimais = 1, MaxCasasDecimais = 2;
-                string[] preco = TxtSalario.Text.Split(',');
-                string CasasDecimais = preco[IndexCasasDecimais];
-                bool Possui2CasasDecimais = CasasDecimais.Length == MaxCasasDecimais;
-                e.Handled = Possui2CasasDecimais && !char.IsControl(e.KeyChar);
-            }
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            else
             {
                 e.Handled = true;
             }

@@ -1,11 +1,13 @@
-﻿using ControleFuncionarios.Enums;
+﻿using Dominio;
+using Dominio.Enums;
 using Microsoft.Data.SqlClient;
 
-namespace ControleFuncionarios
+namespace Infraestrutura
 {
     public class RepositorioBD : IRepositorio
     {
-        private static readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString;
+        private const string NomeDaConexao = "ConexaoBD";
+        private static readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[NomeDaConexao].ConnectionString;
         private static SqlConnection Connection()
         {
             SqlConnection connection = new(connectionString);
@@ -46,9 +48,9 @@ namespace ControleFuncionarios
             }
         }
 
-        public Funcionario ObterPorId(int id)
+        public Funcionario ObterPorId(uint id)
         {
-            Funcionario? funcionario = null;
+            Funcionario funcionario = new();
             using (var conn = Connection())
             {
                 SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
@@ -78,19 +80,10 @@ namespace ControleFuncionarios
 
         public void Remover(Funcionario funcionario)
         {
-            var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (remover.Equals(DialogResult.Yes))
+            using (var conn = Connection())
             {
-                using (var conn = Connection())
-                {
-                    SqlCommand cmd = new SqlCommand($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
-                    cmd.ExecuteReader();
-                    MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Opereção cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SqlCommand cmd = new($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
+                cmd.ExecuteReader();
             }
         }
 
@@ -98,7 +91,7 @@ namespace ControleFuncionarios
         {
             Funcionario funcionario = new()
             {
-                Id = Convert.ToInt32(reader["Id"]),
+                Id = Convert.ToUInt32(reader["Id"]),
                 Nome = reader["Nome"].ToString(),
                 Cpf = reader["Cpf"].ToString(),
                 Telefone = reader["Telefone"].ToString(),
