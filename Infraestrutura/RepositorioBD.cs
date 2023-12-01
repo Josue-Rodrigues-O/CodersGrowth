@@ -47,9 +47,9 @@ namespace Infraestrutura
             }
         }
 
-        public Funcionario ObterPorId(int id)
+        public Funcionario ObterPorId(uint id)
         {
-            Funcionario funcionario = null;
+            Funcionario funcionario = new();
             using (var conn = Connection())
             {
                 SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
@@ -90,7 +90,7 @@ namespace Infraestrutura
         {
             Funcionario funcionario = new()
             {
-                Id = Convert.ToInt32(reader["Id"]),
+                Id = Convert.ToUInt32(reader["Id"]),
                 Nome = reader["Nome"].ToString(),
                 Cpf = reader["Cpf"].ToString(),
                 Telefone = reader["Telefone"].ToString(),

@@ -1,4 +1,4 @@
-﻿namespace Dominio
+﻿namespace Dominio.Constantes
 {
     static class Excessoes
     {

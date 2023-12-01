@@ -1,10 +1,13 @@
 ﻿using System.Text.RegularExpressions;
+using Dominio.Constantes;
 using Dominio.Enums;
 namespace Dominio
 {
     public class Validacoes
     {
         private readonly List<string> _listaErros;
+        private const char Virgula = ',';
+        private const byte SegundoValorVetor = 1;
         public Validacoes()
         {
             _listaErros = new();
@@ -22,7 +25,7 @@ namespace Dominio
             }
             foreach (char index in nome)
             {
-                if (!Regex.IsMatch(index.ToString(), "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]"))
+                if (!Regex.IsMatch(index.ToString(), ExpressoesRegex.REGEX_NOME))
                 {
                     _listaErros.Add(Excessoes.NOME_CONTEM_CARACTERES_ESPECIAIS);
                     break;
@@ -49,9 +52,9 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.SALARIO_NULO);
             }
-            if (!salario.Contains(',')
-                || (salario.Split(',')[1].Length < (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario)
-                || (salario.Split(',')[1].Length > (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario))
+            if (!salario.Contains(Virgula)
+                || (salario.Split(Virgula)[SegundoValorVetor].Length < (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario)
+                || (salario.Split(Virgula)[SegundoValorVetor].Length > (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario))
             {
                 _listaErros.Add(Excessoes.NUMERO_INCORRETO_DE_CASAS_DECIMAIS);
             }
@@ -59,10 +62,10 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.VALOR_DO_SALARIO_MUITO_ALTO);
             }
-            int contVirgula = 0;
+            byte contVirgula = byte.MinValue;
             foreach (char index in salario)
             {
-                if (index == ',')
+                if (index == Virgula)
                 {
                     contVirgula++;
                 }
@@ -74,7 +77,7 @@ namespace Dominio
             
             foreach (char index in salario)
             {
-                if (!Regex.IsMatch(index.ToString(), "[0-9,]"))
+                if (!Regex.IsMatch(index.ToString(), ExpressoesRegex.REGEX_SALARIO))
                 {
                     _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
                     break;
@@ -92,7 +95,7 @@ namespace Dominio
 
             if (_listaErros.Any())
             {
-                string erros = "";
+                string erros = String.Empty;
                 foreach (string index in _listaErros)
                 {
                     erros += index + "\n";

@@ -16,7 +16,7 @@ namespace Infraestrutura
             _listaFuncionarios.Add(funcionario);
         }
 
-        public Funcionario ObterPorId(int id)
+        public Funcionario ObterPorId(uint id)
         {
             return _listaFuncionarios.Find(x => x.Id == id);
         }

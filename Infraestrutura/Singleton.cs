@@ -4,8 +4,8 @@ namespace Infraestrutura
 {
     public class Singleton
     {
-        private static List<Funcionario> _listaFuncionarios;
-        private static int _id;
+        private static List<Funcionario> _listaFuncionarios = new();
+        private static uint _id;
 
         public static List<Funcionario> ListaFuncionario()
         {
@@ -16,7 +16,7 @@ namespace Infraestrutura
             return _listaFuncionarios;
         }
 
-        public static int IncrementarId()
+        public static uint IncrementarId()
         {
             _id++;
             return _id;

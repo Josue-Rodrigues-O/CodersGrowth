@@ -1,12 +1,16 @@
 ﻿using Dominio;
+using Dominio.Constantes;
 using Dominio.Enums;
 using Infraestrutura;
+using Interacao.Constantes;
 using System.Text.RegularExpressions;
 
 namespace Interacao
 {
     public partial class CadastroFuncionario : Form
     {
+        private const char Virgula = ',';
+        private const byte SegundoValorVetor = 1;
         private readonly Funcionario _funcionario;
         private readonly IRepositorio _repositorio;
         public CadastroFuncionario(IRepositorio repositorio, Funcionario? funcionario = null)
@@ -66,14 +70,14 @@ namespace Interacao
         {
             try
             {
-                if (_funcionario.Id == null)
+                if (_funcionario.Id == uint.MinValue)
                 {
                     ValidarEntradasDoUsuario();
                     AtribuirValoresAoObjeto();
                     _funcionario.Id = Singleton.IncrementarId();
                     _repositorio.Criar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
-                    MessageBox.Show("Funcionário adicionado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagesDoMessageBox.FUNCIONARIO_ADICIONADO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -81,23 +85,23 @@ namespace Interacao
                     AtribuirValoresAoObjeto();
                     _repositorio.Atualizar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
-                    MessageBox.Show("Funcionário alterado com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagesDoMessageBox.FUNCIONARIO_ALTERADO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, MensagesDoMessageBox.ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
         {
             DialogResult cancelar;
-            cancelar = MessageBox.Show("Deseja mesmo cancelar a operação?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            cancelar = MessageBox.Show(MensagesDoMessageBox.CANCELAR_OPERACAO, MensagesDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (cancelar.Equals(DialogResult.Yes))
             {
-                MessageBox.Show("Operação cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(MensagesDoMessageBox.CANCELADO_COM_SUCESSO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
@@ -106,7 +110,7 @@ namespace Interacao
         #region Validar Nome
         private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Regex.IsMatch(e.KeyChar.ToString(), "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]")
+            if (Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_NOME)
                 || (int)e.KeyChar == (int)Keys.Back
                 || (int)e.KeyChar == (int)Keys.Space)
             {
@@ -122,10 +126,11 @@ namespace Interacao
         #region Validar Salario
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var PossuiVirgula = TxtSalario.Text.Contains(',');
 
-            if ((Regex.IsMatch(e.KeyChar.ToString(), "[0-9]") || (!PossuiVirgula && e.KeyChar.Equals(','))) 
-                && !(PossuiVirgula && TxtSalario.Text.Split(',')[1].Length == (int)ValoresValidacaoEnum.QuantidadeDeVirgulaMax) 
+            bool PossuiVirgula = TxtSalario.Text.Contains(Virgula);
+
+            if ((Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_SALARIO) || (!PossuiVirgula && e.KeyChar.Equals(Virgula)))
+                && !(PossuiVirgula && TxtSalario.Text.Split(Virgula)[SegundoValorVetor].Length == (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario)
                 || (int)e.KeyChar == (int)Keys.Back)
             {
                 e.Handled = false;

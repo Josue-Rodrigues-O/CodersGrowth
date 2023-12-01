@@ -1,9 +1,11 @@
 using Infraestrutura;
+using Interacao.Constantes;
 
 namespace Interacao
 {
     public partial class TelaPrincipal : Form
     {
+        private const byte SoUmaLinha = 1;
         private static IRepositorio _repositorio;
         public TelaPrincipal(IRepositorio repositorio)
         {
@@ -13,7 +15,7 @@ namespace Interacao
         }
         public static void AtualizarDataGrid()
         {
-            TelaListagem.DataSource = null;
+            TelaListagem.DataSource = new();
             if (_repositorio.ObterTodos().Any())
                 TelaListagem.DataSource = _repositorio.ObterTodos();
         }
@@ -40,36 +42,36 @@ namespace Interacao
             {
                 var funcionario = _repositorio.ObterPorId(ObterIdDaLinha());
 
-                var remover = MessageBox.Show($"Deseja realmente remover o funcionário {funcionario.Nome} do banco de dados?", "Tem certeza?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var remover = MessageBox.Show(MensagesDoMessageBox.DesejaRemoverFuncionario(funcionario), MensagesDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (remover.Equals(DialogResult.Yes))
                 {
                     _repositorio.Remover(funcionario);
                     AtualizarDataGrid();
-                    MessageBox.Show("Funcionário removido com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagesDoMessageBox.FUNCIONARIO_REMOVIDO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Opereção cancelada com sucesso!", "Sucesso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagesDoMessageBox.CANCELADO_COM_SUCESSO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
         private static bool LinhaValida()
         {
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1)
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == SoUmaLinha)
             {
                 return true;
             }
             else
             {
-                MessageBox.Show("Você deve selecionar uma linha!", "Atenção!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(MensagesDoMessageBox.SELECIONE_UMA_LINHA, MensagesDoMessageBox.ATENCAO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
 
-        private static int ObterIdDaLinha()
+        private static uint ObterIdDaLinha()
         {
-            return (int)TelaListagem.CurrentRow.Cells["ID"].Value;
+            return (uint)TelaListagem.CurrentRow.Cells["ID"].Value;
         }
     }
 }
