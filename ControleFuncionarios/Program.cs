@@ -23,14 +23,12 @@ namespace InterfaceUsuario
 
             Application.Run(forms);
         }
-
         private static void UpdateDataBase(IServiceProvider servicesProvider)
         {
             var runner = servicesProvider.GetRequiredService<IMigrationRunner>();
 
             runner.MigrateUp();
         }
-
         private static IHostBuilder CriaHostBuilder()
         {
             return Host.CreateDefaultBuilder()
