@@ -184,6 +184,7 @@
             // 
             TxtSalario.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TxtSalario.Location = new Point(77, 216);
+            TxtSalario.MaxLength = 13;
             TxtSalario.Name = "TxtSalario";
             TxtSalario.Size = new Size(366, 23);
             TxtSalario.TabIndex = 4;
