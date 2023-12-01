@@ -1,4 +1,4 @@
-﻿namespace Interacao
+﻿namespace InterfaceUsuario
 {
     partial class CadastroFuncionario
     {

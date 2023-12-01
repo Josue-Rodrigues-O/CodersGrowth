@@ -1,7 +1,7 @@
 using Infraestrutura;
-using Interacao.Constantes;
+using InterfaceUsuario.Constantes;
 
-namespace Interacao
+namespace InterfaceUsuario
 {
     public partial class TelaPrincipal : Form
     {
@@ -42,16 +42,16 @@ namespace Interacao
             {
                 var funcionario = _repositorio.ObterPorId(ObterIdDaLinha());
 
-                var remover = MessageBox.Show(MensagesDoMessageBox.DesejaRemoverFuncionario(funcionario), MensagesDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var remover = MessageBox.Show(MensagensDoMessageBox.DesejaRemoverFuncionario(funcionario), MensagensDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (remover.Equals(DialogResult.Yes))
                 {
                     _repositorio.Remover(funcionario);
                     AtualizarDataGrid();
-                    MessageBox.Show(MensagesDoMessageBox.FUNCIONARIO_REMOVIDO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_REMOVIDO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show(MensagesDoMessageBox.CANCELADO_COM_SUCESSO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -64,14 +64,15 @@ namespace Interacao
             }
             else
             {
-                MessageBox.Show(MensagesDoMessageBox.SELECIONE_UMA_LINHA, MensagesDoMessageBox.ATENCAO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(MensagensDoMessageBox.SELECIONE_UMA_LINHA, MensagensDoMessageBox.ATENCAO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
 
         private static uint ObterIdDaLinha()
         {
-            return (uint)TelaListagem.CurrentRow.Cells["ID"].Value;
+            const string ID = "ID";
+            return (uint)TelaListagem.CurrentRow.Cells[ID].Value;
         }
     }
 }

@@ -4,7 +4,7 @@ using Infraestrutura.Extensoes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Interacao
+namespace InterfaceUsuario
 {
     internal class Program
     {

@@ -1,6 +1,6 @@
 ﻿using Dominio;
 
-namespace Interacao
+namespace InterfaceUsuario
 {
     partial class TelaPrincipal
     {

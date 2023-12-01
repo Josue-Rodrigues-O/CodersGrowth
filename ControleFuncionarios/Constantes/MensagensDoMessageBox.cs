@@ -1,8 +1,8 @@
 ﻿using Dominio;
 
-namespace Interacao.Constantes
+namespace InterfaceUsuario.Constantes
 {
-    public class MensagesDoMessageBox
+    public class MensagensDoMessageBox
     {
         public const string SELECIONE_UMA_LINHA = "Você deve selecionar uma linha!";
         public const string FUNCIONARIO_ADICIONADO = "Funcionário adicionado com sucesso!";

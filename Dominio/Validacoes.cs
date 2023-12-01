@@ -5,15 +5,11 @@ namespace Dominio
 {
     public class Validacoes
     {
-        private readonly List<string> _listaErros;
-        private const char Virgula = ',';
-        private const byte SegundoValorVetor = 1;
-        public Validacoes()
-        {
-            _listaErros = new();
-        }
+        private readonly List<string> _listaErros = new();
         public void ValidarCampos(string nome, string cpf, string telefone, string salario, DateTime calendario)
         {
+            const char Virgula = ',';
+            const byte SegundoValorVetor = 1;
             #region Nome
             if (String.IsNullOrWhiteSpace(nome))
             {
@@ -74,7 +70,7 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.QUANTIDADE_DE_VIRGULAS_INVALIDAS);
             }
-            
+
             foreach (char index in salario)
             {
                 if (!Regex.IsMatch(index.ToString(), ExpressoesRegex.REGEX_SALARIO))

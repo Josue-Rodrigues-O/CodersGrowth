@@ -6,7 +6,8 @@ namespace Infraestrutura
 {
     public class RepositorioBD : IRepositorio
     {
-        private static readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString;
+        private const string NomeDaConexao = "ConexaoBD";
+        private static readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[NomeDaConexao].ConnectionString;
         private static SqlConnection Connection()
         {
             SqlConnection connection = new(connectionString);

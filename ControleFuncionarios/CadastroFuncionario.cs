@@ -2,15 +2,13 @@
 using Dominio.Constantes;
 using Dominio.Enums;
 using Infraestrutura;
-using Interacao.Constantes;
+using InterfaceUsuario.Constantes;
 using System.Text.RegularExpressions;
 
-namespace Interacao
+namespace InterfaceUsuario
 {
     public partial class CadastroFuncionario : Form
     {
-        private const char Virgula = ',';
-        private const byte SegundoValorVetor = 1;
         private readonly Funcionario _funcionario;
         private readonly IRepositorio _repositorio;
         public CadastroFuncionario(IRepositorio repositorio, Funcionario? funcionario = null)
@@ -77,7 +75,7 @@ namespace Interacao
                     _funcionario.Id = Singleton.IncrementarId();
                     _repositorio.Criar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
-                    MessageBox.Show(MensagesDoMessageBox.FUNCIONARIO_ADICIONADO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_ADICIONADO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -85,23 +83,23 @@ namespace Interacao
                     AtribuirValoresAoObjeto();
                     _repositorio.Atualizar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
-                    MessageBox.Show(MensagesDoMessageBox.FUNCIONARIO_ALTERADO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_ALTERADO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, MensagesDoMessageBox.ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, MensagensDoMessageBox.ERRO, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Ao_Clicar_Em_Cancelar(object sender, EventArgs e)
         {
             DialogResult cancelar;
-            cancelar = MessageBox.Show(MensagesDoMessageBox.CANCELAR_OPERACAO, MensagesDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            cancelar = MessageBox.Show(MensagensDoMessageBox.CANCELAR_OPERACAO, MensagensDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (cancelar.Equals(DialogResult.Yes))
             {
-                MessageBox.Show(MensagesDoMessageBox.CANCELADO_COM_SUCESSO, MensagesDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
@@ -126,7 +124,8 @@ namespace Interacao
         #region Validar Salario
         private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            const char Virgula = ',';
+            const byte SegundoValorVetor = 1;
             bool PossuiVirgula = TxtSalario.Text.Contains(Virgula);
 
             if ((Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_SALARIO) || (!PossuiVirgula && e.KeyChar.Equals(Virgula)))
