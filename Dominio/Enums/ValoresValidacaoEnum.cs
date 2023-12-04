@@ -8,6 +8,7 @@
         TamanhoMaxSalario = 13,
         QuantidadeCasasDecimaisSalario = 2,
         QuantidadeDeVirgulaMax = 1,
-        IdadeMinima = 18
+        IdadeMinima = 18,
+        TamanhoMaximoNome = 255
     }
 }

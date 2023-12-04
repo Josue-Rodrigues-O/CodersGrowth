@@ -2,6 +2,7 @@
 using Dominio.Constantes;
 using Dominio.Enums;
 using Infraestrutura;
+using Infraestrutura.Repositorios;
 using InterfaceUsuario.Constantes;
 using System.Text.RegularExpressions;
 

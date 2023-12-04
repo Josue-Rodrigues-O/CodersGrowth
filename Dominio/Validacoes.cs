@@ -19,6 +19,10 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.TAMANHO_NOME_INCOMPATIVEL);
             }
+            if (nome.Length >= (int)ValoresValidacaoEnum.TamanhoMaximoNome)
+            {
+                _listaErros.Add(Excessoes.TAMANHO_MAXIMO_DO_NOME_ATINGIDO);
+            }
             foreach (char index in nome)
             {
                 if (!Regex.IsMatch(index.ToString(), ExpressoesRegex.REGEX_NOME))

@@ -1,7 +1,8 @@
 ﻿namespace Dominio.Constantes
 {
-    static class Excessoes
+    public static class Excessoes
     {
+        public const string TAMANHO_MAXIMO_DO_NOME_ATINGIDO = "O campo Nome não pode ter mais de 255 caracteres!";
         public const string NOME_NULO = "O campo Nome não pode ser nulo!";
         public const string NOME_CONTEM_CARACTERES_ESPECIAIS = "O campo Nome não pode conter caracteres especiais ou números!";
         public const string TAMANHO_NOME_INCOMPATIVEL = "O campo Nome deve conter pelo menos três caracteres!";
@@ -13,5 +14,12 @@
         public const string QUANTIDADE_DE_VIRGULAS_INVALIDAS = "O campo Salário não pode ter mais de uma virgula!";
         public const string SALARIO_CONTEM_CARACTERES_ESPECIAIS = "O campo Salário não pode conter caracteres especiais ou letras!";
         public const string VALOR_DO_SALARIO_MUITO_ALTO = "O campo Salário não pode ser maior que 9.999.999.999,99!";
+
+        public const string ERRO_AO_CADASTRAR_FUNCIONARIO = "Houve um erro ao tentar cadastrar um novo funcionário, tente novamente!";
+        public const string ERRO_AO_PESQUISAR_FUNCIONARIO = "Houve um erro ao tentar encontrar o funcionário selecionado, tente novamente!";
+        public const string ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS = "Houve um erro ao tentar recuperar as informações do banco de dados, tente novamente!";
+        public const string ERRO_AO_REMOVER_FUNCIONARIO = "Houve um erro ao tentar remover o cadastro selecionado, tente novamente!";
+        public const string ERRO_AO_ALTERAR_FUNCIONARIO = "Houve um erro ao tentar alterar o cadastro selecionado, tente novamente!";
+        public const string ERRO_AO_SE_CONECTAR_COM_BANCO_DE_DADOS = "Houve um erro ao tentar se conectar com o banco de dados, tente novamente!";
     }
 }
