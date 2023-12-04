@@ -35,7 +35,7 @@ namespace InterfaceUsuario
                 .ConfigureContainer<IServiceCollection>((context, services) =>
                 {
                     services.AddScoped<TelaPrincipal>();
-                    services.AddScoped<IRepositorio, Repositorio>();
+                    services.AddScoped<IRepositorio, RepositorioLinqToDb>();
                     services.ExecutarMigracoes();
                 });
         }

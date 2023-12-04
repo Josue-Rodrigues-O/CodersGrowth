@@ -95,6 +95,7 @@ namespace InterfaceUsuario
             TelaListagem.RowTemplate.Height = 25;
             TelaListagem.RowTemplate.ReadOnly = true;
             TelaListagem.RowTemplate.Resizable = DataGridViewTriState.False;
+            TelaListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             TelaListagem.Size = new Size(937, 349);
             TelaListagem.TabIndex = 0;
             // 
