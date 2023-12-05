@@ -1,4 +1,4 @@
-using Infraestrutura;
+using Infraestrutura.Repositorios;
 using InterfaceUsuario.Constantes;
 
 namespace InterfaceUsuario

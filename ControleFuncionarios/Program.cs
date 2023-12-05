@@ -1,6 +1,6 @@
 using FluentMigrator.Runner;
-using Infraestrutura;
 using Infraestrutura.Extensoes;
+using Infraestrutura.Repositorios;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -37,7 +37,7 @@ namespace InterfaceUsuario
                 .ConfigureContainer<IServiceCollection>((context, services) =>
                 {
                     services.AddScoped<TelaPrincipal>();
-                    services.AddScoped<IRepositorio, RepositorioBD>();
+                    services.AddScoped<IRepositorio, RepositorioLinqToDb>();
                     services.ExecutarMigracoes();
                 });
         }

@@ -1,6 +1,6 @@
 ﻿using Dominio;
 
-namespace Infraestrutura
+namespace Infraestrutura.Repositorios
 {
     public class Repositorio : IRepositorio
     {
