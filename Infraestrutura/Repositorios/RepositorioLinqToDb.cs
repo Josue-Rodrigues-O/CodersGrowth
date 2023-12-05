@@ -5,6 +5,7 @@ using LinqToDB.Data;
 
 namespace Infraestrutura.Repositorios
 {
+    
     public class RepositorioLinqToDb : IRepositorio
     {
         private DataConnection Conexao()
