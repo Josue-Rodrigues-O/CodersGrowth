@@ -2,7 +2,7 @@
 using Dominio.Enums;
 using Microsoft.Data.SqlClient;
 
-namespace Infraestrutura
+namespace Infraestrutura.Repositorios
 {
     public class RepositorioBD : IRepositorio
     {

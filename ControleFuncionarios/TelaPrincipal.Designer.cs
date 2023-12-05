@@ -73,7 +73,7 @@ namespace InterfaceUsuario
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionBackColor = Color.Black;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             TelaListagem.DefaultCellStyle = dataGridViewCellStyle2;
@@ -84,15 +84,18 @@ namespace InterfaceUsuario
             TelaListagem.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.SelectionBackColor = Color.Black;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             TelaListagem.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             TelaListagem.RowHeadersWidth = 30;
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.SelectionBackColor = Color.Black;
             TelaListagem.RowsDefaultCellStyle = dataGridViewCellStyle4;
             TelaListagem.RowTemplate.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             TelaListagem.RowTemplate.Height = 25;
             TelaListagem.RowTemplate.ReadOnly = true;
             TelaListagem.RowTemplate.Resizable = DataGridViewTriState.False;
+            TelaListagem.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             TelaListagem.Size = new Size(937, 349);
             TelaListagem.TabIndex = 0;
             // 
