@@ -7,24 +7,28 @@ namespace Infraestrutura.Repositorios
 {
     public class RepositorioLinqToDb : IRepositorio
     {
-        private readonly DataConnection Connection =
-            new(new DataOptions()
+        private DataConnection Conexao()
+        {
+            return new(new DataOptions()
             .UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString));
-
+        }
         public void Criar(Funcionario funcionario)
         {
             try
             {
-                Connection.Insert(new Funcionario
+                using (var conn = Conexao())
                 {
-                    Nome = funcionario.Nome,
-                    Cpf = funcionario.Cpf,
-                    DataNascimento = funcionario.DataNascimento,
-                    EhCasado = funcionario.EhCasado,
-                    Genero = funcionario.Genero,
-                    Salario = funcionario.Salario,
-                    Telefone = funcionario.Telefone
-                });
+                    conn.Insert(new Funcionario
+                    {
+                        Nome = funcionario.Nome,
+                        Cpf = funcionario.Cpf,
+                        DataNascimento = funcionario.DataNascimento,
+                        EhCasado = funcionario.EhCasado,
+                        Genero = funcionario.Genero,
+                        Salario = funcionario.Salario,
+                        Telefone = funcionario.Telefone
+                    });
+                }
             }
             catch
             {
@@ -37,11 +41,13 @@ namespace Infraestrutura.Repositorios
             try
             {
                 Funcionario funcionario = new();
-
-                var a = Connection.GetTable<Funcionario>().Where(x => x.Id == id).ToList();
-                foreach (var item in a)
+                using (var conn = Conexao())
                 {
-                    funcionario = item;
+                    var listaBD = conn.GetTable<Funcionario>().Where(x => x.Id == id).ToList();
+                    foreach (var item in listaBD)
+                    {
+                        funcionario = item;
+                    }
                 }
                 return funcionario;
             }
@@ -55,7 +61,10 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                return Connection.GetTable<Funcionario>().ToList();
+                using (var conn = Conexao())
+                {
+                    return conn.GetTable<Funcionario>().ToList();
+                }
             }
             catch
             {
@@ -67,7 +76,10 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                Connection.Update(funcionario);
+                using (var conn = Conexao())
+                {
+                    conn.Update(funcionario);
+                }
             }
             catch
             {
@@ -79,7 +91,10 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                Connection.Delete(funcionario);
+                using (var conn = Conexao())
+                {
+                    conn.Delete(funcionario);
+                }
             }
             catch
             {
