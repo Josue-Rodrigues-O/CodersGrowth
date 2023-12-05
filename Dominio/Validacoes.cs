@@ -89,6 +89,10 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.SALARIO_INVALIDO);
             }
+            if(Convert.ToDecimal(salario) < (int)ValoresValidacaoEnum.TamanhoMinSalario)
+            {
+                _listaErros.Add(Excessoes.SALARIO_INVALIDO);
+            }
             #endregion
 
             #region Data de Nascimento
