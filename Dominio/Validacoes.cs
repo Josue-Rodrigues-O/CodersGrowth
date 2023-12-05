@@ -10,14 +10,19 @@ namespace Dominio
         {
             const char Virgula = ',';
             const byte SegundoValorVetor = 1;
+            const byte PrimeiroValorVetor = 0;
             #region Nome
             if (String.IsNullOrWhiteSpace(nome))
             {
                 _listaErros.Add(Excessoes.NOME_NULO);
             }
-            if (nome.Length < (int)ValoresValidacaoEnum.TamanhoMinNome)
+            if (nome.Trim().Length < (int)ValoresValidacaoEnum.TamanhoMinNome)
             {
                 _listaErros.Add(Excessoes.TAMANHO_NOME_INCOMPATIVEL);
+            }
+            if (nome.Length >= (int)ValoresValidacaoEnum.TamanhoMaxNome)
+            {
+                _listaErros.Add(Excessoes.TAMANHO_MAX_NOME_INCOMPATIVEL);
             }
             foreach (char index in nome)
             {
@@ -78,6 +83,15 @@ namespace Dominio
                     _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
                     break;
                 }
+            }
+            if (String.IsNullOrWhiteSpace(salario.Split(Virgula)[PrimeiroValorVetor])
+                || String.IsNullOrEmpty(salario.Split(Virgula)[PrimeiroValorVetor]))
+            {
+                _listaErros.Add(Excessoes.SALARIO_INVALIDO);
+            }
+            if(Convert.ToDecimal(salario) < (int)ValoresValidacaoEnum.TamanhoMinSalario)
+            {
+                _listaErros.Add(Excessoes.SALARIO_INVALIDO);
             }
             #endregion
 

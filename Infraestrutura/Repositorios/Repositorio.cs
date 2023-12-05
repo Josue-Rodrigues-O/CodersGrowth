@@ -1,6 +1,6 @@
 ﻿using Dominio;
 
-namespace Infraestrutura
+namespace Infraestrutura.Repositorios
 {
     public class Repositorio : IRepositorio
     {
@@ -18,7 +18,7 @@ namespace Infraestrutura
 
         public Funcionario ObterPorId(uint id)
         {
-            return _listaFuncionarios.Find(x => x.Id == id);
+            return _listaFuncionarios.First(x => x.Id == id);
         }
 
         public List<Funcionario> ObterTodos()
