@@ -5,6 +5,7 @@
         public const string NOME_NULO = "O campo Nome não pode ser nulo!";
         public const string NOME_CONTEM_CARACTERES_ESPECIAIS = "O campo Nome não pode conter caracteres especiais ou números!";
         public const string TAMANHO_NOME_INCOMPATIVEL = "O campo Nome deve conter pelo menos três caracteres!";
+        public const string TAMANHO_MAX_NOME_INCOMPATIVEL = "O campo Nome não pode ter mais de 255 caracteres!";
         public const string CPF_PREENCHIDO_INCORRETAMENTE = "O campo CPF deve ser preenchido corretamente!";
         public const string TELEFONE_PREENCHIDO_INCORRETAMENTE = "O campo Telefone deve ser preenchido corretamente!";
         public const string SALARIO_NULO = "O campo Salário não pode ser nulo!";

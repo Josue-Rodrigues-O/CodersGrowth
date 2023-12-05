@@ -3,6 +3,7 @@
     public enum ValoresValidacaoEnum
     {
         TamanhoMinNome = 3,
+        TamanhoMaxNome = 255,
         TamanhoCorretoCpf = 14,
         TamanhoCorretoTelefone = 16,
         TamanhoMaxSalario = 13,

@@ -15,9 +15,13 @@ namespace Dominio
             {
                 _listaErros.Add(Excessoes.NOME_NULO);
             }
-            if (nome.Length < (int)ValoresValidacaoEnum.TamanhoMinNome)
+            if (nome.Trim().Length < (int)ValoresValidacaoEnum.TamanhoMinNome)
             {
                 _listaErros.Add(Excessoes.TAMANHO_NOME_INCOMPATIVEL);
+            }
+            if (nome.Length >= (int)ValoresValidacaoEnum.TamanhoMaxNome)
+            {
+                _listaErros.Add(Excessoes.TAMANHO_MAX_NOME_INCOMPATIVEL);
             }
             foreach (char index in nome)
             {
