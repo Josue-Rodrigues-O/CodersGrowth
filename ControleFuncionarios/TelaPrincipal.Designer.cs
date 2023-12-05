@@ -223,13 +223,6 @@ namespace InterfaceUsuario
         private Button btnRemover;
         private BindingSource funcionarioBindingSource;
         private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn nomeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn cpfDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn telefoneDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn salarioDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn ehCasadoDataGridViewCheckBoxColumn;
-        private DataGridViewTextBoxColumn dataNascimentoDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn generoDataGridViewTextBoxColumn;
         private BindingSource funcionarioBindingSource1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;

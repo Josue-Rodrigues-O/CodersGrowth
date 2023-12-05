@@ -14,7 +14,7 @@
         public const string QUANTIDADE_DE_VIRGULAS_INVALIDAS = "O campo Salário não pode ter mais de uma virgula!";
         public const string SALARIO_CONTEM_CARACTERES_ESPECIAIS = "O campo Salário não pode conter caracteres especiais ou letras!";
         public const string VALOR_DO_SALARIO_MUITO_ALTO = "O campo Salário não pode ser maior que 9.999.999.999,99!";
-
+        public const string SALARIO_INVALIDO = "O valor contido no campo Salário é inválido!";
         public const string ERRO_AO_CADASTRAR_FUNCIONARIO = "Houve um erro ao tentar cadastrar um novo funcionário, tente novamente!";
         public const string ERRO_AO_PESQUISAR_FUNCIONARIO = "Houve um erro ao tentar pesquisar um funcionário no banco de dados, tente novamente!";
         public const string ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS = "Houve um erro ao tentar recuperar as informações do banco de dados, tente novamente!";

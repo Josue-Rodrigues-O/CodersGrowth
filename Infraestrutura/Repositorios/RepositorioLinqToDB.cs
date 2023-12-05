@@ -43,7 +43,7 @@ namespace Infraestrutura.Repositorios
             {
                 using (var conn = Conexao())
                 {
-                    return conn.GetTable<Funcionario>().FirstOrDefault(x => x.Id == id);
+                    return conn.GetTable<Funcionario>().First(x => x.Id == id);
                 }
             }
             catch

@@ -14,23 +14,21 @@ namespace Infraestrutura.Repositorios
             connection.Open();
             return connection;
         }
-        public void Atualizar(Funcionario funcionario)
+        private static Funcionario NovoFuncionario(SqlDataReader reader)
         {
-            using (var conn = Connection())
+            Funcionario funcionario = new()
             {
-                SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
-                                    Nome='{funcionario.Nome}',
-                                    Cpf='{funcionario.Cpf}',
-                                    Telefone='{funcionario.Telefone}',
-                                    Salario={funcionario.Salario.ToString().Replace(",", ".")},
-                                    DataNascimento='{funcionario.DataNascimento.Date:yyyy-MM-dd}',
-                                    EhCasado={Convert.ToByte(funcionario.EhCasado)},
-                                    Genero='{funcionario.Genero}' 
-                                    WHERE Id={funcionario.Id}", conn);
-                cmd.ExecuteReader();
-            }
+                Id = Convert.ToUInt32(reader["Id"]),
+                Nome = reader["Nome"].ToString(),
+                Cpf = reader["Cpf"].ToString(),
+                Telefone = reader["Telefone"].ToString(),
+                Salario = Convert.ToDecimal(reader["Salario"]),
+                DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
+                EhCasado = Convert.ToBoolean(reader["EhCasado"]),
+                Genero = (GeneroEnum)Enum.Parse(typeof(GeneroEnum), reader["Genero"].ToString())
+            };
+            return funcionario;
         }
-
         public void Criar(Funcionario funcionario)
         {
             using (var conn = Connection())
@@ -47,22 +45,6 @@ namespace Infraestrutura.Repositorios
                 cmd.ExecuteReader();
             }
         }
-
-        public Funcionario ObterPorId(uint id)
-        {
-            Funcionario funcionario = new();
-            using (var conn = Connection())
-            {
-                SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    funcionario = NovoFuncionario(reader);
-                }
-            }
-            return funcionario;
-        }
-
         public List<Funcionario> ObterTodos()
         {
             List<Funcionario> lista = new();
@@ -77,7 +59,36 @@ namespace Infraestrutura.Repositorios
             }
             return lista;
         }
-
+        public Funcionario ObterPorId(uint id)
+        {
+            Funcionario funcionario = new();
+            using (var conn = Connection())
+            {
+                SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    funcionario = NovoFuncionario(reader);
+                }
+            }
+            return funcionario;
+        }
+        public void Atualizar(Funcionario funcionario)
+        {
+            using (var conn = Connection())
+            {
+                SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
+                                    Nome='{funcionario.Nome}',
+                                    Cpf='{funcionario.Cpf}',
+                                    Telefone='{funcionario.Telefone}',
+                                    Salario={funcionario.Salario.ToString().Replace(",", ".")},
+                                    DataNascimento='{funcionario.DataNascimento.Date:yyyy-MM-dd}',
+                                    EhCasado={Convert.ToByte(funcionario.EhCasado)},
+                                    Genero='{funcionario.Genero}' 
+                                    WHERE Id={funcionario.Id}", conn);
+                cmd.ExecuteReader();
+            }
+        }
         public void Remover(Funcionario funcionario)
         {
             using (var conn = Connection())
@@ -85,22 +96,6 @@ namespace Infraestrutura.Repositorios
                 SqlCommand cmd = new($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
                 cmd.ExecuteReader();
             }
-        }
-
-        private static Funcionario NovoFuncionario(SqlDataReader reader)
-        {
-            Funcionario funcionario = new()
-            {
-                Id = Convert.ToUInt32(reader["Id"]),
-                Nome = reader["Nome"].ToString(),
-                Cpf = reader["Cpf"].ToString(),
-                Telefone = reader["Telefone"].ToString(),
-                Salario = Convert.ToDecimal(reader["Salario"]),
-                DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
-                EhCasado = Convert.ToBoolean(reader["EhCasado"]),
-                Genero = (GeneroEnum)Enum.Parse(typeof(GeneroEnum), reader["Genero"].ToString())
-            };
-            return funcionario;
         }
     }
 }

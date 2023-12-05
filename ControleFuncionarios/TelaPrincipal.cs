@@ -5,7 +5,6 @@ namespace InterfaceUsuario
 {
     public partial class TelaPrincipal : Form
     {
-        private const byte SoUmaLinha = 1;
         private static IRepositorio _repositorio;
         public TelaPrincipal(IRepositorio repositorio)
         {
@@ -57,6 +56,7 @@ namespace InterfaceUsuario
         }
         private static bool LinhaValida()
         {
+            const byte SoUmaLinha = 1;
 
             if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == SoUmaLinha)
             {

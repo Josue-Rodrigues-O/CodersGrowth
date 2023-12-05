@@ -10,6 +10,7 @@ namespace Dominio
         {
             const char Virgula = ',';
             const byte SegundoValorVetor = 1;
+            const byte PrimeiroValorVetor = 0;
             #region Nome
             if (String.IsNullOrWhiteSpace(nome))
             {
@@ -82,6 +83,11 @@ namespace Dominio
                     _listaErros.Add(Excessoes.SALARIO_CONTEM_CARACTERES_ESPECIAIS);
                     break;
                 }
+            }
+            if (String.IsNullOrWhiteSpace(salario.Split(Virgula)[PrimeiroValorVetor])
+                || String.IsNullOrEmpty(salario.Split(Virgula)[PrimeiroValorVetor]))
+            {
+                _listaErros.Add(Excessoes.SALARIO_INVALIDO);
             }
             #endregion
 
