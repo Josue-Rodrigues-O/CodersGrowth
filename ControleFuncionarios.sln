@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio", "Dominio\Dominio.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestrutura", "Infraestrutura\Infraestrutura.csproj", "{9EFE9BF1-02E6-4C18-A768-F1AD8CBD628E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceUsuarioForms", "InterfaceUsuarioForms\InterfaceUsuarioForms.csproj", "{CAA4D81D-0A80-44DF-8233-E9A28B3A0ADF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9EFE9BF1-02E6-4C18-A768-F1AD8CBD628E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EFE9BF1-02E6-4C18-A768-F1AD8CBD628E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EFE9BF1-02E6-4C18-A768-F1AD8CBD628E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA4D81D-0A80-44DF-8233-E9A28B3A0ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA4D81D-0A80-44DF-8233-E9A28B3A0ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA4D81D-0A80-44DF-8233-E9A28B3A0ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA4D81D-0A80-44DF-8233-E9A28B3A0ADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

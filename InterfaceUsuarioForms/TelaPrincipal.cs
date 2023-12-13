@@ -1,7 +1,7 @@
 using Infraestrutura.Repositorios;
-using InterfaceUsuario.Constantes;
+using InterfaceUsuarioForms.Constantes;
 
-namespace InterfaceUsuario
+namespace InterfaceUsuarioForms
 {
     public partial class TelaPrincipal : Form
     {
