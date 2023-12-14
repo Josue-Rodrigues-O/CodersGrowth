@@ -3,10 +3,10 @@ using Dominio.Constantes;
 using Dominio.Enums;
 using Infraestrutura;
 using Infraestrutura.Repositorios;
-using InterfaceUsuario.Constantes;
+using InterfaceUsuarioForms.Constantes;
 using System.Text.RegularExpressions;
 
-namespace InterfaceUsuario
+namespace InterfaceUsuarioForms
 {
     public partial class CadastroFuncionario : Form
     {
