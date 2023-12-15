@@ -9,7 +9,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
     [ApiController]
     public class ApiCrud : ControllerBase
     {
-        private IRepositorio _repositorio = new Repositorio();
+        private readonly IRepositorio _repositorio = new Repositorio();
 
         [HttpGet]
         public List<Funcionario> ObterTodos()
@@ -43,9 +43,9 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         {
             try
             {
-                Validacoes _validacoes = new();
+                Validacoes validacoes = new();
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
-                _validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
+                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
                 _repositorio.Criar(funcionario);
                 return Created(Constantes.ROTA_CRIAR, funcionario);
             }
@@ -61,8 +61,8 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             try
             {
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
-                Validacoes _validacoes = new();
-                _validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
+                Validacoes validacoes = new();
+                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
                 _repositorio.Atualizar(funcionario);
                 return Ok(Constantes.SUCESSO);
             }
