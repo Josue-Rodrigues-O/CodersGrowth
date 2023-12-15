@@ -73,7 +73,6 @@ namespace InterfaceUsuarioForms
                 {
                     ValidarEntradasDoUsuario();
                     AtribuirValoresAoObjeto();
-                    _funcionario.Id = Singleton.IncrementarId();
                     _repositorio.Criar(_funcionario);
                     TelaPrincipal.AtualizarDataGrid();
                     MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_ADICIONADO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);

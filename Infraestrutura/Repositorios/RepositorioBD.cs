@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Dominio.Constantes;
 using Dominio.Enums;
 using Microsoft.Data.SqlClient;
 
@@ -31,9 +32,12 @@ namespace Infraestrutura.Repositorios
         }
         public void Criar(Funcionario funcionario)
         {
-            using (var conn = Connection())
+            try
             {
-                SqlCommand cmd = new($@"INSERT INTO TabFuncionarios (Nome,Cpf,Telefone,Salario,DataNascimento,EhCasado,Genero) 
+
+                using (var conn = Connection())
+                {
+                    SqlCommand cmd = new($@"INSERT INTO TabFuncionarios (Nome,Cpf,Telefone,Salario,DataNascimento,EhCasado,Genero) 
                                     VALUES (
                                     '{funcionario.Nome}',
                                     '{funcionario.Cpf}',
@@ -42,42 +46,63 @@ namespace Infraestrutura.Repositorios
                                     '{funcionario.DataNascimento.Date:yyyy-MM-dd}',
                                     {Convert.ToByte(funcionario.EhCasado)},
                                     '{funcionario.Genero}')", conn);
-                cmd.ExecuteReader();
+                    cmd.ExecuteReader();
+                }
+            }
+            catch
+            {
+                throw new Exception(message: Excessoes.ERRO_AO_CADASTRAR_FUNCIONARIO);
+            }
+        }
+        public Funcionario ObterPorId(uint id)
+        {
+            try
+            {
+                Funcionario funcionario = new();
+                using (var conn = Connection())
+                {
+                    SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        funcionario = NovoFuncionario(reader);
+                    }
+                }
+                return funcionario;
+            }
+            catch
+            {
+                throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
             }
         }
         public List<Funcionario> ObterTodos()
         {
-            List<Funcionario> lista = new();
-            using (var conn = Connection())
+            try
             {
-                SqlCommand cmd = new("SELECT * FROM TabFuncionarios", conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                List<Funcionario> lista = new();
+                using (var conn = Connection())
                 {
-                    lista.Add(NovoFuncionario(reader));
+                    SqlCommand cmd = new("SELECT * FROM TabFuncionarios", conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lista.Add(NovoFuncionario(reader));
+                    }
                 }
+                return lista;
             }
-            return lista;
-        }
-        public Funcionario ObterPorId(uint id)
-        {
-            Funcionario funcionario = new();
-            using (var conn = Connection())
+            catch
             {
-                SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    funcionario = NovoFuncionario(reader);
-                }
+                throw new Exception(message: Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
             }
-            return funcionario;
         }
         public void Atualizar(Funcionario funcionario)
         {
-            using (var conn = Connection())
+            try
             {
-                SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
+                using (var conn = Connection())
+                {
+                    SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
                                     Nome='{funcionario.Nome}',
                                     Cpf='{funcionario.Cpf}',
                                     Telefone='{funcionario.Telefone}',
@@ -86,15 +111,27 @@ namespace Infraestrutura.Repositorios
                                     EhCasado={Convert.ToByte(funcionario.EhCasado)},
                                     Genero='{funcionario.Genero}' 
                                     WHERE Id={funcionario.Id}", conn);
-                cmd.ExecuteReader();
+                    cmd.ExecuteReader();
+                }
+            }
+            catch
+            {
+                throw new Exception(message: Excessoes.ERRO_AO_ALTERAR_FUNCIONARIO);
             }
         }
         public void Remover(Funcionario funcionario)
         {
-            using (var conn = Connection())
+            try
             {
-                SqlCommand cmd = new($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
-                cmd.ExecuteReader();
+                using (var conn = Connection())
+                {
+                    SqlCommand cmd = new($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
+                    cmd.ExecuteReader();
+                }
+            }
+            catch
+            {
+                throw new Exception(message: Excessoes.ERRO_AO_REMOVER_FUNCIONARIO);
             }
         }
     }
