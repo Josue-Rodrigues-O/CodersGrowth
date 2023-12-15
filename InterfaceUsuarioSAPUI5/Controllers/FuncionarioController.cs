@@ -7,16 +7,16 @@ namespace InterfaceUsuarioSAPUI5.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApiCrud : ControllerBase
+    public class FuncionarioController : ControllerBase
     {
         private readonly IRepositorio _repositorio = new Repositorio();
 
         [HttpGet]
-        public List<Funcionario> ObterTodos()
+        public OkObjectResult ObterTodos()
         {
             try
             {
-                return _repositorio.ObterTodos();
+                return Ok(_repositorio.ObterTodos());
             }
             catch
             {
@@ -25,12 +25,12 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet("{id}")]
-        public Funcionario ObterPorId(uint id)
+        public OkObjectResult ObterPorId(uint id)
         {
             try
             {
                 if (id == uint.MinValue) throw new Exception(message: Excessoes.ID_NULO);
-                return _repositorio.ObterPorId(id);
+                return Ok(_repositorio.ObterPorId(id));
             }
             catch
             {
@@ -56,7 +56,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpPatch]
-        public OkObjectResult Atualizar([FromBody] Funcionario funcionario)
+        public NoContentResult Atualizar([FromBody] Funcionario funcionario)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                 Validacoes validacoes = new();
                 validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
                 _repositorio.Atualizar(funcionario);
-                return Ok(Constantes.SUCESSO);
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -73,16 +73,17 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpDelete("{id}")]
-        public OkObjectResult Remover(uint id)
+        public NoContentResult Remover(uint id)
         {
             try
             {
                 if (id == uint.MinValue) throw new Exception(message: Excessoes.ID_NULO);
                 _repositorio.Remover(_repositorio.ObterPorId(id));
-                return Ok(Constantes.SUCESSO);
+                return NoContent();
             }
             catch (Exception ex)
             {
+                BadRequest(ex.Message);
                 throw new Exception(message: ex.Message);
             }
         }
