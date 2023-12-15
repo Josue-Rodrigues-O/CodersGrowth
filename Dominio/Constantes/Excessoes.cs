@@ -2,6 +2,8 @@
 {
     public static class Excessoes
     {
+        public const string ID_NULO = "Para realizar a ação desejada você deve selecionar pelo menos um cadastro!";
+        public const string OBJETO_NULO = "Impossível completar a ação pois não foi passada nenhuma informação!";
         public const string NOME_NULO = "O campo Nome não pode ser nulo!";
         public const string NOME_CONTEM_CARACTERES_ESPECIAIS = "O campo Nome não pode conter caracteres especiais ou números!";
         public const string TAMANHO_NOME_INCOMPATIVEL = "O campo Nome deve conter pelo menos três caracteres!";
