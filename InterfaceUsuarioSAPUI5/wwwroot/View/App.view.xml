@@ -1,8 +1,11 @@
 <mvc:View
     controllerName="controle.funcionarios.controller.App"
     xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Button
-        text="{i18n>btnAdicionar}"
-        press=".onMostrarOla" />
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true">
+    <Shell>
+        <App
+            class="myAppDemoWT"
+            id="app" />
+    </Shell>
 </mvc:View>
