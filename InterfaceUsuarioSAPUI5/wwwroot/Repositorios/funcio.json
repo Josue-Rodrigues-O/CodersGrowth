@@ -1,0 +1,14 @@
+{
+    "FUNCIONARIOS":[
+        {
+            "id": 1,
+            "nome": "João Andrade",
+            "cpf": "979.789.416-54",
+            "telefone": "(49) 8 7464-9687",
+            "salario": 984455.85,
+            "ehCasado": true,
+            "dataNascimento": "1999-01-01T00:00:00",
+            "genero": 1
+        }
+    ]
+}

@@ -1,9 +1,6 @@
-sap.ui.define([
-  "../common/client/HttpApiClient"
-], (HttpApiClient) => {
-  "use strict";
+const endpoint = "https://localhost:7293/api/Funcionario";
 
-  return {
-    
-  }
-});
+
+export function nnn() {
+  console.log(fetch(endpoint))
+}

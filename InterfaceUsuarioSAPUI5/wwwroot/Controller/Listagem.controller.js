@@ -7,7 +7,7 @@ sap.ui.define([
     return Controller.extend("sap.ui.webc.main.sample.Table.C", {
 
         onInit: function () {
-            var oModel = new JSONModel(sap.ui.require.toUrl("sap/ui/demo/mock/products.json"));
+            var oModel = new JSONModel(sap.ui.require.toUrl("controle/funcionarios/Repositorios/funcio.json"));
             this.getView().setModel(oModel);
         }
     });

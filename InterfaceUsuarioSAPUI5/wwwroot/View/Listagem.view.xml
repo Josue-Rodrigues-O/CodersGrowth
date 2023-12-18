@@ -10,10 +10,7 @@
 			mode="SingleSelect"
 			selectionChange="handleSelectionChange"
 			rows="{
-					path: '/ProductCollection',
-					sorter: {
-						path: 'Name'
-					}
+					path: '/FUNCIONARIOS'
 				}">
 			<columns>
 				<TableColumn>
@@ -46,42 +43,42 @@
 					<cells>
 						<TableCell>
 							<content>
-								<Label text="{Id}" />
+								<Label text="{id}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{Nome}" />
+								<Label text="{nome}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{Cpf}" />
+								<Label text="{cpf}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{Telefone}" />
+								<Label text="{telefone}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{Salario}" />
+								<Label text="{salario}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{EhCasado}" />
+								<Label text="{ehCasado}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{DataNascimento}" />
+								<Label text="{dataNascimento}" />
 							</content>
 						</TableCell>
 						<TableCell>
 							<content>
-								<Label text="{Genero}" />
+								<Label text="{genero}" />
 							</content>
 						</TableCell>
 					</cells>
