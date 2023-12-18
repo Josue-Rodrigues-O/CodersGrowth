@@ -9,7 +9,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
     [ApiController]
     public class FuncionarioController : ControllerBase
     {
-        private readonly IRepositorio _repositorio = new Repositorio();
+        private readonly IRepositorio _repositorio = new RepositorioBD();
 
         [HttpGet]
         public OkObjectResult ObterTodos()

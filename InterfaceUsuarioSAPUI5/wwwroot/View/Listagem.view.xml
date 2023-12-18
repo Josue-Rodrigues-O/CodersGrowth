@@ -1,11 +1,92 @@
 <mvc:View
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc">
-    <Panel>
-        <Table
-            selectionMode="SingleSelect"
-            >
-
-        </Table>
-    </Panel>
+	controllerName="controle.funcionarios.controller.Listagem"
+	xmlns="sap.ui.webc.main"
+	xmlns:mvc="sap.ui.core.mvc">
+	<Panel>
+		<Table
+			id="TabelaFuncionarios"
+			stickyColumnHeader="true"
+			rowClick="handleRowClick"
+			mode="SingleSelect"
+			selectionChange="handleSelectionChange"
+			rows="{
+					path: '/ProductCollection',
+					sorter: {
+						path: 'Name'
+					}
+				}">
+			<columns>
+				<TableColumn>
+					<Label text="ID" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="Nome" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="CPF" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="Telefone" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="Salário" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="Casado?" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="Data de Nascimento" />
+				</TableColumn>
+				<TableColumn>
+					<Label text="Gênero" />
+				</TableColumn>
+			</columns>
+			<rows>
+				<TableRow type="Active">
+					<cells>
+						<TableCell>
+							<content>
+								<Label text="{Id}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{Nome}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{Cpf}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{Telefone}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{Salario}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{EhCasado}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{DataNascimento}" />
+							</content>
+						</TableCell>
+						<TableCell>
+							<content>
+								<Label text="{Genero}" />
+							</content>
+						</TableCell>
+					</cells>
+				</TableRow>
+			</rows>
+		</Table>
+	</Panel>
 </mvc:View>

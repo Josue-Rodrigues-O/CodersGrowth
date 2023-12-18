@@ -24,7 +24,7 @@
             "libs": {
                 "sap.ui.core": {},
                 "sap.m": {},
-                "sap.ui.table": {}
+                "sap.ui.webc.main": {}
             }
         },
         "models": {
