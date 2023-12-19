@@ -10,32 +10,35 @@
 			mode="SingleSelect"
 			selectionChange="handleSelectionChange"
 			rows="{
-					path: '/FUNCIONARIOS'
+					path: '/FUNCIONARIOS',
+					sorter: {
+						path: 'id'
+					}
 				}">
 			<columns>
 				<TableColumn>
-					<Label text="ID" />
+					<Label text="{i18n>TituloColunaId}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="Nome" />
+					<Label text="{i18n>TituloColunaNome}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="CPF" />
+					<Label text="{i18n>TituloColunaCpf}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="Telefone" />
+					<Label text="{i18n>TituloColunaTelefone}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="Salário" />
+					<Label text="{i18n>TituloColunaSalario}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="Casado?" />
+					<Label text="{i18n>TituloColunaEhCasado}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="Data de Nascimento" />
+					<Label text="{i18n>TituloColunaDataNascimento}" />
 				</TableColumn>
 				<TableColumn>
-					<Label text="Gênero" />
+					<Label text="{i18n>TituloColunaGenero}" />
 				</TableColumn>
 			</columns>
 			<rows>
