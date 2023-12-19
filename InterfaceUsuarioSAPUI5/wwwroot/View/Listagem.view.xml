@@ -1,92 +1,52 @@
 <mvc:View
-	controllerName="controle.funcionarios.controller.Listagem"
-	xmlns="sap.ui.webc.main"
+	controllerName="controle.funcionarios.Controller.Listagem"
+	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
-	<Panel>
+	<Panel accessibleRole="Region">
 		<Table
-			id="TabelaFuncionarios"
-			stickyColumnHeader="true"
-			rowClick="handleRowClick"
-			mode="SingleSelect"
-			selectionChange="handleSelectionChange"
-			rows="{
-					path: '/FUNCIONARIOS',
-					sorter: {
-						path: 'id'
-					}
-				}">
+			class="sapUiResponsiveMargin"
+			width="auto"
+			items="{tabelinha>/}">
 			<columns>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaId}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaNome}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaCpf}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaTelefone}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaSalario}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaEhCasado}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaDataNascimento}" />
-				</TableColumn>
-				<TableColumn>
-					<Label text="{i18n>TituloColunaGenero}" />
-				</TableColumn>
+				<Column>
+					<Text text="{i18n>TituloColunaId}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaNome}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaCpf}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaTelefone}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaSalario}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaEhCasado}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaGenero}" />
+				</Column>
+				<Column>
+					<Text text="{i18n>TituloColunaDataNascimento}" />
+				</Column>
 			</columns>
-			<rows>
-				<TableRow type="Active">
+			<items>
+				<ColumnListItem>
 					<cells>
-						<TableCell>
-							<content>
-								<Label text="{id}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{nome}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{cpf}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{telefone}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{salario}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{ehCasado}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{dataNascimento}" />
-							</content>
-						</TableCell>
-						<TableCell>
-							<content>
-								<Label text="{genero}" />
-							</content>
-						</TableCell>
+						<Text text="{tabelinha>id}" />
+						<Text text="{tabelinha>nome}" />
+						<Text text="{tabelinha>cpf}" />
+						<Text text="{tabelinha>telefone}" />
+						<Text text="{tabelinha>salario}" />
+						<Text text="{tabelinha>ehCasado}" />
+						<Text text="{tabelinha>genero}" />
+						<Text text="{tabelinha>dataNascimento}" />
 					</cells>
-				</TableRow>
-			</rows>
+				</ColumnListItem>
+			</items>
 		</Table>
 	</Panel>
 </mvc:View>
