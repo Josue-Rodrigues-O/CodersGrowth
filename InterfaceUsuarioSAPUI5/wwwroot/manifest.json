@@ -23,8 +23,7 @@
             "minUI5Version": "1.108.0",
             "libs": {
                 "sap.ui.core": {},
-                "sap.m": {},
-                "sap.ui.webc.main": {}
+                "sap.m": {}
             }
         },
         "models": {
@@ -33,7 +32,8 @@
                 "settings": {
                     "bundleName": "controle.funcionarios.i18n.i18n",
                     "supportedLocales": [
-                        ""
+                        "pt",
+                        "en"
                     ],
                     "fallbackLocale": ""
                 }

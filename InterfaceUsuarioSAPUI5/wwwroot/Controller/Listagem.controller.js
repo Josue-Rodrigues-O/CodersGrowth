@@ -1,8 +1,11 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "../Model/formatter"
-], function (Controller, JSONModel, formatter) {
+    "../Model/formatter",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "../Repositorios/RepositorioAPI"
+], function (Controller, JSONModel, formatter, Filter, FilterOperator, RepositorioAPI) {
     "use strict";
 
     return Controller.extend("controle.funcionarios.Controller.Listagem", {
@@ -13,14 +16,23 @@ sap.ui.define([
             });
             this.getView().setModel(oViewModel, "view");
 
-            this.ObterTodos();
+            RepositorioAPI.obterTodos(this);
         },
-        ObterTodos() {
-            const url = "/api/Funcionario"
-            fetch(url)
-                .then(jogos => jogos.json())
-                .then(jogos => this.getView().setModel(new JSONModel(jogos), "TabelaFuncionarios"))
-                .catch((erro) => console.log(erro.error))
+
+        Ao_Clicar_Abre_Tela_De_Cadastro(){
+            alert("Abrir tela de cadastro");
+        },
+
+        Filtro_Da_Tela_De_Listagem(oEvent){
+            const aFilter = [];
+            const sQuery = oEvent.getParameter("query");
+            if(sQuery) {
+                aFilter.push(new Filter("nome", FilterOperator.Contains, sQuery));
+            }
+
+            const oList = this.byId("TabelaFuncionarios");
+            const oBinding = oList.getBinding("items");
+            oBinding.filter(aFilter);
         }
     });
 });

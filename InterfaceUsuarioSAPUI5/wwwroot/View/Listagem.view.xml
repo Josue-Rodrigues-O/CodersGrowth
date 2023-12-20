@@ -2,7 +2,22 @@
 	controllerName="controle.funcionarios.controller.Listagem"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
-	<Panel accessibleRole="Region">
+	<Panel
+		class="sapUiResponsiveMargin"
+		width="auto"
+		accessibleRole="Region">
+		<headerToolbar>
+			<Toolbar>
+				<Button
+					icon="sap-icon://add"
+					text="{i18n>btnAdicionar}"
+					press=".Ao_Clicar_Abre_Tela_De_Cadastro" />
+				<ToolbarSpacer />
+				<SearchField
+					width="50%"
+					search=".Filtro_Da_Tela_De_Listagem" />
+			</Toolbar>
+		</headerToolbar>
 		<Table
 			id="TabelaFuncionarios"
 			width="auto"
@@ -15,7 +30,8 @@
 			}">
 			<columns>
 				<Column
-					hAlign="Center">
+					hAlign="Center"
+					width="3rem">
 					<Text text="{i18n>TituloColunaId}" />
 				</Column>
 				<Column
@@ -35,7 +51,8 @@
 					<Text text="{i18n>TituloColunaSalario}" />
 				</Column>
 				<Column
-					hAlign="Center">
+					hAlign="Center"
+					width="9rem">
 					<Text text="{i18n>TituloColunaEhCasado}" />
 				</Column>
 				<Column
@@ -68,21 +85,12 @@
 							unit="{view>/currency}" />
 						<Text
 							text="{
-							parts: [
-								'TabelaFuncionarios>ehCasado',
-								'i18n>sim',
-								'i18n>nao'
-							],
+							path: 'TabelaFuncionarios>ehCasado',
 							formatter: '.formatter.estadoCivilText'
 						}" />
 						<Text
 							text="{
-							parts: [
-								'TabelaFuncionarios>genero',
-								'i18n>indefinido',
-								'i18n>masculino',
-								'i18n>feminino'
-							],
+							path: 'TabelaFuncionarios>genero',
 							formatter: '.formatter.generoText'
 						}" />
 						<Text
