@@ -32,7 +32,7 @@
                 "settings": {
                     "bundleName": "controle.funcionarios.i18n.i18n",
                     "supportedLocales": [
-                        "pt",
+                        "pt_BR",
                         "en"
                     ],
                     "fallbackLocale": ""

@@ -67,7 +67,7 @@
 			<items>
 				<ColumnListItem>
 					<cells>
-						<ObjectIdentifier title="{TabelaFuncionarios>id}" />
+						<Text title="{TabelaFuncionarios>id}" />
 						<ObjectIdentifier title="{TabelaFuncionarios>nome}" />
 						<ObjectIdentifier title="{TabelaFuncionarios>cpf}" />
 						<Text text="{TabelaFuncionarios>telefone}" />
@@ -79,10 +79,10 @@
 								],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {
-									showMeasure: false
+									currencyCode:false,
+									showMeasure: true
 								}
-							}"
-							unit="{view>/currency}" />
+							}" />
 						<Text
 							text="{
 							path: 'TabelaFuncionarios>ehCasado',
