@@ -7,15 +7,16 @@
 		width="auto"
 		accessibleRole="Region">
 		<headerToolbar>
-			<Toolbar>
+			<Toolbar
+				class="sapUi-Std-PaddingS">
 				<Button
 					icon="sap-icon://add"
 					text="{i18n>btnAdicionar}"
-					press=".Ao_Clicar_Abre_Tela_De_Cadastro" />
+					press=".aoClicarAbreTelaDeCadastro" />
 				<ToolbarSpacer />
 				<SearchField
-					width="50%"
-					search=".Filtro_Da_Tela_De_Listagem" />
+					width="40%"
+					search=".aoPesquisarFiltrarFuncionarios" />
 			</Toolbar>
 		</headerToolbar>
 		<Table
@@ -52,7 +53,7 @@
 				</Column>
 				<Column
 					hAlign="Center"
-					width="9rem">
+					width="6rem">
 					<Text text="{i18n>TituloColunaEhCasado}" />
 				</Column>
 				<Column
@@ -67,7 +68,7 @@
 			<items>
 				<ColumnListItem>
 					<cells>
-						<Text title="{TabelaFuncionarios>id}" />
+						<ObjectIdentifier title="{TabelaFuncionarios>id}" />
 						<ObjectIdentifier title="{TabelaFuncionarios>nome}" />
 						<ObjectIdentifier title="{TabelaFuncionarios>cpf}" />
 						<Text text="{TabelaFuncionarios>telefone}" />

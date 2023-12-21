@@ -3,8 +3,8 @@
     "sap.app": {
         "id": "controle.funcionarios",
         "i18n": "i18n/i18n.properties",
-        "title": "{{appTitle}}",
-        "description": "{{appDescription}}",
+        "title": "{{appTitulo}}",
+        "description": "{{appDescricao}}",
         "type": "application",
         "applicationVersion": {
             "version": "1.0.0"
@@ -43,13 +43,6 @@
             "viewName": "controle.funcionarios.view.App",
             "type": "XML",
             "id": "app"
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
         },
         "routing": {
             "config": {

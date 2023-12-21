@@ -58,7 +58,7 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                Funcionario funcionario = new();
+                Funcionario funcionario = null;
                 using (var conn = Connection())
                 {
                     SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
@@ -68,11 +68,15 @@ namespace Infraestrutura.Repositorios
                         funcionario = NovoFuncionario(reader);
                     }
                 }
+                if(funcionario is null)
+                {
+                    throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
+                }
                 return funcionario;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
+                throw new Exception(message: ex.Message);
             }
         }
         public List<Funcionario> ObterTodos()

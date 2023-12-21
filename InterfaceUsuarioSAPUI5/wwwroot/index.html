@@ -10,12 +10,13 @@
 		data-sap-ui-libs="sap.m"
 		data-sap-ui-compatVersion="edge"
 		data-sap-ui-async="true"
-		data-sap-ui-onInit="module:controle/funcionarios/index"
+		data-sap-ui-onInit="module:sap/ui/core/ComponentSupport"
 		data-sap-ui-resourceroots='{
 			"controle.funcionarios": "./"
 		}'>
 	</script>
 </head>
 <body class="sapUiBody" id="content">
+	<div data-sap-ui-component data-name="controle.funcionarios" data-id="container" data-settings='{"id" : "funcionarios"}'></div>
 </body>
 </html>

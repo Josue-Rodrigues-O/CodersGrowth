@@ -4,6 +4,6 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("controle.funcionarios.controller.App", {
-
+        
     });
 });

@@ -11,28 +11,28 @@ sap.ui.define([
     return Controller.extend("controle.funcionarios.Controller.Listagem", {
         formatter: formatter,
         onInit: function () {
-            const oViewModel = new JSONModel({
+            const viewModelo = new JSONModel({
                 currency: "BRL"
             });
-            this.getView().setModel(oViewModel, "view");
+            this.getView().setModel(viewModelo, "view");
 
             RepositorioAPI.obterTodos(this);
         },
 
-        Ao_Clicar_Abre_Tela_De_Cadastro(){
+        aoClicarAbreTelaDeCadastro(){
             alert("Abrir tela de cadastro");
         },
 
-        Filtro_Da_Tela_De_Listagem(oEvent){
-            const aFilter = [];
-            const sQuery = oEvent.getParameter("query");
-            if(sQuery) {
-                aFilter.push(new Filter("nome", FilterOperator.Contains, sQuery));
+        aoPesquisarFiltrarFuncionarios(Evento){
+            const arrayFiltrado = [];
+            const stringQuery = Evento.getParameter("query");
+            if(stringQuery) {
+                arrayFiltrado.push(new Filter("nome", FilterOperator.Contains, stringQuery));
             }
 
-            const oList = this.byId("TabelaFuncionarios");
-            const oBinding = oList.getBinding("items");
-            oBinding.filter(aFilter);
+            const listaFiltrada = this.byId("TabelaFuncionarios");
+            const objetoBinding = listaFiltrada.getBinding("items");
+            objetoBinding.filter(arrayFiltrado);
         }
     });
 });
