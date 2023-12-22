@@ -73,5 +73,60 @@ namespace Infraestrutura.Repositorios
                 throw new Exception(message: Excessoes.ERRO_AO_REMOVER_FUNCIONARIO);
             }
         }
+
+        public List<Funcionario> Filtrar(string condicao)
+        {
+            try
+            {
+                var listaFiltrada = new List<Funcionario>();
+                foreach (var item in _listaFuncionarios)
+                {
+                    string ehCasado = string.Empty;
+                    switch (item.EhCasado)
+                    {
+                        case true: ehCasado = "sim"; break;
+                        case false: ehCasado = "nao"; break;
+                    }
+
+                    if (item.Id.ToString().Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (item.Nome.Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (item.Cpf.Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (item.Telefone.Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (item.Salario.ToString().Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (item.DataNascimento.ToString().Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (item.Genero.ToString().Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                    else if (ehCasado.Contains(condicao))
+                    {
+                        listaFiltrada.Add(item);
+                    }
+                }
+                return listaFiltrada;
+            }
+            catch
+            {
+                throw new Exception(message: Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
+            }
+        }
     }
 }

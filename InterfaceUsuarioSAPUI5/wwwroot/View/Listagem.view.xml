@@ -1,6 +1,7 @@
 <mvc:View
 	controllerName="controle.funcionarios.controller.Listagem"
 	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc">
 	<Panel
 		class="sapUiResponsiveMargin"
@@ -8,10 +9,12 @@
 		accessibleRole="Region">
 		<headerToolbar>
 			<Toolbar
+				style="Clear"
 				class="sapUi-Std-PaddingS">
 				<Button
+					type="Ghost"
 					icon="sap-icon://add"
-					text="{i18n>btnAdicionar}"
+					text="{i18n>botaoAdicionar}"
 					press=".aoClicarAbreTelaDeCadastro" />
 				<ToolbarSpacer />
 				<SearchField
@@ -20,6 +23,7 @@
 			</Toolbar>
 		</headerToolbar>
 		<Table
+			showSeparators="Inner"
 			id="TabelaFuncionarios"
 			width="auto"
 			items="{
@@ -32,43 +36,61 @@
 			<columns>
 				<Column
 					hAlign="Center"
-					width="3rem">
-					<Text text="{i18n>TituloColunaId}" />
+					width="5rem">
+					<header>
+						<Text text="{i18n>TituloColunaId}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center">
-					<Text text="{i18n>TituloColunaNome}" />
+					<header>
+						<Text text="{i18n>TituloColunaNome}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center">
-					<Text text="{i18n>TituloColunaCpf}" />
+					<header>
+						<Text text="{i18n>TituloColunaCpf}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center">
-					<Text text="{i18n>TituloColunaTelefone}" />
+					<header>
+						<Text text="{i18n>TituloColunaTelefone}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center">
-					<Text text="{i18n>TituloColunaSalario}" />
+					<header>
+						<Text text="{i18n>TituloColunaSalario}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center"
 					width="6rem">
-					<Text text="{i18n>TituloColunaEhCasado}" />
+					<header>
+						<Text text="{i18n>TituloColunaEhCasado}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center">
-					<Text text="{i18n>TituloColunaGenero}" />
+					<header>
+						<Text text="{i18n>TituloColunaGenero}" />
+					</header>
 				</Column>
 				<Column
 					hAlign="Center">
-					<Text text="{i18n>TituloColunaDataNascimento}" />
+					<header>
+						<Text text="{i18n>TituloColunaDataNascimento}" />
+					</header>
 				</Column>
 			</columns>
 			<items>
 				<ColumnListItem>
 					<cells>
-						<ObjectIdentifier title="{TabelaFuncionarios>id}" />
+						<ObjectIdentifier
+							badgePeople="true"
+							title="{TabelaFuncionarios>id}" />
 						<ObjectIdentifier title="{TabelaFuncionarios>nome}" />
 						<ObjectIdentifier title="{TabelaFuncionarios>cpf}" />
 						<Text text="{TabelaFuncionarios>telefone}" />

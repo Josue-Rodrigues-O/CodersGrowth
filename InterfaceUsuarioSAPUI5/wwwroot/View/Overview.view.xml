@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
-    >
+>
     <Page title="{i18n>tituloTelaListagem}">
         <content>
             <mvc:XMLView viewName="controle.funcionarios.view.Listagem" />

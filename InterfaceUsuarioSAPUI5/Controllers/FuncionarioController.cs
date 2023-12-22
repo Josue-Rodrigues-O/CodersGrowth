@@ -5,13 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InterfaceUsuarioSAPUI5.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class FuncionarioController : ControllerBase
     {
-        private readonly IRepositorio _repositorio = new RepositorioBD();
+        private readonly IRepositorio _repositorio;
+        
+        public FuncionarioController(IRepositorio repositorio)
+        {
+            _repositorio = repositorio;
+        }
 
         [HttpPost]
+        [ActionName("Criar")]
         public IActionResult Criar([FromBody] Funcionario funcionario)
         {
             try
@@ -27,8 +33,9 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpGet]
+        [ActionName("ObterTodos")]
         public IActionResult ObterTodos()
         {
             try
@@ -42,6 +49,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet("{id}")]
+        [ActionName("ObterPorId")]
         public IActionResult ObterPorId(uint id)
         {
             try
@@ -56,7 +64,22 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             }
         }
 
+        [HttpGet("{condicao}")]
+        [ActionName("Filtrar")]
+        public IActionResult Filtro(string condicao)
+        {
+            try
+            {
+                return Ok(_repositorio.Filtrar(condicao));
+            }
+            catch
+            {
+                return BadRequest(Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
+            }
+        }
+
         [HttpPatch]
+        [ActionName("Atualizar")]
         public IActionResult Atualizar([FromBody] Funcionario funcionario)
         {
             try
@@ -74,6 +97,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ActionName("Delete")]
         public IActionResult Remover(uint id)
         {
             try

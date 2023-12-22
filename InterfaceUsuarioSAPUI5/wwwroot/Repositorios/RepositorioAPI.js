@@ -6,19 +6,27 @@ sap.ui.define([
   const ID_TABELA = "TabelaFuncionarios";
 
   return {
-    obterTodos(controller) {
-      const url = "/api/Funcionario"
+    obterTodos(view) {
+      const url = "/api/Funcionario/ObterTodos"
       fetch(url)
         .then(funcionarios => funcionarios.json())
-        .then(funcionarios => controller.getView().setModel(new JSONModel(funcionarios), ID_TABELA))
+        .then(funcionarios => view.setModel(new JSONModel(funcionarios), ID_TABELA))
         .catch((erro) => console.log(erro.error))
     },
 
-    obterPorId(controller, id){
-      const url = `/api/Funcionario/${id}`
+    obterPorId(view, id){
+      const url = `/api/Funcionario/ObterPorId/${id}`
       fetch(url)
         .then(funcionarios => funcionarios.json())
-        .then(funcionarios => controller.getView().setModel(new JSONModel([funcionarios]), ID_TABELA))
+        .then(funcionarios => view.setModel(new JSONModel([funcionarios]), ID_TABELA))
+        .catch((erro) => console.log(erro.error))
+    },
+
+    obterTodosComFiltro(view, condicao){
+      const url = `/api/Funcionario/Filtrar/${condicao}`
+      fetch(url)
+        .then(funcionarios => funcionarios.json())
+        .then(funcionarios => view.setModel(new JSONModel(funcionarios), ID_TABELA))
         .catch((erro) => console.log(erro.error))
     }
   }

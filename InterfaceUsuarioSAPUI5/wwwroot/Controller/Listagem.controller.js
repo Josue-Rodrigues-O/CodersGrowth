@@ -16,7 +16,7 @@ sap.ui.define([
             });
             this.getView().setModel(viewModelo, "view");
 
-            RepositorioAPI.obterTodos(this);
+            RepositorioAPI.obterTodos(this.getView());
         },
 
         aoClicarAbreTelaDeCadastro(){
@@ -24,6 +24,7 @@ sap.ui.define([
         },
 
         aoPesquisarFiltrarFuncionarios(Evento){
+            console.log(Evento);
             const arrayFiltrado = [];
             const stringQuery = Evento.getParameter("query");
             if(stringQuery) {
