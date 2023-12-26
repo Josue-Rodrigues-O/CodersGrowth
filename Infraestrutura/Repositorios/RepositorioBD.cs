@@ -19,7 +19,7 @@ namespace Infraestrutura.Repositorios
         {
             Funcionario funcionario = new()
             {
-                Id = Convert.ToUInt32(reader["Id"]),
+                Id = Convert.ToInt32(reader["Id"]),
                 Nome = reader["Nome"].ToString(),
                 Cpf = reader["Cpf"].ToString(),
                 Telefone = reader["Telefone"].ToString(),
@@ -136,36 +136,6 @@ namespace Infraestrutura.Repositorios
             catch
             {
                 throw new Exception(message: Excessoes.ERRO_AO_REMOVER_FUNCIONARIO);
-            }
-        }
-
-        public List<Funcionario> Filtrar(string condicao)
-        {
-            try
-            {
-                List<Funcionario> lista = new();
-                using (var conn = Connection())
-                {
-                    SqlCommand cmd = new($@"select * from TabFuncionarios where 
-                                            Id like '%{condicao}%' or 
-                                            Nome like '%{condicao}%' or 
-                                            Cpf like '%{condicao}%' or 
-                                            Telefone like '%{condicao}%' or 
-                                            Salario like '%{condicao}%' or 
-                                            EhCasado like '%{condicao}%' or 
-                                            DataNascimento like '%{condicao}%' or 
-                                            Genero like '%{condicao}%' ", conn);
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        lista.Add(NovoFuncionario(reader));
-                    }
-                }
-                return lista;
-            }
-            catch
-            {
-                throw new Exception(message: Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
             }
         }
     }

@@ -7,7 +7,7 @@ namespace Dominio
     public class Funcionario
     {
         [PrimaryKey, Identity, NotNull]
-        public uint Id { get; set; }
+        public int Id { get; set; }
         [NotNull, Column("Nome")]
         public string Nome { get; set; } = string.Empty;
         [NotNull, Column("Cpf")]

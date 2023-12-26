@@ -1,23 +1,24 @@
 ﻿using Dominio;
 using Dominio.Constantes;
 using Infraestrutura.Repositorios;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.InteropServices;
 
 namespace InterfaceUsuarioSAPUI5.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class FuncionarioController : ControllerBase
     {
         private readonly IRepositorio _repositorio;
-        
+
         public FuncionarioController(IRepositorio repositorio)
         {
             _repositorio = repositorio;
         }
 
         [HttpPost]
-        [ActionName("Criar")]
         public IActionResult Criar([FromBody] Funcionario funcionario)
         {
             try
@@ -26,7 +27,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
                 validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
                 _repositorio.Criar(funcionario);
-                return Created(Constantes.ROTA_CRIAR, funcionario);
+                return Created(funcionario.Id.ToString(), funcionario);
             }
             catch (Exception ex)
             {
@@ -35,12 +36,30 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet]
-        [ActionName("ObterTodos")]
-        public IActionResult ObterTodos()
+        public IActionResult ObterTodos([FromQuery] string? condicao)
         {
             try
             {
-                return Ok(_repositorio.ObterTodos());
+                IEnumerable<Funcionario> listaFiltrada;
+
+                if (string.IsNullOrEmpty(condicao))
+                {
+                    listaFiltrada = _repositorio.ObterTodos();
+                }
+                else
+                {
+                    listaFiltrada =
+                    from funcionario
+                    in _repositorio.ObterTodos()
+                    where funcionario.Id.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Cpf.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Telefone.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Salario.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.DataNascimento.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    select funcionario;
+                }
+                return Ok(listaFiltrada);
             }
             catch
             {
@@ -49,7 +68,6 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet("{id}")]
-        [ActionName("ObterPorId")]
         public IActionResult ObterPorId(uint id)
         {
             try
@@ -64,22 +82,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             }
         }
 
-        [HttpGet("{condicao}")]
-        [ActionName("Filtrar")]
-        public IActionResult Filtro(string condicao)
-        {
-            try
-            {
-                return Ok(_repositorio.Filtrar(condicao));
-            }
-            catch
-            {
-                return BadRequest(Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
-            }
-        }
-
         [HttpPatch]
-        [ActionName("Atualizar")]
         public IActionResult Atualizar([FromBody] Funcionario funcionario)
         {
             try
@@ -97,7 +100,6 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ActionName("Delete")]
         public IActionResult Remover(uint id)
         {
             try

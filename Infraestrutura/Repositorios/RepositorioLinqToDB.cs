@@ -17,19 +17,17 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                using (var conn = Conexao())
+                using var conn = Conexao();
+                funcionario.Id = conn.InsertWithInt32Identity(new Funcionario
                 {
-                    conn.Insert(new Funcionario
-                    {
-                        Nome = funcionario.Nome,
-                        Cpf = funcionario.Cpf,
-                        DataNascimento = funcionario.DataNascimento,
-                        EhCasado = funcionario.EhCasado,
-                        Genero = funcionario.Genero,
-                        Salario = funcionario.Salario,
-                        Telefone = funcionario.Telefone
-                    });
-                }
+                    Nome = funcionario.Nome,
+                    Cpf = funcionario.Cpf,
+                    DataNascimento = funcionario.DataNascimento,
+                    EhCasado = funcionario.EhCasado,
+                    Genero = funcionario.Genero,
+                    Salario = funcionario.Salario,
+                    Telefone = funcionario.Telefone
+                });
             }
             catch
             {
@@ -94,70 +92,6 @@ namespace Infraestrutura.Repositorios
             catch
             {
                 throw new Exception(message: Excessoes.ERRO_AO_REMOVER_FUNCIONARIO);
-            }
-        }
-
-        public List<Funcionario> Filtrar(string condicao)
-        {
-            try
-            {
-                using (var conn = Conexao())
-                {
-                    var lista = conn.GetTable<Funcionario>().ToList();
-                    var listaFiltrada = new List<Funcionario>();
-
-                    listaFiltrada = lista.
-
-                    foreach (var item in lista)
-                    {
-                        string ehCasado = string.Empty;
-                        switch (item.EhCasado)
-                        {
-                            case true: ehCasado = "sim"; break;
-                            case false: ehCasado = "nao"; break;
-                        }
-
-                        if (item.Id.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (item.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (item.Cpf.Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (item.Telefone.Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (item.Salario.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (item.DataNascimento.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (item.Genero.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                        else if (ehCasado.Contains(condicao, StringComparison.OrdinalIgnoreCase))
-                        {
-                            listaFiltrada.Add(item);
-                        }
-                    }
-
-
-                    return listaFiltrada;
-                }
-            }
-            catch
-            {
-                throw new Exception(message: Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
             }
         }
     }

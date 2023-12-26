@@ -58,12 +58,30 @@
                     "pattern": "",
                     "name": "overview",
                     "target": "overview"
+                },
+                {
+                    "pattern": "create",
+                    "name": "create",
+                    "target": "create"
+                },
+                {
+                    "pattern": "details",
+                    "name": "details",
+                    "target": "details"
                 }
             ],
             "targets": {
                 "overview": {
                     "id": "overview",
                     "name": "Overview"
+                },
+                "create": {
+                    "id": "create",
+                    "name": "Create"
+                },
+                "details": {
+                    "id": "details",
+                    "name": "Details"
                 }
             }
         },

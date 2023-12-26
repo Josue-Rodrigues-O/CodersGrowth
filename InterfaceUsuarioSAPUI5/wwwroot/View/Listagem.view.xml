@@ -23,6 +23,7 @@
 			</Toolbar>
 		</headerToolbar>
 		<Table
+			growingScrollToLoad="true"
 			showSeparators="Inner"
 			id="TabelaFuncionarios"
 			width="auto"
@@ -86,7 +87,9 @@
 				</Column>
 			</columns>
 			<items>
-				<ColumnListItem>
+				<ColumnListItem
+					type="Navigation"
+					press=".aoClicarAbrirDetails">
 					<cells>
 						<ObjectIdentifier
 							badgePeople="true"
