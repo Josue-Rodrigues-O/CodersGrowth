@@ -1,12 +1,12 @@
 <mvc:View
-    controllerName="controle.funcionarios.controller.Details"
+    controllerName="controle.funcionarios.controller.Criar"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
     <Page
-        title="{i18n>tituloPaginaDetalhes}"
+        title="{i18n>tituloPaginaCriacao}"
         showNavButton="true"
         navButtonPress=".aoClicarVoltarParaPaginaAnterior">
         <Text
-            text="PAGINA DE DESCRIÇÃO" />
+            text="PAGINA DE CRIAÇÃO" />
     </Page>
 </mvc:View>

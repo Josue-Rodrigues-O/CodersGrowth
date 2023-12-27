@@ -2,17 +2,18 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "../Model/formatter",
-    "../Repositorios/RepositorioAPI"
-], function (Controller, JSONModel, formatter, RepositorioAPI) {
+    "../Repositorios/FuncionarioRepository"
+], function (Controller, JSONModel, formatter, FuncionarioRepository) {
     "use strict";
 
-    const MODELO_TABELA = "ModeloTabelaFuncionarios";
-    const MODELO_SALARIO = "ModeloSalario"
-    const ROTA_CREATE = "create";
-    const ROTA_DETAILS = "details";
+    const CONTROLE_LISTAGEM = "controle.funcionarios.Controller.Listagem";
+    const MODELO_TABELA = "modeloTabelaFuncionarios";
+    const MODELO_SALARIO = "modeloSalario"
+    const ROTA_CRIAR = "criar";
+    const ROTA_DETALHES = "detalhes";
     const MOEDA = "BRL";
 
-    return Controller.extend("controle.funcionarios.Controller.Listagem", {
+    return Controller.extend(CONTROLE_LISTAGEM, {
         formatter: formatter,
         onInit: function () {
             this.definirModeloMoeda();
@@ -27,22 +28,23 @@ sap.ui.define([
         },
 
         chamarObterTodos() {
-            RepositorioAPI.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
+            FuncionarioRepository.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
         aoClicarAbreTelaDeCadastro() {
-            const oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo(ROTA_CREATE);
+            const rota = this.getOwnerComponent().getRouter();
+            rota.navTo(ROTA_CRIAR);
         },
 
         aoPesquisarFiltrarFuncionarios(condicao) {
-            const stringCondicao = condicao.getParameter("query");
-            RepositorioAPI.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
+            const parametroQuery = "query";
+            const stringCondicao = condicao.getParameter(parametroQuery);
+            FuncionarioRepository.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
         aoClicarAbrirDetails() {
-            const oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo(ROTA_DETAILS);
+            const rota = this.getOwnerComponent().getRouter();
+            rota.navTo(ROTA_DETALHES);
         }
     });
 });

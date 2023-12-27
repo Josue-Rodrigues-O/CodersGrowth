@@ -3,9 +3,9 @@ sap.ui.define([
 ], (Controller) => {
     "use strict";
 
-    const APP_CONTROLLER = "controle.funcionarios.controller.App";
+    const CONTROLADOR_APP = "controle.funcionarios.controller.App";
 
-    return Controller.extend(APP_CONTROLLER, {
+    return Controller.extend(CONTROLADOR_APP, {
         
     });
 });

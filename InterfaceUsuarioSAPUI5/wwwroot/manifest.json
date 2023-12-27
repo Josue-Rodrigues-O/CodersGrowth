@@ -60,14 +60,14 @@
                     "target": "overview"
                 },
                 {
-                    "pattern": "create",
-                    "name": "create",
-                    "target": "create"
+                    "pattern": "criar",
+                    "name": "criar",
+                    "target": "criar"
                 },
                 {
-                    "pattern": "details",
-                    "name": "details",
-                    "target": "details"
+                    "pattern": "detalhes",
+                    "name": "detalhes",
+                    "target": "detalhes"
                 }
             ],
             "targets": {
@@ -75,13 +75,13 @@
                     "id": "overview",
                     "name": "Overview"
                 },
-                "create": {
-                    "id": "create",
-                    "name": "Create"
+                "criar": {
+                    "id": "criar",
+                    "name": "Criar"
                 },
-                "details": {
-                    "id": "details",
-                    "name": "Details"
+                "detalhes": {
+                    "id": "detalhes",
+                    "name": "Detalhes"
                 }
             }
         },
