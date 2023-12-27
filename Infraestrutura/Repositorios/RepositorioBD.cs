@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Dominio.Constantes;
 using Dominio.Enums;
+using LinqToDB.SqlQuery;
 using Microsoft.Data.SqlClient;
 
 namespace Infraestrutura.Repositorios
@@ -45,8 +46,8 @@ namespace Infraestrutura.Repositorios
                                     {funcionario.Salario.ToString().Replace(",", ".")},
                                     '{funcionario.DataNascimento.Date:yyyy-MM-dd}',
                                     {Convert.ToByte(funcionario.EhCasado)},
-                                    '{funcionario.Genero}')", conn);
-                    cmd.ExecuteReader();
+                                    '{funcionario.Genero}'); SELECT SCOPE_IDENTITY()", conn);
+                    funcionario.Id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch

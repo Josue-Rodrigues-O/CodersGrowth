@@ -1,9 +1,7 @@
 ﻿using Dominio;
 using Dominio.Constantes;
 using Infraestrutura.Repositorios;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
 
 namespace InterfaceUsuarioSAPUI5.Controllers
 {
