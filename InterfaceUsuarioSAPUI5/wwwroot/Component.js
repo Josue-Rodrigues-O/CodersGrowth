@@ -3,7 +3,9 @@ sap.ui.define([
 ], (UIComponent) => {
     "use strict";
 
-    return UIComponent.extend("controle.funcionarios.Component", {
+    const COMPONENT = "controle.funcionarios.Component";
+
+    return UIComponent.extend(COMPONENT, {
         metadata: {
             interfaces: ["sap.ui.core.IAsyncContentCreation"],
             manifest: "json"

@@ -3,27 +3,27 @@ sap.ui.define([], () => {
 
     return {
         generoText(sexo) {
-            const resourceBuendle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            const recursos_i18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
             switch (sexo) {
                 case 0:
-                    return resourceBuendle.getText("indefinido");
+                    return recursos_i18n.getText("indefinido");
                 case 1:
-                    return resourceBuendle.getText("masculino");
+                    return recursos_i18n.getText("masculino");
                 case 2:
-                    return resourceBuendle.getText("feminino");
+                    return recursos_i18n.getText("feminino");
                 default:
                     return sexo;
             }
         },
-        estadoCivilText(estadoCivil) {
-            const resourceBuendle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-            switch (estadoCivil) {
+        estadoCivilText(ehCasado) {
+            const recursos_i18n = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            switch (ehCasado) {
                 case true:
-                    return resourceBuendle.getText("sim");
+                    return recursos_i18n.getText("sim");
                 case false:
-                    return resourceBuendle.getText("nao");
+                    return recursos_i18n.getText("nao");
                 default:
-                    return estadoCivil;
+                    return ehCasado;
             }
         }
     }

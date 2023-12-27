@@ -23,12 +23,14 @@
 			</Toolbar>
 		</headerToolbar>
 		<Table
+			growing="true"
+			growingThreshold="11"
 			growingScrollToLoad="true"
 			showSeparators="Inner"
-			id="TabelaFuncionarios"
+			id="IdTabelaFuncionarios"
 			width="auto"
 			items="{
-				path : 'TabelaFuncionarios>/',
+				path : 'ModeloTabelaFuncionarios>/',
 				sorter : {
 					path : 'id',
 					group : false
@@ -93,15 +95,15 @@
 					<cells>
 						<ObjectIdentifier
 							badgePeople="true"
-							title="{TabelaFuncionarios>id}" />
-						<ObjectIdentifier title="{TabelaFuncionarios>nome}" />
-						<ObjectIdentifier title="{TabelaFuncionarios>cpf}" />
-						<Text text="{TabelaFuncionarios>telefone}" />
+							title="{ModeloTabelaFuncionarios>id}" />
+						<ObjectIdentifier title="{ModeloTabelaFuncionarios>nome}" />
+						<ObjectIdentifier title="{ModeloTabelaFuncionarios>cpf}" />
+						<Text text="{ModeloTabelaFuncionarios>telefone}" />
 						<ObjectNumber
 							number="{
 								parts: [
-									'TabelaFuncionarios>salario',
-									'view>/currency'
+									'ModeloTabelaFuncionarios>salario',
+									'ModeloSalario>/currency'
 								],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {
@@ -111,17 +113,17 @@
 							}" />
 						<Text
 							text="{
-							path: 'TabelaFuncionarios>ehCasado',
+							path: 'ModeloTabelaFuncionarios>ehCasado',
 							formatter: '.formatter.estadoCivilText'
 						}" />
 						<Text
 							text="{
-							path: 'TabelaFuncionarios>genero',
+							path: 'ModeloTabelaFuncionarios>genero',
 							formatter: '.formatter.generoText'
 						}" />
 						<Text
 							text="{
-							path: 'TabelaFuncionarios>dataNascimento',
+							path: 'ModeloTabelaFuncionarios>dataNascimento',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
 								style: 'short',

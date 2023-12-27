@@ -6,7 +6,11 @@ sap.ui.define([
 ], function (Controller, JSONModel, formatter, RepositorioAPI) {
     "use strict";
 
-    const ID_TABELA = "TabelaFuncionarios";
+    const MODELO_TABELA = "ModeloTabelaFuncionarios";
+    const MODELO_SALARIO = "ModeloSalario"
+    const ROTA_CREATE = "create";
+    const ROTA_DETAILS = "details";
+    const MOEDA = "BRL";
 
     return Controller.extend("controle.funcionarios.Controller.Listagem", {
         formatter: formatter,
@@ -17,28 +21,28 @@ sap.ui.define([
 
         definirModeloMoeda() {
             const modeloMoeda = new JSONModel({
-                currency: "BRL"
+                currency: MOEDA
             });
-            this.getView().setModel(modeloMoeda, "view");
+            this.getView().setModel(modeloMoeda, MODELO_SALARIO);
         },
 
         chamarObterTodos() {
-            RepositorioAPI.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), ID_TABELA));
+            RepositorioAPI.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
         aoClicarAbreTelaDeCadastro() {
             const oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("create");
+            oRouter.navTo(ROTA_CREATE);
         },
 
         aoPesquisarFiltrarFuncionarios(condicao) {
             const stringCondicao = condicao.getParameter("query");
-            RepositorioAPI.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), ID_TABELA));
+            RepositorioAPI.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
         aoClicarAbrirDetails() {
             const oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("details");
+            oRouter.navTo(ROTA_DETAILS);
         }
     });
 });
