@@ -20,11 +20,13 @@ sap.ui.define([
             this.chamarObterTodos();
         },
 
+        _data: {
+            "currency": "BRL"
+        },
+
         definirModeloMoeda() {
-            const modeloMoeda = new JSONModel({
-                currency: MOEDA
-            });
-            this.getView().setModel(modeloMoeda, MODELO_SALARIO);
+            var modelo = new JSONModel(this._data);
+            this.getView().setModel(modelo);
         },
 
         chamarObterTodos() {

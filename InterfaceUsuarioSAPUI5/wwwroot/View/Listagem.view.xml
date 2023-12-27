@@ -99,16 +99,12 @@
 						<ObjectIdentifier title="{modeloTabelaFuncionarios>nome}" />
 						<ObjectIdentifier title="{modeloTabelaFuncionarios>cpf}" />
 						<Text text="{modeloTabelaFuncionarios>telefone}" />
-						<ObjectNumber
-							number="{
-								parts: [
-									'modeloTabelaFuncionarios>salario',
-									'modeloSalario>/currency'
-								],
+						<Text
+							text="{
+								parts: ['modeloTabelaFuncionarios>salario', '/currency'],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {
-									currencyCode:false,
-									showMeasure: true
+									currencyCode : false
 								}
 							}" />
 						<Text
