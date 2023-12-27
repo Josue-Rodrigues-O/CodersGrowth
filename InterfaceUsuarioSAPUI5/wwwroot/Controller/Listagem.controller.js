@@ -8,28 +8,16 @@ sap.ui.define([
 
     const CONTROLE_LISTAGEM = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
-    const MODELO_SALARIO = "modeloSalario"
     const ROTA_CRIAR = "criar";
     const ROTA_DETALHES = "detalhes";
-    const MOEDA = "BRL";
 
     return Controller.extend(CONTROLE_LISTAGEM, {
         formatter: formatter,
         onInit: function () {
-            this.definirModeloMoeda();
-            this.chamarObterTodos();
+            this._carregarFuncionarios();
         },
 
-        _data: {
-            "currency": "BRL"
-        },
-
-        definirModeloMoeda() {
-            var modelo = new JSONModel(this._data);
-            this.getView().setModel(modelo);
-        },
-
-        chamarObterTodos() {
+        _carregarFuncionarios() {
             FuncionarioRepository.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
@@ -44,7 +32,7 @@ sap.ui.define([
             FuncionarioRepository.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
-        aoClicarAbrirDetails() {
+        aoClicarAbreTelaDeDetalhes() {
             const rota = this.getOwnerComponent().getRouter();
             rota.navTo(ROTA_DETALHES);
         }

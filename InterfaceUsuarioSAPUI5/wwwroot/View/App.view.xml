@@ -5,6 +5,7 @@
     displayBlock="true">
     <Shell>
         <App
+            defaultTransitionName="flip"
             class="myAppDemoWT"
             id="app" />
     </Shell>

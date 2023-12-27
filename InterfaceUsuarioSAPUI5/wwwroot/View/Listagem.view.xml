@@ -4,6 +4,7 @@
 	xmlns:core="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc">
 	<Panel
+		stickyHeader="true"
 		class="sapUiResponsiveMargin"
 		width="auto"
 		accessibleRole="Region">
@@ -23,6 +24,7 @@
 			</Toolbar>
 		</headerToolbar>
 		<Table
+			alternateRowColors="true"
 			growing="true"
 			growingThreshold="11"
 			growingScrollToLoad="true"
@@ -91,7 +93,7 @@
 			<items>
 				<ColumnListItem
 					type="Navigation"
-					press=".aoClicarAbrirDetails">
+					press=".aoClicarAbreTelaDeDetalhes">
 					<cells>
 						<ObjectIdentifier
 							badgePeople="true"
@@ -101,7 +103,7 @@
 						<Text text="{modeloTabelaFuncionarios>telefone}" />
 						<Text
 							text="{
-								parts: ['modeloTabelaFuncionarios>salario', '/currency'],
+								parts: ['modeloTabelaFuncionarios>salario', 'i18n>moeda'],
 								type: 'sap.ui.model.type.Currency',
 								formatOptions: {
 									currencyCode : false
