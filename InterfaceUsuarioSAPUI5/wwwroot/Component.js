@@ -3,11 +3,11 @@ sap.ui.define([
 ], (UIComponent) => {
     "use strict";
 
-    const COMPONENT = "controle.funcionarios.Component";
+    const nameSpace = "controle.funcionarios.Component";
     const IASYNC_CONTENT_CREATION = "sap.ui.core.IAsyncContentCreation";
     const TIPO_DE_ARQUIVO_MANIFEST = "json";
 
-    return UIComponent.extend(COMPONENT, {
+    return UIComponent.extend(nameSpace, {
         metadata: {
             interfaces: [IASYNC_CONTENT_CREATION],
             manifest: TIPO_DE_ARQUIVO_MANIFEST

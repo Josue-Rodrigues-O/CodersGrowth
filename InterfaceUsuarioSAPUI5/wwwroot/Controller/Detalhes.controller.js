@@ -4,10 +4,10 @@ sap.ui.define([
 ], function (Controller, History) {
     'use strict';
 
-    const CONTROLADOR_DETALHES = "controle.funcionarios.controller.Detalhes";
+    const nameSpace = "controle.funcionarios.controller.Detalhes";
     const ROTA_OVERVIEW = "overview"
 
-    return Controller.extend(CONTROLADOR_DETALHES, {
+    return Controller.extend(nameSpace, {
         aoClicarVoltarParaPaginaAnterior() {
             const PAGINA_ANTERIOR = -1;
             const historico = History.getInstance();
