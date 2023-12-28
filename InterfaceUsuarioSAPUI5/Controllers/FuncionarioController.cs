@@ -9,37 +9,15 @@ namespace InterfaceUsuarioSAPUI5.Controllers
     [ApiController]
     public class FuncionarioController : ControllerBase
     {
-        private readonly IRepositorio _repositorio = new Repositorio();
+        private readonly IRepositorio _repositorio;
 
-        [HttpGet]
-        public OkObjectResult ObterTodos()
+        public FuncionarioController(IRepositorio repositorio)
         {
-            try
-            {
-                return Ok(_repositorio.ObterTodos());
-            }
-            catch
-            {
-                throw new Exception(message: Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public OkObjectResult ObterPorId(uint id)
-        {
-            try
-            {
-                if (id == uint.MinValue) throw new Exception(message: Excessoes.ID_NULO);
-                return Ok(_repositorio.ObterPorId(id));
-            }
-            catch
-            {
-                throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
-            }
+            _repositorio = repositorio;
         }
 
         [HttpPost]
-        public CreatedResult Criar([FromBody] Funcionario funcionario)
+        public IActionResult Criar([FromBody] Funcionario funcionario)
         {
             try
             {
@@ -47,16 +25,63 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
                 validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
                 _repositorio.Criar(funcionario);
-                return Created(Constantes.ROTA_CRIAR, funcionario);
+                return Created(funcionario.Id.ToString(), funcionario);
             }
             catch (Exception ex)
             {
-                throw new Exception(message: ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ObterTodos([FromQuery] string? condicao)
+        {
+            try
+            {
+                IEnumerable<Funcionario> listaFiltrada;
+
+                if (string.IsNullOrEmpty(condicao))
+                {
+                    listaFiltrada = _repositorio.ObterTodos();
+                }
+                else
+                {
+                    listaFiltrada =
+                    from funcionario
+                    in _repositorio.ObterTodos()
+                    where funcionario.Id.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Cpf.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Telefone.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.Salario.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    || funcionario.DataNascimento.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    select funcionario;
+                }
+                return Ok(listaFiltrada);
+            }
+            catch
+            {
+                return BadRequest(Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(uint id)
+        {
+            try
+            {
+                var funcionario = _repositorio.ObterPorId(id);
+                if (funcionario is null) throw new Exception(message: Excessoes.ID_NULO);
+                return Ok(funcionario);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
             }
         }
 
         [HttpPatch]
-        public NoContentResult Atualizar([FromBody] Funcionario funcionario)
+        public IActionResult Atualizar([FromBody] Funcionario funcionario)
         {
             try
             {
@@ -68,23 +93,23 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(message: ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpDelete("{id}")]
-        public NoContentResult Remover(uint id)
+        public IActionResult Remover(uint id)
         {
             try
             {
-                if (id == uint.MinValue) throw new Exception(message: Excessoes.ID_NULO);
-                _repositorio.Remover(_repositorio.ObterPorId(id));
+                var funcionario = _repositorio.ObterPorId(id);
+                if (funcionario is null) throw new Exception(message: Excessoes.ID_NULO);
+                _repositorio.Remover(funcionario);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                BadRequest(ex.Message);
-                throw new Exception(message: ex.Message);
+                return BadRequest(ex.Message);
             }
         }
     }

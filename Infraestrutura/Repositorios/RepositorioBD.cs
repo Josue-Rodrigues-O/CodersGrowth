@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using Dominio.Constantes;
 using Dominio.Enums;
+using LinqToDB.SqlQuery;
 using Microsoft.Data.SqlClient;
 
 namespace Infraestrutura.Repositorios
@@ -19,7 +20,7 @@ namespace Infraestrutura.Repositorios
         {
             Funcionario funcionario = new()
             {
-                Id = Convert.ToUInt32(reader["Id"]),
+                Id = Convert.ToInt32(reader["Id"]),
                 Nome = reader["Nome"].ToString(),
                 Cpf = reader["Cpf"].ToString(),
                 Telefone = reader["Telefone"].ToString(),
@@ -45,8 +46,8 @@ namespace Infraestrutura.Repositorios
                                     {funcionario.Salario.ToString().Replace(",", ".")},
                                     '{funcionario.DataNascimento.Date:yyyy-MM-dd}',
                                     {Convert.ToByte(funcionario.EhCasado)},
-                                    '{funcionario.Genero}')", conn);
-                    cmd.ExecuteReader();
+                                    '{funcionario.Genero}'); SELECT SCOPE_IDENTITY()", conn);
+                    funcionario.Id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch
@@ -58,7 +59,7 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                Funcionario funcionario = new();
+                Funcionario funcionario = null;
                 using (var conn = Connection())
                 {
                     SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
@@ -68,11 +69,15 @@ namespace Infraestrutura.Repositorios
                         funcionario = NovoFuncionario(reader);
                     }
                 }
+                if (funcionario is null)
+                {
+                    throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
+                }
                 return funcionario;
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
+                throw new Exception(message: ex.Message);
             }
         }
         public List<Funcionario> ObterTodos()

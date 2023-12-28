@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página inicial</title>
+	<meta charset="utf-8">
+	<title>Controle de Funcionarios</title>
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<script
+		id="sap-ui-bootstrap"
+		src="https://sdk.openui5.org/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_fiori_3_dark"
+		data-sap-ui-libs="sap.m"
+		data-sap-ui-compatVersion="edge"
+		data-sap-ui-async="true"
+		data-sap-ui-onInit="module:sap/ui/core/ComponentSupport"
+		data-sap-ui-resourceroots='{
+			"controle.funcionarios": "./"
+		}'>
+	</script>
 </head>
-<body>
-    <div>Olá mundos mais uma vez</div>
+<body class="sapUiBody" id="content">
+	<div data-sap-ui-component data-name="controle.funcionarios" data-id="container" data-settings='{"id" : "funcionarios"}'></div>
 </body>
 </html>

@@ -29,7 +29,7 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                return _listaFuncionarios.First(x => x.Id == id);
+                return _listaFuncionarios.FirstOrDefault(x => x.Id == id);
             }
             catch
             {

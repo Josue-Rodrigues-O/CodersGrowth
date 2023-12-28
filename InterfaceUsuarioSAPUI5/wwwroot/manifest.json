@@ -1,6 +1,89 @@
 {
     "_version": "1.58.0",
     "sap.app": {
-        "id": "ui5.walkthrough"
+        "id": "controle.funcionarios",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitulo}}",
+        "description": "{{appDescricao}}",
+        "type": "application",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "dependencies": {
+            "minUI5Version": "1.108.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "controle.funcionarios.i18n.i18n",
+                    "supportedLocales": [
+                        "pt_BR",
+                        "en"
+                    ],
+                    "fallbackLocale": ""
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "controle.funcionarios.view.Listagem",
+            "type": "XML",
+            "id": "app"
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "View",
+                "viewType": "XML",
+                "path": "controle.funcionarios.view",
+                "controlId": "app",
+                "controlAggregation": "pages"
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "listagem",
+                    "target": "listagem"
+                },
+                {
+                    "pattern": "criar",
+                    "name": "criar",
+                    "target": "criar"
+                },
+                {
+                    "pattern": "detalhes",
+                    "name": "detalhes",
+                    "target": "detalhes"
+                }
+            ],
+            "targets": {
+                "listagem": {
+                    "id": "listagem",
+                    "name": "Listagem"
+                },
+                "criar": {
+                    "id": "criar",
+                    "name": "Criar"
+                },
+                "detalhes": {
+                    "id": "detalhes",
+                    "name": "Detalhes"
+                }
+            }
+        }
     }
 }
