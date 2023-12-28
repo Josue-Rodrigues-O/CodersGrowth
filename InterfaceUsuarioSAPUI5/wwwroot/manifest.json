@@ -40,7 +40,7 @@
             }
         },
         "rootView": {
-            "viewName": "controle.funcionarios.view.App",
+            "viewName": "controle.funcionarios.view.Listagem",
             "type": "XML",
             "id": "app"
         },
@@ -56,8 +56,8 @@
             "routes": [
                 {
                     "pattern": "",
-                    "name": "overview",
-                    "target": "overview"
+                    "name": "listagem",
+                    "target": "listagem"
                 },
                 {
                     "pattern": "criar",
@@ -71,9 +71,9 @@
                 }
             ],
             "targets": {
-                "overview": {
-                    "id": "overview",
-                    "name": "Overview"
+                "listagem": {
+                    "id": "listagem",
+                    "name": "Listagem"
                 },
                 "criar": {
                     "id": "criar",
@@ -84,10 +84,6 @@
                     "name": "Detalhes"
                 }
             }
-        },
-        "contentDensities": {
-            "compact": true,
-            "cozy": true
         }
     }
 }
