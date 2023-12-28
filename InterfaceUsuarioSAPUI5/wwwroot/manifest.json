@@ -23,6 +23,7 @@
             "minUI5Version": "1.108.0",
             "libs": {
                 "sap.ui.core": {},
+                "sap.uxap": {} ,
                 "sap.m": {}
             }
         },
@@ -65,7 +66,7 @@
                     "target": "criar"
                 },
                 {
-                    "pattern": "detalhes",
+                    "pattern": "detalhes/{id}",
                     "name": "detalhes",
                     "target": "detalhes"
                 }

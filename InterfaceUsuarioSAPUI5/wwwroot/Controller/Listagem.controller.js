@@ -32,9 +32,12 @@ sap.ui.define([
             rota.navTo(ROTA_CRIAR);
         },
 
-        aoClicarAbreTelaDeDetalhes() {
-            const rota = this.getOwnerComponent().getRouter();
-            rota.navTo(ROTA_DETALHES);
+        aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
+            const funcionario = linhaSelecionada.getSource();
+			const rota = this.getOwnerComponent().getRouter();
+			rota.navTo(ROTA_DETALHES, {
+				id: window.encodeURIComponent(funcionario.getBindingContext(MODELO_TABELA).getPath().substr(1))
+			});
         }
     });
 });
