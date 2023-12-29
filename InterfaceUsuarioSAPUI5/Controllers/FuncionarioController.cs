@@ -49,8 +49,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                     listaFiltrada =
                     from funcionario
                     in _repositorio.ObterTodos()
-                    where funcionario.Id.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
-                    || funcionario.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    where funcionario.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase)
                     || funcionario.Cpf.Contains(condicao, StringComparison.OrdinalIgnoreCase)
                     || funcionario.Telefone.Contains(condicao, StringComparison.OrdinalIgnoreCase)
                     || funcionario.Salario.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)

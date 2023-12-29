@@ -16,11 +16,11 @@ sap.ui.define([
         onInit: function () {
             this._carregarFuncionarios();
         },
-        
+
         _carregarFuncionarios() {
             FuncionarioRepository.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
-        
+
         _pesquisarFiltrarFuncionarios(condicao) {
             const parametroQuery = "query";
             const stringCondicao = condicao.getParameter(parametroQuery);
@@ -33,11 +33,21 @@ sap.ui.define([
         },
 
         aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
-            const funcionario = linhaSelecionada.getSource();
-			const rota = this.getOwnerComponent().getRouter();
-			rota.navTo(ROTA_DETALHES, {
-				id: window.encodeURIComponent(funcionario.getBindingContext(MODELO_TABELA).getPath().substr(1))
-			});
+            //CORRIGIR NOMES
+            const promisseLinhaSelecionada = linhaSelecionada.getSource();
+
+            const indexLinhaSelecionada = promisseLinhaSelecionada.getBindingContext(MODELO_TABELA).getPath().substr(1)
+
+            const listaDeFuncionarios = promisseLinhaSelecionada.getBindingContext(MODELO_TABELA).oModel.oData
+
+            const funcionario = listaDeFuncionarios[indexLinhaSelecionada]
+
+            const rota = this.getOwnerComponent().getRouter();
+
+
+            rota.navTo(ROTA_DETALHES, {
+                id: window.encodeURIComponent(funcionario.id)
+            });
         }
     });
 });

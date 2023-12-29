@@ -6,7 +6,6 @@
 	displayBlock="true">
 
 	<App
-		defaultTransitionName="flip"
 		id="app">
 		<Page
 			title="{i18n>tituloTelaListagem}"
@@ -22,8 +21,7 @@
 							style="Clear"
 							class="sapUi-Std-PaddingS">
 							<Button
-								type="Ghost"
-								icon="sap-icon://add"
+								type="Transparent"
 								text="{i18n>botaoAdicionar}"
 								press=".aoClicarAbreTelaDeCadastro" />
 							<ToolbarSpacer />
@@ -48,13 +46,6 @@
 							}
 						}">
 						<columns>
-							<Column
-								hAlign="Center"
-								width="5rem">
-								<header>
-									<Text text="{i18n>TituloColunaId}" />
-								</header>
-							</Column>
 							<Column
 								hAlign="Center">
 								<header>
@@ -104,9 +95,6 @@
 								type="Navigation"
 								press=".aoClicarAbreTelaDeDetalhes">
 								<cells>
-									<ObjectIdentifier
-										badgePeople="true"
-										title="{modeloTabelaFuncionarios>id}" />
 									<ObjectIdentifier title="{modeloTabelaFuncionarios>nome}" />
 									<ObjectIdentifier title="{modeloTabelaFuncionarios>cpf}" />
 									<Text text="{modeloTabelaFuncionarios>telefone}" />

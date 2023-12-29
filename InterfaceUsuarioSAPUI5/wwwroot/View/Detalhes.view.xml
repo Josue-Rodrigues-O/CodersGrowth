@@ -1,21 +1,103 @@
 <mvc:View
     controllerName="controle.funcionarios.Controller.Detalhes"
     xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
-    height="100%">
-    <Page
-        title="{i18n>tituloPaginaDetalhes}"
-        showNavButton="true"
-        navButtonPress=".aoClicarVoltarParaPaginaAnterior">
-        <ObjectHeader
-            title="{modeloTabelaFuncionarios>nome}" />
-        <HBox>
-            <HBox><ObjectIdentifier title="CPF" /></HBox>
-            <HBox><ObjectIdentifier title="Telefone" /></HBox>
-            <HBox><ObjectIdentifier title="salário" /></HBox>
-            <HBox><ObjectIdentifier title="Casado(a)?" /></HBox>
-            <HBox><ObjectIdentifier title="Gênero" /></HBox>
-            <HBox><ObjectIdentifier title="Data de Nascimento" /></HBox>
-        </HBox>
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page>
+        <customHeader>
+            <Toolbar>
+                <Button type="Back" press="aoClicarVoltarParaPaginaAnterior" />
+                <ToolbarSpacer />
+                <Title text="{i18n>tituloPaginaDetalhes}" />
+                <ToolbarSpacer />
+                <Button
+                    text="{i18n>editar}"
+                    type="Transparent"
+                    press="aoClicarAbreTelaDeEdicao"/>
+                <Button
+                    text="{i18n>remover}"
+                    type="Transparent"
+                    press="aoClicarRemoveFuncionario"/>
+            </Toolbar>
+
+        </customHeader>
+        <VBox>
+            <HBox class="sapUiSmallMargin">
+                <ObjectIdentifier title="{/nome}" />
+            </HBox>
+            <FlexBox
+                direction="Row">
+                <VBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaId}:" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaCpf}:" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaTelefone}:" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaSalario}:" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaEhCasado}:" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaGenero}:" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{i18n>TituloColunaDataNascimento}:" />
+                    </HBox>
+                </VBox>
+                <VBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{/id}" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{/cpf}" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier title="{/telefone}" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier
+                            title="{
+                                parts: ['/salario'],
+                                type: 'sap.ui.model.type.Currency',
+                                formatOptions: {
+                                    style : 'short'
+                                }
+                            }" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier
+                            title="{
+                                path: '/ehCasado',
+                                formatter: '.formatter.estadoCivilText'
+                            }" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier
+                            title="{
+                                path: '/genero',
+                                formatter: '.formatter.generoText'
+                            }" />
+                    </HBox>
+                    <HBox class="sapUiSmallMargin">
+                        <ObjectIdentifier
+                            title="{
+                                path: '/dataNascimento',
+                                type: 'sap.ui.model.type.Date',
+                                formatOptions: {
+                                    style: 'short',
+                                    source: {
+                                    pattern: 'yyyy-MM-ddTHH:mm:ss'
+                                    }
+                                }
+                            }" />
+                    </HBox>
+                </VBox>
+            </FlexBox>
+        </VBox>
     </Page>
 </mvc:View>
