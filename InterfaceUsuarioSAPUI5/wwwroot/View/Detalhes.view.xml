@@ -10,10 +10,12 @@
                 <Title text="{i18n>tituloPaginaDetalhes}" />
                 <ToolbarSpacer />
                 <Button
+                    icon="sap-icon://edit"
                     text="{i18n>editar}"
                     type="Transparent"
                     press="aoClicarAbreTelaDeEdicao"/>
                 <Button
+                    icon="sap-icon://delete"
                     text="{i18n>remover}"
                     type="Transparent"
                     press="aoClicarRemoveFuncionario"/>
