@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (Controller, History) {
     'use strict';
 
-    const nameSpace = "controle.funcionarios.controller.Criar";
+    const nameSpace = "controle.funcionarios.controller.Cadastro";
     const ROTA_LISTAGEM = "listagem";
 
     return Controller.extend(nameSpace, {

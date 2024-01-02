@@ -8,7 +8,7 @@ sap.ui.define([
 
     const nameSpace = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
-    const ROTA_CRIAR = "criar";
+    const ROTA_CADASTRO = "cadastro";
     const ROTA_DETALHES = "detalhes";
     const ROTA_LISTAGEM = "listagem"
 
@@ -33,7 +33,7 @@ sap.ui.define([
 
         aoClicarAbreTelaDeCadastro() {
             const rota = this.getOwnerComponent().getRouter();
-            rota.navTo(ROTA_CRIAR);
+            rota.navTo(ROTA_CADASTRO);
         },
 
         aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
