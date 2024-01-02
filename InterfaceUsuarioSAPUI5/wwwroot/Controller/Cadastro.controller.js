@@ -20,6 +20,14 @@ sap.ui.define([
                 const rota = this.getOwnerComponent().getRouter();
                 rota.navTo(ROTA_LISTAGEM, {}, true);
             }
+        },
+
+        aoClicarEmSalvar() {
+
+        },
+
+        aoClicarEmCancelar() {
+
         }
     })
 });

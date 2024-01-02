@@ -11,12 +11,12 @@
                 <ToolbarSpacer />
                 <Button
                     icon="sap-icon://edit"
-                    text="{i18n>editar}"
+                    text="{i18n>botaoEditar}"
                     type="Transparent"
                     press="aoClicarAbreTelaDeEdicao"/>
                 <Button
                     icon="sap-icon://delete"
-                    text="{i18n>remover}"
+                    text="{i18n>botaoRemover}"
                     type="Transparent"
                     press="aoClicarRemoveFuncionario"/>
             </Toolbar>
@@ -43,7 +43,7 @@
                         <ObjectIdentifier title="{i18n>TituloColunaSalario}:" />
                     </HBox>
                     <HBox class="sapUiSmallMargin">
-                        <ObjectIdentifier title="{i18n>TituloColunaEhCasado}:" />
+                        <ObjectIdentifier title="{i18n>TituloColunaEstadoCivil}:" />
                     </HBox>
                     <HBox class="sapUiSmallMargin">
                         <ObjectIdentifier title="{i18n>TituloColunaGenero}:" />

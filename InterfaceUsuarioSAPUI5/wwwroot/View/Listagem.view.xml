@@ -72,7 +72,7 @@
 						<Column
 							hAlign="Center">
 							<header>
-								<Text text="{i18n>TituloColunaEhCasado}" />
+								<Text text="{i18n>TituloColunaEstadoCivil}" />
 							</header>
 						</Column>
 						<Column

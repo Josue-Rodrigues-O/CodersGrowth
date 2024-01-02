@@ -1,12 +1,125 @@
 <mvc:View
     controllerName="controle.funcionarios.controller.Cadastro"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
     xmlns:mvc="sap.ui.core.mvc">
-    <Page
-        title="{i18n>tituloPaginaCriacao}"
-        showNavButton="true"
-        navButtonPress=".aoClicarVoltarParaPaginaAnterior">
-        <Text
-            text="PAGINA DE CRIAÇÃO" />
+    <Page>
+        <customHeader>
+            <Toolbar>
+                <Button type="Back" press=".aoClicarVoltarParaPaginaAnterior" />
+                <ToolbarSpacer />
+                <Title text="{i18n>tituloPaginaCriacao}" />
+                <ToolbarSpacer />
+                <Button
+                    icon="sap-icon://save"
+                    text="{i18n>botaoSalvar}"
+                    type="Transparent"
+                    press="aoClicarEmSalvarArmazenaCadastro" />
+                <Button
+                    icon="sap-icon://decline"
+                    text="{i18n>botaoCancelar}"
+                    type="Transparent"
+                    press="aoClicarEmCancelarEncerraOperacao" />
+            </Toolbar>
+        </customHeader>
+        <HBox>
+            <VBox class="sapUiMediumMargin" width="100%">
+                <Label
+                    showColon="true"
+                    text="{i18n>TituloColunaNome}"
+                    labelFor="inputNome" />
+                <Input
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderNome}"
+                    id="inputNome"
+                    required="true" />
+                <Label
+                    showColon="true"
+                    class="sapUiTinyMarginTop"
+                    text="{i18n>TituloColunaCpf}"
+                    labelFor="inputCpf" />
+                <MaskInput
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderCpf}"
+                    id="inputCpf"
+                    required="true"
+                    mask="999.999.999-99"
+                    width="100%" />
+                <Label
+                    showColon="true"
+                    class="sapUiTinyMarginTop"
+                    text="{i18n>TituloColunaTelefone}"
+                    labelFor="inputTelefone" />
+                <MaskInput
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderTelefone}"
+                    id="inputTelefone"
+                    required="true"
+                    mask="(99) 9 9999-9999"
+                    width="100%" />
+                <Label
+                    showColon="true"
+                    class="sapUiTinyMarginTop"
+                    text="{i18n>TituloColunaSalario}"
+                    labelFor="inputSalario" />
+                <Input
+                    type="Number"
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderSalario}"
+                    id="inputSalario"
+                    required="true" />
+                <HBox>
+                    <VBox width="50%" class="sapUiSmallMarginEnd">
+                        <Label
+                            showColon="true"
+                            class="sapUiTinyMarginTop"
+                            text="{i18n>TituloColunaGenero}"
+                            labelFor="inputGenero" />
+                        <ComboBox
+                            placeholder="Selecione o Gênero"
+                            required="true"
+                            width="100%"
+                            class="sapUiTinyMarginTop"
+                            id="inputGenero"
+                            selectedKey="1">
+                            <core:Item key="1" text="Indefinido" />
+                            <core:Item key="2" text="Masculino" />
+                            <core:Item key="3" text="Feminino" />
+                        </ComboBox>
+                    </VBox>
+                    <VBox>
+                        <Label
+                            showColon="true"
+                            class="sapUiTinyMarginTop"
+                            text="{i18n>TituloColunaEstadoCivil}"
+                            labelFor="grupoEstadoCivil"
+                            required="true" />
+                        <RadioButtonGroup
+                            id="grupoEstadoCivil"
+                            columns="2">
+                            <RadioButton
+                                text="{i18n>solteiro}"
+                                selected="true" />
+                            <RadioButton
+                                text="{i18n>casado}" />
+                        </RadioButtonGroup>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <VBox class="sapUiMediumMargin">
+                <Label
+                    required="true"
+                    showColon="true"
+                    text="{i18n>TituloColunaDataNascimento}"
+                    labelFor="calendarDataNascimento" />
+                <u:Calendar
+                    class="sapUiTinyMarginTop"
+                    showWeekNumbers="false"
+                    id="calendarDataNascimento"
+                    select="handleCalendarSelect" />
+            </VBox>
+        </HBox>
     </Page>
 </mvc:View>
