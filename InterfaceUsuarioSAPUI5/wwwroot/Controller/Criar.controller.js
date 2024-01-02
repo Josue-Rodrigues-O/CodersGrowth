@@ -5,7 +5,7 @@ sap.ui.define([
     'use strict';
 
     const nameSpace = "controle.funcionarios.controller.Criar";
-    const ROTA_OVERVIEW = "overview";
+    const ROTA_LISTAGEM = "listagem";
 
     return Controller.extend(nameSpace, {
 
@@ -18,7 +18,7 @@ sap.ui.define([
                 window.history.go(PAGINA_ANTERIOR);
             } else {
                 const rota = this.getOwnerComponent().getRouter();
-                rota.navTo(ROTA_OVERVIEW, {}, true);
+                rota.navTo(ROTA_LISTAGEM, {}, true);
             }
         }
     })

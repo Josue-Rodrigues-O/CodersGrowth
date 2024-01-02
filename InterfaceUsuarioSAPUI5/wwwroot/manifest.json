@@ -23,6 +23,7 @@
             "minUI5Version": "1.108.0",
             "libs": {
                 "sap.ui.core": {},
+                "sap.uxap": {} ,
                 "sap.m": {}
             }
         },
@@ -40,7 +41,7 @@
             }
         },
         "rootView": {
-            "viewName": "controle.funcionarios.view.Listagem",
+            "viewName": "controle.funcionarios.view.App",
             "type": "XML",
             "id": "app"
         },
@@ -65,7 +66,7 @@
                     "target": "criar"
                 },
                 {
-                    "pattern": "detalhes",
+                    "pattern": "funcionario/{id}",
                     "name": "detalhes",
                     "target": "detalhes"
                 }
