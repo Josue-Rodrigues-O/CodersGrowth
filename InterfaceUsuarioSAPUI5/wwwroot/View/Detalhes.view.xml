@@ -20,7 +20,8 @@
             </Toolbar>
 
         </customHeader>
-        <VBox>
+        <VBox
+            class="sapUiMediumMargin">
             <HBox class="sapUiSmallMargin">
                 <ObjectIdentifier title="{/nome}" />
             </HBox>

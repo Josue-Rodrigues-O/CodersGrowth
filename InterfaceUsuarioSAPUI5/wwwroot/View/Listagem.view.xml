@@ -5,119 +5,116 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	displayBlock="true">
 
-	<App
-		id="app">
-		<Page
-			title="{i18n>tituloTelaListagem}"
-			titleAlignment="Center">
-			<content>
-				<Panel
-					stickyHeader="true"
-					class="sapUiResponsiveMargin"
+	<Page
+		title="{i18n>tituloTelaListagem}"
+		titleAlignment="Center">
+		<content>
+			<Panel
+				stickyHeader="true"
+				class="sapUiResponsiveMargin"
+				width="auto"
+				accessibleRole="Region">
+				<headerToolbar>
+					<Toolbar
+						style="Clear"
+						class="sapUi-Std-PaddingS">
+						<Button
+							type="Transparent"
+							text="{i18n>botaoAdicionar}"
+							press=".aoClicarAbreTelaDeCadastro" />
+						<ToolbarSpacer />
+						<SearchField
+							width="40%"
+							search="._pesquisarFiltrarFuncionarios" />
+					</Toolbar>
+				</headerToolbar>
+				<Table
+					alternateRowColors="true"
+					growing="true"
+					growingThreshold="11"
+					growingScrollToLoad="true"
+					showSeparators="Inner"
+					id="IdTabelaFuncionarios"
 					width="auto"
-					accessibleRole="Region">
-					<headerToolbar>
-						<Toolbar
-							style="Clear"
-							class="sapUi-Std-PaddingS">
-							<Button
-								type="Transparent"
-								text="{i18n>botaoAdicionar}"
-								press=".aoClicarAbreTelaDeCadastro" />
-							<ToolbarSpacer />
-							<SearchField
-								width="40%"
-								search="._pesquisarFiltrarFuncionarios" />
-						</Toolbar>
-					</headerToolbar>
-					<Table
-						alternateRowColors="true"
-						growing="true"
-						growingThreshold="11"
-						growingScrollToLoad="true"
-						showSeparators="Inner"
-						id="IdTabelaFuncionarios"
-						width="auto"
-						items="{
+					items="{
 							path : 'modeloTabelaFuncionarios>/',
 							sorter : {
 								path : 'id',
 								group : false
 							}
 						}">
-						<columns>
-							<Column
-								hAlign="Center">
-								<header>
-									<Text text="{i18n>TituloColunaNome}" />
-								</header>
-							</Column>
-							<Column
-								hAlign="Center">
-								<header>
-									<Text text="{i18n>TituloColunaCpf}" />
-								</header>
-							</Column>
-							<Column
-								hAlign="Center">
-								<header>
-									<Text text="{i18n>TituloColunaTelefone}" />
-								</header>
-							</Column>
-							<Column
-								hAlign="Center">
-								<header>
-									<Text text="{i18n>TituloColunaSalario}" />
-								</header>
-							</Column>
-							<Column
-								hAlign="Center"
-								width="6rem">
-								<header>
-									<Text text="{i18n>TituloColunaEhCasado}" />
-								</header>
-							</Column>
-							<Column
-								hAlign="Center">
-								<header>
-									<Text text="{i18n>TituloColunaGenero}" />
-								</header>
-							</Column>
-							<Column
-								hAlign="Center">
-								<header>
-									<Text text="{i18n>TituloColunaDataNascimento}" />
-								</header>
-							</Column>
-						</columns>
-						<items>
-							<ColumnListItem
-								type="Navigation"
-								press=".aoClicarAbreTelaDeDetalhes">
-								<cells>
-									<ObjectIdentifier title="{modeloTabelaFuncionarios>nome}" />
-									<ObjectIdentifier title="{modeloTabelaFuncionarios>cpf}" />
-									<Text text="{modeloTabelaFuncionarios>telefone}" />
-									<Text
-										text="{
+					<columns>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaNome}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaCpf}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaTelefone}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaSalario}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaEhCasado}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaGenero}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaDataNascimento}" />
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem
+							type="Navigation"
+							press=".aoClicarAbreTelaDeDetalhes">
+							<cells>
+								<ObjectIdentifier title="{modeloTabelaFuncionarios>nome}" />
+								<ObjectIdentifier title="{modeloTabelaFuncionarios>cpf}" />
+								<Text text="{modeloTabelaFuncionarios>telefone}" />
+								<Text
+									text="{
 											parts: ['modeloTabelaFuncionarios>salario'],
 											type: 'sap.ui.model.type.Currency',
 											formatOptions: {
 												style : 'short'
 											}
 										}" />
-									<Text
-										text="{
+								<Text
+									text="{
 										path: 'modeloTabelaFuncionarios>ehCasado',
 										formatter: '.formatter.estadoCivilText'
 									}" />
-									<Text
-										text="{
+								<Text
+									text="{
 										path: 'modeloTabelaFuncionarios>genero',
 										formatter: '.formatter.generoText'
 									}" />
-									<Text
-										text="{
+								<Text
+									text="{
 										path: 'modeloTabelaFuncionarios>dataNascimento',
 										type: 'sap.ui.model.type.Date',
 										formatOptions: {
@@ -127,13 +124,11 @@
 											}
 										}
 									}" />
-								</cells>
-							</ColumnListItem>
-						</items>
-					</Table>
-				</Panel>
-			</content>
-		</Page>
-	</App>
-
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</content>
+	</Page>
 </mvc:View>

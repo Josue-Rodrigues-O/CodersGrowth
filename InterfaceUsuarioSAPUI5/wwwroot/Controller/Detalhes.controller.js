@@ -15,36 +15,34 @@ sap.ui.define([
 
         formatter: formatter,
 
-        //#region CORRIGIR NOMES
-        
         onInit() {
             this._aoCoincidirRota();
         },
 
         _aoCoincidirRota() {
             const rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(ROTA_DETALHES).attachPatternMatched(this.onObjectMatched, this);
+            rota.getRoute(ROTA_DETALHES).attachPatternMatched(this._carregarFuncionario, this);
         },
-        onObjectMatched(oEvent) {
-            try {
-                const id = oEvent.getParameter("arguments").id;
 
+        _carregarFuncionario(evento) {
+            const ARGUMENTOS = "arguments";
+            try {
+                const id = evento.getParameter(ARGUMENTOS).id;
                 FuncionarioRepository.obterPorId(id).then(funcionarios => {
                     this.getView()
                         .setModel(new JSONModel(funcionarios))
                 }).catch(erro => console.log(erro));
-
-            } catch (error) {
-                console.log(error)
+            } catch (erro) {
+                console.log(erro)
             }
         },
-        //#endregion
+
         aoClicarAbreTelaDeEdicao() {
-            alert("Tela de Edição");
+
         },
 
         aoClicarRemoveFuncionario() {
-            alert("Remover Funcionário");
+
         },
 
         aoClicarVoltarParaPaginaAnterior() {
@@ -59,5 +57,5 @@ sap.ui.define([
                 rota.navTo(ROTA_LISTAGEM, {}, true);
             }
         }
-    })
+    });
 });
