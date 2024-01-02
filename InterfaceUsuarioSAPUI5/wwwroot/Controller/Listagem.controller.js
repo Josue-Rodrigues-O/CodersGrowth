@@ -39,17 +39,10 @@ sap.ui.define([
         aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
             const recursosLinhaSelecionada = linhaSelecionada.getSource();
 
-            const indexLinhaSelecionada = window.encodeURIComponent(recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getPath().substr(1));
-
-            const listaDeFuncionarios = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).oModel.oData;
-
-            const funcionario = listaDeFuncionarios[indexLinhaSelecionada];
-
             const rota = this.getOwnerComponent().getRouter();
 
-
             rota.navTo(ROTA_DETALHES, {
-                id: window.encodeURIComponent(funcionario.id)
+                id: window.encodeURIComponent(recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty("id"))
             });
         }
     });
