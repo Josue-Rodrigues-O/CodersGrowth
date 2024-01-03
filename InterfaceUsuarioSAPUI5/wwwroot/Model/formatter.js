@@ -1,15 +1,17 @@
-sap.ui.define([], () => {
+sap.ui.define([
+    'sap/ui/core/format/DateFormat'
+], (DateFormat) => {
     "use strict";
 
     const i18n = "i18n";
 
     return {
-        
+
         generoText(sexo) {
             const indefinido = "indefinido"
             const masculino = "masculino"
             const feminino = "feminino"
-            
+
             const recursos_i18n = this.getOwnerComponent().getModel(i18n).getResourceBundle();
             switch (sexo) {
                 case 0:
