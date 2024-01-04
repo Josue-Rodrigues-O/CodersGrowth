@@ -1,6 +1,4 @@
-sap.ui.define([
-    'sap/ui/core/format/DateFormat'
-], (DateFormat) => {
+sap.ui.define([], () => {
     "use strict";
 
     const i18n = "i18n";
@@ -30,14 +28,7 @@ sap.ui.define([
             const solteiro = "solteiro"
 
             const recursos_i18n = this.getOwnerComponent().getModel(i18n).getResourceBundle();
-            switch (ehCasado) {
-                case true:
-                    return recursos_i18n.getText(casado);
-                case false:
-                    return recursos_i18n.getText(solteiro);
-                default:
-                    return ehCasado;
-            }
+            return ehCasado ? recursos_i18n.getText(casado) : recursos_i18n.getText(solteiro);
         }
     }
 });

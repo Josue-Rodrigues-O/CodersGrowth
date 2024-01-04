@@ -80,17 +80,16 @@
                     showColon="true"
                     text="{i18n>TituloColunaGenero}"
                     labelFor="inputGenero" />
-                <ComboBox
-                    placeholder="Selecione o Gênero"
+                <Select
                     required="true"
                     width="100%"
                     class="sapUiTinyMarginTop"
                     id="inputGenero"
                     selectedKey="{/genero}">
-                    <core:Item key="0" text="Indefinido" />
-                    <core:Item key="1" text="Masculino" />
-                    <core:Item key="2" text="Feminino" />
-                </ComboBox>
+                    <core:Item key="0" text="{i18n>indefinido}" />
+                    <core:Item key="1" text="{i18n>masculino}" />
+                    <core:Item key="2" text="{i18n>feminino}" />
+                </Select>
                 <Label
                     required="true"
                     class="sapUiTinyMarginTop"
@@ -113,6 +112,7 @@
                     id="grupoEstadoCivil"
                     columns="2">
                     <RadioButton
+                        id="solteiro"
                         text="{i18n>solteiro}"
                         selected="true" />
                     <RadioButton

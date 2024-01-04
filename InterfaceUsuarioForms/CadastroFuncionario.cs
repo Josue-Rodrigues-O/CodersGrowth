@@ -62,7 +62,7 @@ namespace InterfaceUsuarioForms
         private void ValidarEntradasDoUsuario()
         {
             Validacoes validacao = new();
-            validacao.ValidarCampos(TxtNome.Text, TxtCpf.Text, TxtTelefone.Text, TxtSalario.Text, Calendario.SelectionStart);
+            validacao.ValidarCampos(TxtNome.Text, TxtCpf.Text, TxtTelefone.Text, TxtSalario.Text, Calendario.SelectionStart, (int)ComboGenero.SelectedItem);
         }
 
         private void Ao_Clicar_Em_Salvar(object sender, EventArgs e)

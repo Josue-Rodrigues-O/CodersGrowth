@@ -6,13 +6,13 @@ namespace Dominio
     public class Validacoes
     {
         private readonly List<string> _listaErros = new();
-        public void ValidarCampos(string nome, string cpf, string telefone, string salario, DateTime calendario)
+        public void ValidarCampos(string nome, string cpf, string telefone, string salario, DateTime calendario, int genero)
         {
             const char Virgula = ',';
             const byte SegundoValorVetor = 1;
             const byte PrimeiroValorVetor = 0;
             #region Nome
-            if (String.IsNullOrWhiteSpace(nome))
+            if (String.IsNullOrWhiteSpace(nome) || string.IsNullOrEmpty(nome))
             {
                 _listaErros.Add(Excessoes.NOME_NULO);
             }
@@ -35,21 +35,21 @@ namespace Dominio
             #endregion
 
             #region CPF
-            if (cpf.Length < (int)ValoresValidacaoEnum.TamanhoCorretoCpf)
+            if (cpf.Length < (int)ValoresValidacaoEnum.TamanhoCorretoCpf || string.IsNullOrEmpty(cpf))
             {
                 _listaErros.Add(Excessoes.CPF_PREENCHIDO_INCORRETAMENTE);
             }
             #endregion
 
             #region Telefone
-            if (telefone.Length < (int)ValoresValidacaoEnum.TamanhoCorretoTelefone)
+            if (telefone.Length < (int)ValoresValidacaoEnum.TamanhoCorretoTelefone || string.IsNullOrEmpty(telefone))
             {
                 _listaErros.Add(Excessoes.TELEFONE_PREENCHIDO_INCORRETAMENTE);
             }
             #endregion
 
             #region Salario
-            if (string.IsNullOrWhiteSpace(salario))
+            if (string.IsNullOrWhiteSpace(salario) || string.IsNullOrEmpty(salario))
             {
                 _listaErros.Add(Excessoes.SALARIO_NULO);
             }
@@ -100,6 +100,15 @@ namespace Dominio
             if (anos < (int)ValoresValidacaoEnum.IdadeMinima)
             {
                 _listaErros.Add(Excessoes.IDADE_INVALIDA);
+            }
+            #endregion
+
+            #region Genero
+            if(genero != (int)GeneroEnum.Indefinido
+                && genero != (int)GeneroEnum.Masculino
+                && genero != (int)GeneroEnum.Feminino)
+            {
+                _listaErros.Add(Excessoes.VALOR_DO_GENERO_INVALIDO);
             }
             #endregion
 

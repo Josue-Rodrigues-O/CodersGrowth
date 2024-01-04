@@ -22,5 +22,6 @@
         public const string ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS = "Houve um erro ao tentar recuperar as informações do banco de dados, tente novamente!";
         public const string ERRO_AO_ALTERAR_FUNCIONARIO = "Houve um erro ao tentar alterar os dados do funcionário, tente novamente!";
         public const string ERRO_AO_REMOVER_FUNCIONARIO = "Houve um erro ao tentar remover o cadastro selecionado, tente novamente!";
+        public const string VALOR_DO_GENERO_INVALIDO = "O valor informado no campo genero é inválido!";
     }
 }

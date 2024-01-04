@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "../Model/formatter",
-    "../Repositorios/FuncionarioRepository"
-], function (Controller, JSONModel, formatter, FuncionarioRepository) {
+    "../Model/Formatter",
+    "../Repositorios/FuncionarioRepository",
+    "sap/m/MessageBox"
+], function (Controller, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
     "use strict";
 
     const nameSpace = "controle.funcionarios.Controller.Listagem";
@@ -14,7 +15,7 @@ sap.ui.define([
 
     return Controller.extend(nameSpace, {
 
-        formatter: formatter,
+        formatter: Formatter,
 
         onInit() {
             let rota = this.getOwnerComponent().getRouter();
@@ -22,13 +23,20 @@ sap.ui.define([
         },
 
         _aoCoincidirRota() {
-            FuncionarioRepository.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
+            try {
+                FuncionarioRepository.obterTodos()
+                    .then(funcionarios => funcionarios.json())
+                    .then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA))
+                    .catch(async erro => MessageBox.warning(await erro.text()));
+            } catch (erro) {
+                MessageBox.warning(erro)                
+            }
         },
 
         _pesquisarFiltrarFuncionarios(condicao) {
             const parametroQuery = "query";
             const stringCondicao = condicao.getParameter(parametroQuery);
-            FuncionarioRepository.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
+            FuncionarioRepository.obterTodos(stringCondicao).then(funcionarios => funcionarios.json()).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
         },
 
         aoClicarAbreTelaDeCadastro() {
