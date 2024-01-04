@@ -7,7 +7,7 @@
     <Page>
         <customHeader>
             <Toolbar>
-                <Button type="Back" press="._aoClicarEmVoltar" />
+                <Button type="Back" press=".aoClicarEmVoltar" />
                 <ToolbarSpacer />
                 <Title text="{i18n>tituloPaginaCriacao}" />
                 <ToolbarSpacer />
@@ -15,12 +15,12 @@
                     icon="sap-icon://save"
                     text="{i18n>botaoSalvar}"
                     type="Transparent"
-                    press="._aoClicarEmSalvar" />
+                    press=".aoClicarEmSalvar" />
                 <Button
                     icon="sap-icon://decline"
                     text="{i18n>botaoCancelar}"
                     type="Transparent"
-                    press="._aoClicarEmCancelar" />
+                    press=".aoClicarEmCancelar" />
             </Toolbar>
         </customHeader>
         <HBox>
@@ -113,8 +113,7 @@
                     columns="2">
                     <RadioButton
                         id="solteiro"
-                        text="{i18n>solteiro}"
-                        selected="true" />
+                        text="{i18n>solteiro}" />
                     <RadioButton
                         selected="{/ehCasado}"
                         text="{i18n>casado}" />

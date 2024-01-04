@@ -26,7 +26,7 @@
 						<ToolbarSpacer />
 						<SearchField
 							width="40%"
-							search="._pesquisarFiltrarFuncionarios" />
+							search=".aoPesquisarFiltrarFuncionarios" />
 					</Toolbar>
 				</headerToolbar>
 				<Table

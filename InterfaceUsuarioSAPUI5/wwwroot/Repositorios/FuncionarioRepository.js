@@ -10,15 +10,15 @@ sap.ui.define([], () => {
 
     obterTodos(condicao) {
       const uri = `?condicao=${condicao}`
-      let URL_FILTRO = URL;
+      let query = URL;
       if (condicao != (undefined || null)) {
-        URL_FILTRO += uri
+        query += uri
       }
-      return fetch(URL_FILTRO);
+      return fetch(query);
     },
 
     criar(funcionario) {
-      const configuracaoFetch = {
+      let configuracaoFetch = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8'

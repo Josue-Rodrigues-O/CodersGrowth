@@ -1,44 +1,43 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/routing/History",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox"
-], function (Controller, JSONModel, History, Formatter, FuncionarioRepository, MessageBox) {
+], function (Controller, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
     'use strict';
 
-    const nameSpace = "controle.funcionarios.Controller.Detalhes";
-    const ROTA_LISTAGEM = "listagem"
-    const ROTA_DETALHES = "detalhes"
+    const NAMESPACE = "controle.funcionarios.Controller.Detalhes";
 
-    return Controller.extend(nameSpace, {
+    return Controller.extend(NAMESPACE, {
 
         formatter: Formatter,
 
         onInit() {
+            const rotaDetalhes = "detalhes"
             const rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(ROTA_DETALHES).attachPatternMatched(this._aoCoincidirRota, this);
+            rota.getRoute(rotaDetalhes).attachPatternMatched(this._aoCoincidirRota, this);
         },
 
         _aoCoincidirRota(evento) {
-            const ARGUMENTOS = "arguments";
-            const id = evento.getParameter(ARGUMENTOS).id;
             try {
-                FuncionarioRepository.obterPorId(id)
-                    .then(funcionarios => {
-                        if (funcionarios.status == 200) {
-                            return funcionarios.json()
+                const statusOk = 200
+                const parametroArgumentos = "arguments";
+                const idFuncionario = evento.getParameter(parametroArgumentos).id;
+                FuncionarioRepository.obterPorId(idFuncionario)
+                    .then(response => {
+                        if (response.status == statusOk) {
+                            return response.json()
                         } else {
-                            return Promise.reject(funcionarios)
+                            return Promise.reject(response)
                         }
                     })
-                    .then(funcionarios => {
+                    .then(response => {
                         this.getView()
-                            .setModel(new JSONModel(funcionarios))
+                            .setModel(new JSONModel(response))
                     }).catch(async erro => MessageBox.warning(await erro.text()));
             } catch (erro) {
-                MessageBox.warning(erro)
+                MessageBox.warning(erro.message)
             }
         },
 
@@ -51,8 +50,13 @@ sap.ui.define([
         },
 
         aoClicarVoltarParaPaginaAnterior() {
-            const rota = this.getOwnerComponent().getRouter();
-            rota.navTo(ROTA_LISTAGEM, {}, true);
+            try {
+                const rotaListagem = "listagem"
+                const rota = this.getOwnerComponent().getRouter();
+                rota.navTo(rotaListagem, {}, true);
+            } catch (erro) {
+                MessageBox.warning(erro.message)                
+            }
         }
     });
 });

@@ -7,21 +7,21 @@ sap.ui.define([
 ], function (Controller, History, JSONModel, FuncionarioRepository, MessageBox) {
     'use strict';
 
-    const nameSpace = "controle.funcionarios.controller.Cadastro";
-    const ROTA_LISTAGEM = "listagem";
-    const ROTA_CADASTRO = "cadastro"
+    const NAMESPACE = "controle.funcionarios.controller.Cadastro";
 
-    return Controller.extend(nameSpace, {
+    return Controller.extend(NAMESPACE, {
         onInit() {
             this._aoCoincidirRota()
         },
 
         _aoCoincidirRota() {
+            const rotaCadastro = "cadastro"
             const rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(ROTA_CADASTRO).attachPatternMatched(this._modeloFuncinario, this);
+            rota.getRoute(rotaCadastro).attachPatternMatched(this._modeloFuncionario, this);
         },
 
-        _modeloFuncinario() {
+        _modeloFuncionario() {
+            const idRadioButtonSolteiro = "solteiro"
             const funcionario = {
                 nome: "",
                 cpf: "",
@@ -31,42 +31,32 @@ sap.ui.define([
                 genero: 0,
                 dataNascimento: ""
             }
+            this.byId(idRadioButtonSolteiro).setSelected(true)
             let modelo = new JSONModel(funcionario);
             this.getView().setModel(modelo)
         },
-
-        _voltarParaPaginaAnterior() {
-            const PAGINA_ANTERIOR = -1;
-            const historico = History.getInstance();
-            const hashAnterior = historico.getPreviousHash();
-
-            this.byId("solteiro").setSelected(true)
-            if (hashAnterior !== undefined) {
-                window.history.go(PAGINA_ANTERIOR);
-            } else {
-                const rota = this.getOwnerComponent().getRouter();
-                rota.navTo(ROTA_LISTAGEM, {}, true);
-            }
+        
+        _obterRecursoi18n(nomeVariavelI18n) {
+            const modeloi18n = "i18n"
+            const recursos_i18n = this.getOwnerComponent().getModel(modeloi18n).getResourceBundle();
+            return recursos_i18n.getText(nomeVariavelI18n)
         },
-
-        _obterRecursoi18n(variavel) {
-            const i18n = "i18n"
-            const recursos_i18n = this.getOwnerComponent().getModel(i18n).getResourceBundle();
-            return recursos_i18n.getText(variavel)
-        },
-
-        _aoClicarEmSalvar() {
+        
+        aoClicarEmSalvar() {
             try {
+                const statusCreated = 201
                 const cadastro = this;
-                const MSG_SUCESSO = "MSG_SUCESSO_AO_CADASTRAR"
+                const msgSucesso = "msgSucessoAoCadastrar"
                 let modelo = this.getView().getModel().oData
+
                 modelo.genero = Number(modelo.genero)
                 modelo.salario = Number(modelo.salario)
+                
                 FuncionarioRepository.criar(modelo)
-                    .then(async response => {
-                        if (response.status == 201) {
+                .then(async response => {
+                    if (response.status == statusCreated) {
                             let funcionario = await response.json();
-                            MessageBox.success(this._obterRecursoi18n(MSG_SUCESSO), {
+                            MessageBox.success(cadastro._obterRecursoi18n(msgSucesso), {
                                 onClose() {
                                     cadastro._irParaTelaDeDetalhes(funcionario);
                                 }
@@ -80,47 +70,62 @@ sap.ui.define([
                     });
 
             } catch (erro) {
-                MessageBox.warning(erro)
+                MessageBox.warning(erro.message)
             }
         },
 
-        _aoClicarEmVoltar() {
-            const msg_confirmar = "MSG_CONFIRMAR_ACAO_CANCELAR";
-            const SIM = "botaoSim";
-            const NAO = "botaoNao";
+        aoClicarEmVoltar() {
+            const msg_confirmar = "msgConfirmarAcaoVoltar";
+            const botaoSim = "botaoSim";
+            const botaoNao = "botaoNao";
             const cadastro = this;
 
             MessageBox.confirm(cadastro._obterRecursoi18n(msg_confirmar), {
-                actions: [cadastro._obterRecursoi18n(SIM), cadastro._obterRecursoi18n(NAO)],
-                emphasizedAction: cadastro._obterRecursoi18n(SIM),
-                onClose: function (acao) {
-                    if (acao == cadastro._obterRecursoi18n(SIM)) {
+                actions: [cadastro._obterRecursoi18n(botaoSim), cadastro._obterRecursoi18n(botaoNao)],
+                emphasizedAction: cadastro._obterRecursoi18n(botaoSim),
+                onClose(acao) {
+                    if (acao == cadastro._obterRecursoi18n(botaoSim)) {
                         cadastro._voltarParaPaginaAnterior()
                     }
                 }
             });
         },
 
-        _aoClicarEmCancelar() {
-            const msg_confirmar = "MSG_CONFIRMAR_ACAO_CANCELAR";
-            const SIM = "botaoSim";
-            const NAO = "botaoNao";
+        aoClicarEmCancelar() {
+            const msg_confirmar = "msgConfirmarAcaoCancelar";
+            const botaoSim = "botaoSim";
+            const botaoNao = "botaoNao";
             const cadastro = this;
 
             MessageBox.confirm(cadastro._obterRecursoi18n(msg_confirmar), {
-                actions: [cadastro._obterRecursoi18n(SIM), cadastro._obterRecursoi18n(NAO)],
-                emphasizedAction: cadastro._obterRecursoi18n(SIM),
-                onClose: function (acao) {
-                    if (acao == cadastro._obterRecursoi18n(SIM)) {
+                actions: [cadastro._obterRecursoi18n(botaoSim), cadastro._obterRecursoi18n(botaoNao)],
+                emphasizedAction: cadastro._obterRecursoi18n(botaoSim),
+                onClose(acao) {
+                    if (acao == cadastro._obterRecursoi18n(botaoSim)) {
                         cadastro._voltarParaPaginaAnterior()
                     }
                 }
             });
+        },
+
+        _voltarParaPaginaAnterior() {
+            const rotaListagem = "listagem";
+            const paginaAnterior = -1;
+            const historico = History.getInstance();
+            const hashAnterior = historico.getPreviousHash();
+        
+            if (hashAnterior !== undefined) {
+                window.history.go(paginaAnterior);
+            } else {
+                const rota = this.getOwnerComponent().getRouter();
+                rota.navTo(rotaListagem, {}, true);
+            }
         },
 
         _irParaTelaDeDetalhes(funcionario) {
+            const rotaDetalhes = "detalhes"
             const rota = this.getOwnerComponent().getRouter();
-            rota.navTo("detalhes", {
+            rota.navTo(rotaDetalhes, {
                 id: window.encodeURIComponent(funcionario.id)
             });
         }

@@ -1,34 +1,34 @@
 sap.ui.define([], () => {
     "use strict";
 
-    const i18n = "i18n";
+    const MODELO_I18N = "i18n";
 
     return {
 
-        generoText(sexo) {
-            const indefinido = "indefinido"
-            const masculino = "masculino"
-            const feminino = "feminino"
+        generoText(genero) {
+            const generoIndefinido = "indefinido"
+            const generoMasculino = "masculino"
+            const generoFeminino = "feminino"
 
-            const recursos_i18n = this.getOwnerComponent().getModel(i18n).getResourceBundle();
-            switch (sexo) {
+            const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
+            switch (genero) {
                 case 0:
-                    return recursos_i18n.getText(indefinido);
+                    return recursos_i18n.getText(generoIndefinido);
                 case 1:
-                    return recursos_i18n.getText(masculino);
+                    return recursos_i18n.getText(generoMasculino);
                 case 2:
-                    return recursos_i18n.getText(feminino);
+                    return recursos_i18n.getText(generoFeminino);
                 default:
-                    return sexo;
+                    return genero;
             }
         },
 
         estadoCivilText(ehCasado) {
-            const casado = "casado"
-            const solteiro = "solteiro"
+            const estadoCivilCasado = "casado"
+            const estadoCivilSolteiro = "solteiro"
 
-            const recursos_i18n = this.getOwnerComponent().getModel(i18n).getResourceBundle();
-            return ehCasado ? recursos_i18n.getText(casado) : recursos_i18n.getText(solteiro);
+            const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
+            return ehCasado ? recursos_i18n.getText(estadoCivilCasado) : recursos_i18n.getText(estadoCivilSolteiro);
         }
     }
 });

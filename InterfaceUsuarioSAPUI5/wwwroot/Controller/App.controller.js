@@ -3,6 +3,6 @@ sap.ui.define([
 ], function (Controller) {
     'use strict';
     
-    const nameSpace = "controle.funcionarios.Controller.App"
-    return Controller.extend(nameSpace, {});
+    const NAMESPACE = "controle.funcionarios.Controller.App"
+    return Controller.extend(NAMESPACE, {});
 });
