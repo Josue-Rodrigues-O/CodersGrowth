@@ -9,30 +9,41 @@ sap.ui.define([
 
     const nameSpace = "controle.funcionarios.controller.Cadastro";
     const ROTA_LISTAGEM = "listagem";
-    const funcionario = {
-        nome: null,
-        cpf: null,
-        telefone: null,
-        salario: null,
-        ehCasado: false,
-        dataNascimento: null,
-        genero: null
-    }
+    const ROTA_CADASTRO = "cadastro"
+
 
     return Controller.extend(nameSpace, {
 
         formatter: formatter,
 
         onInit() {
-            this._modeloFuncinario();
+            this._aoCoincidirRota()
+        },
+
+        _aoCoincidirRota() {
+            const rota = this.getOwnerComponent().getRouter();
+            rota.getRoute(ROTA_CADASTRO).attachPatternMatched(this._modeloFuncinario, this);
         },
 
         _modeloFuncinario() {
+            const funcionario = new Object()
             let modelo = new JSONModel(funcionario);
             this.getView().setModel(modelo)
         },
 
+        _reiniciaModelo() {
+            let modelo = this.getView().getModel().oData
+            modelo.nome = null
+            modelo.cpf = null
+            modelo.telefone = null
+            modelo.salario = null
+            modelo.ehCasado = false
+            modelo.dataNascimento = null
+            modelo.genero = null
+        },
+
         _voltarParaPaginaAnterior() {
+            
             const PAGINA_ANTERIOR = -1;
             const historico = History.getInstance();
             const hashAnterior = historico.getPreviousHash();
@@ -46,17 +57,21 @@ sap.ui.define([
         },
 
         _aoClicarEmSalvar() {
-            funcionario.genero = parseInt(funcionario.genero)
-            funcionario.salario = Number(funcionario.salario)
-            FuncionarioRepository.criar(funcionario)
+            let modelo = this.getView().getModel().oData
+            modelo.genero = parseInt(modelo.genero)
+            modelo.salario = Number(modelo.salario)
+            FuncionarioRepository.criar(modelo)
+            this._reiniciaModelo()
             this._voltarParaPaginaAnterior()
         },
 
         _aoClicarEmVoltar() {
+            this._reiniciaModelo()
             this._voltarParaPaginaAnterior()
         },
 
         _aoClicarEmCancelar() {
+            this._reiniciaModelo()
             this._voltarParaPaginaAnterior()
         }
     })
