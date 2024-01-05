@@ -23,7 +23,7 @@
                     press=".aoClicarEmCancelar" />
             </Toolbar>
         </customHeader>
-        <HBox>
+        <HBox class="sapUiMediumMargin">
             <VBox class="sapUiMediumMargin" width="100%">
                 <Label
                     showColon="true"
@@ -73,51 +73,55 @@
                     placeholder="{i18n>placeholderSalario}"
                     id="inputSalario"
                     required="true" />
-            </VBox>
+                <HBox>
+                    <VBox
+                        width="63%">
+                        <Label
+                            showColon="true"
+                            text="{i18n>TituloColunaGenero}"
+                            labelFor="inputGenero" />
+                        <Select
+                            required="true"
+                            width="100%"
+                            class="sapUiTinyMarginTop"
+                            id="inputGenero"
+                            selectedKey="{/genero}">
+                            <core:Item key="0" text="{i18n>indefinido}" />
+                            <core:Item key="1" text="{i18n>masculino}" />
+                            <core:Item key="2" text="{i18n>feminino}" />
+                        </Select>
+                    </VBox>
 
-            <VBox class="sapUiMediumMargin" width="100%">
-                <Label
-                    showColon="true"
-                    text="{i18n>TituloColunaGenero}"
-                    labelFor="inputGenero" />
-                <Select
-                    required="true"
-                    width="100%"
-                    class="sapUiTinyMarginTop"
-                    id="inputGenero"
-                    selectedKey="{/genero}">
-                    <core:Item key="0" text="{i18n>indefinido}" />
-                    <core:Item key="1" text="{i18n>masculino}" />
-                    <core:Item key="2" text="{i18n>feminino}" />
-                </Select>
+                    <VBox>
+                        <Label
+                            showColon="true"
+                            class="sapUiTinyMarginTop"
+                            text="{i18n>TituloColunaEstadoCivil}"
+                            labelFor="grupoEstadoCivil"
+                            required="true" />
+                        <RadioButtonGroup
+                            id="grupoEstadoCivil"
+                            columns="2">
+                            <RadioButton
+                                id="solteiro"
+                                text="{i18n>solteiro}" />
+                            <RadioButton
+                                selected="{/ehCasado}"
+                                text="{i18n>casado}" />
+                        </RadioButtonGroup>
+                    </VBox>
+                </HBox>
+            </VBox>
+            <VBox class="sapUiMediumMargin">
                 <Label
                     required="true"
                     class="sapUiTinyMarginTop"
                     showColon="true"
                     text="{i18n>TituloColunaDataNascimento}"
-                    labelFor="inputDataNascimento" />
-                <Input
-                    value="{/dataNascimento}"
-                    type="Date"
-                    class="sapUiTinyMarginTop"
-                    placeholder="{i18n>placeholderDataNascimento}"
-                    id="inputDataNascimento" />
-                <Label
-                    showColon="true"
-                    class="sapUiTinyMarginTop"
-                    text="{i18n>TituloColunaEstadoCivil}"
-                    labelFor="grupoEstadoCivil"
-                    required="true" />
-                <RadioButtonGroup
-                    id="grupoEstadoCivil"
-                    columns="2">
-                    <RadioButton
-                        id="solteiro"
-                        text="{i18n>solteiro}" />
-                    <RadioButton
-                        selected="{/ehCasado}"
-                        text="{i18n>casado}" />
-                </RadioButtonGroup>
+                    labelFor="calendarDataNascimento" />
+                <u:Calendar
+                    id="calendarDataNascimento"
+                    select="diaSelecionado" />
             </VBox>
         </HBox>
     </Page>

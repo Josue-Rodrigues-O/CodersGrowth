@@ -1,4 +1,6 @@
-sap.ui.define([], () => {
+sap.ui.define([
+    "sap/ui/core/format/DateFormat"
+], (DateFormat) => {
     "use strict";
 
     const MODELO_I18N = "i18n";
@@ -29,6 +31,14 @@ sap.ui.define([], () => {
 
             const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
             return ehCasado ? recursos_i18n.getText(estadoCivilCasado) : recursos_i18n.getText(estadoCivilSolteiro);
+        },
+
+        formatarData(data){
+            const formatoData = "yyyy-MM-dd"
+            let formatador = DateFormat.getDateInstance({
+                pattern: formatoData
+            })
+            return formatador.format(data)
         }
     }
 });
