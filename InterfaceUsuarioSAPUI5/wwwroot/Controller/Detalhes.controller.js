@@ -21,10 +21,18 @@ sap.ui.define([
 
         _aoCoincidirRota(evento) {
             try {
-                const statusOk = 200
                 const parametroArgumentos = "arguments";
                 const idFuncionario = evento.getParameter(parametroArgumentos).id;
-                FuncionarioRepository.obterPorId(idFuncionario)
+                this._obterPorId(idFuncionario)
+            } catch (erro) {
+                MessageBox.warning(erro.message)
+            }
+        },
+
+        _obterPorId(id) {
+            try {
+                const statusOk = 200
+                FuncionarioRepository.obterPorId(id)
                     .then(response => {
                         if (response.status == statusOk) {
                             return response.json()
@@ -36,7 +44,7 @@ sap.ui.define([
                         this.getView()
                             .setModel(new JSONModel(response))
                     }).catch(async erro => MessageBox.warning(await erro.text()));
-            } catch (erro) {
+            } catch (error) {
                 MessageBox.warning(erro.message)
             }
         },
@@ -55,7 +63,7 @@ sap.ui.define([
                 const rota = this.getOwnerComponent().getRouter();
                 rota.navTo(rotaListagem, {}, true);
             } catch (erro) {
-                MessageBox.warning(erro.message)                
+                MessageBox.warning(erro.message)
             }
         }
     });

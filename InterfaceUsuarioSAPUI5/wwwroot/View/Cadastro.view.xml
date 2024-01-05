@@ -79,9 +79,9 @@
                         <Label
                             showColon="true"
                             text="{i18n>TituloColunaGenero}"
+                            required="true"
                             labelFor="inputGenero" />
                         <Select
-                            required="true"
                             width="100%"
                             class="sapUiTinyMarginTop"
                             id="inputGenero"
@@ -121,7 +121,7 @@
                     labelFor="calendarDataNascimento" />
                 <u:Calendar
                     id="calendarDataNascimento"
-                    select="diaSelecionado" />
+                    select="diaSelecionado"/>
             </VBox>
         </HBox>
     </Page>

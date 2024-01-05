@@ -22,8 +22,12 @@ sap.ui.define([
         },
 
         _aoCoincidirRota() {
+            this._obterFuncionarios()
+        },
+
+        _obterFuncionarios(condicao) {
             try {
-                FuncionarioRepository.obterTodos()
+                FuncionarioRepository.obterTodos(condicao)
                     .then(response => {
                         if (response.status == STATUS_OK) {
                             return response.json()
@@ -43,17 +47,7 @@ sap.ui.define([
             try {
                 const parametroQuery = "query";
                 const stringCondicao = condicao.getParameter(parametroQuery);
-                FuncionarioRepository.obterTodos(stringCondicao)
-                    .then(response => {
-                        if (response.status == STATUS_OK) {
-                            return response.json()
-                        }
-                        else {
-                            return Promise.reject(response)
-                        }
-                    })
-                    .then(response => this.getView().setModel(new JSONModel(response), MODELO_TABELA))
-                    .catch(async erro => MessageBox.warning(await erro.text()));
+                this._obterFuncionarios(stringCondicao)
             } catch (erro) {
                 MessageBox.warning(erro.message)
             }
@@ -79,7 +73,7 @@ sap.ui.define([
                 const rota = this.getOwnerComponent().getRouter();
 
                 rota.navTo(rotaDetalhes, {
-                    id: window.encodeURIComponent(recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario))
+                    id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)
                 });
             } catch (erro) {
                 MessageBox.warning(erro.message)

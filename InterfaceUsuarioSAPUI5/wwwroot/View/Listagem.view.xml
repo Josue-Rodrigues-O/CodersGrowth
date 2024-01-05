@@ -117,11 +117,11 @@
 								<Text
 									text="{
 										path: 'modeloTabelaFuncionarios>dataNascimento',
-										type: 'sap.ui.model.type.Date',
+										type: 'sap.ui.model.type.DateTime',
 										formatOptions: {
-											style: 'short',
+											pattern: 'dd/MM/yyyy',
 											source: {
-											pattern: 'yyyy-MM-ddTHH:mm:ss'
+												pattern: 'yyyy-MM-dd'
 											}
 										}
 									}" />

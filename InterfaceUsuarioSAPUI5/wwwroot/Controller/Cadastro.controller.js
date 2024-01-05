@@ -50,43 +50,43 @@ sap.ui.define([
             const idCalendario = "calendarDataNascimento"
             const calendario = this.byId(idCalendario)
             calendario.removeAllSelectedDates()
-            calendario._oFocusedDate._oUDate.oDate = UI5Date.getInstance()
+            calendario.focusDate(UI5Date.getInstance())
             this.byId(idRadioButtonSolteiro).setSelected(true)
         },
 
         diaSelecionado(evento) {
             const primeiroArray = 0
             let data = Formatter.formatarData(evento.getSource().getSelectedDates()[primeiroArray].getStartDate())
-            this.getView().getModel().oData.dataNascimento = data
+            this.getView().getModel().getData().dataNascimento = data
+        },
+
+        _criar(modelo, controller) {
+            const statusCreated = 201
+            const msgSucesso = "msgSucessoAoCadastrar"
+            FuncionarioRepository.criar(modelo)
+                .then(async response => {
+                    if (response.status == statusCreated) {
+                        let funcionario = await response.json();
+                        MessageBox.success(controller._obterRecursoi18n(msgSucesso), {
+                            onClose() {
+                                controller._irParaTelaDeDetalhes(funcionario);
+                            }
+                        })
+                    } else {
+                        return Promise.reject(response);
+                    }
+                })
+                .catch(async erro => {
+                    MessageBox.warning(await erro.text())
+                });
         },
 
         aoClicarEmSalvar() {
             try {
-                const statusCreated = 201
-                const cadastro = this;
-                const msgSucesso = "msgSucessoAoCadastrar"
-                let modelo = this.getView().getModel().oData
-
+                let modelo = this.getView().getModel().getData()
                 modelo.genero = Number(modelo.genero)
                 modelo.salario = Number(modelo.salario)
-
-                FuncionarioRepository.criar(modelo)
-                    .then(async response => {
-                        if (response.status == statusCreated) {
-                            let funcionario = await response.json();
-                            MessageBox.success(cadastro._obterRecursoi18n(msgSucesso), {
-                                onClose() {
-                                    cadastro._irParaTelaDeDetalhes(funcionario);
-                                }
-                            })
-                        } else {
-                            return Promise.reject(response);
-                        }
-                    })
-                    .catch(async erro => {
-                        MessageBox.warning(await erro.text())
-                    });
-
+                this._criar(modelo, this)
             } catch (erro) {
                 MessageBox.warning(erro.message)
             }
@@ -94,57 +94,45 @@ sap.ui.define([
 
         aoClicarEmVoltar() {
             const msg_confirmar = "msgConfirmarAcaoVoltar";
-            const botaoSim = "botaoSim";
-            const botaoNao = "botaoNao";
-            const cadastro = this;
-
-            MessageBox.confirm(cadastro._obterRecursoi18n(msg_confirmar), {
-                actions: [cadastro._obterRecursoi18n(botaoSim), cadastro._obterRecursoi18n(botaoNao)],
-                emphasizedAction: cadastro._obterRecursoi18n(botaoSim),
-                onClose(acao) {
-                    if (acao == cadastro._obterRecursoi18n(botaoSim)) {
-                        cadastro._voltarParaPaginaAnterior()
-                    }
-                }
-            });
+            this._voltarParaPaginaAnterior(this._obterRecursoi18n(msg_confirmar), this)
         },
 
         aoClicarEmCancelar() {
             const msg_confirmar = "msgConfirmarAcaoCancelar";
-            const botaoSim = "botaoSim";
-            const botaoNao = "botaoNao";
-            const cadastro = this;
-
-            MessageBox.confirm(cadastro._obterRecursoi18n(msg_confirmar), {
-                actions: [cadastro._obterRecursoi18n(botaoSim), cadastro._obterRecursoi18n(botaoNao)],
-                emphasizedAction: cadastro._obterRecursoi18n(botaoSim),
-                onClose(acao) {
-                    if (acao == cadastro._obterRecursoi18n(botaoSim)) {
-                        cadastro._voltarParaPaginaAnterior()
-                    }
-                }
-            });
+            this._voltarParaPaginaAnterior(this._obterRecursoi18n(msg_confirmar), this)
         },
 
-        _voltarParaPaginaAnterior() {
+        _voltarParaPaginaAnterior(mensagem, controller) {
             const rotaListagem = "listagem";
             const paginaAnterior = -1;
             const historico = History.getInstance();
             const hashAnterior = historico.getPreviousHash();
+            const botaoSim = "botaoSim";
+            const botaoNao = "botaoNao";
+            const textoBotaoSim = this._obterRecursoi18n(botaoSim);
+            const textoBotaoNao = this._obterRecursoi18n(botaoNao);
 
-            if (hashAnterior !== undefined) {
-                window.history.go(paginaAnterior);
-            } else {
-                const rota = this.getOwnerComponent().getRouter();
-                rota.navTo(rotaListagem, {}, true);
-            }
+            MessageBox.confirm(mensagem, {
+                actions: [textoBotaoSim, textoBotaoNao],
+                emphasizedAction: textoBotaoSim,
+                onClose(acao) {
+                    if (acao == textoBotaoSim) {
+                        if (hashAnterior !== undefined) {
+                            window.history.go(paginaAnterior);
+                        } else {
+                            const rota = controller.getOwnerComponent().getRouter();
+                            rota.navTo(rotaListagem, {}, true);
+                        }
+                    }
+                }
+            });
         },
 
         _irParaTelaDeDetalhes(funcionario) {
             const rotaDetalhes = "detalhes"
             const rota = this.getOwnerComponent().getRouter();
             rota.navTo(rotaDetalhes, {
-                id: window.encodeURIComponent(funcionario.id)
+                id: funcionario.id
             });
         }
     })
