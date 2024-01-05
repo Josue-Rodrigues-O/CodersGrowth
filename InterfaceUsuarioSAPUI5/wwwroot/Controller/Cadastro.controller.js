@@ -25,13 +25,14 @@ sap.ui.define([
         },
 
         _modeloFuncionario() {
+            const stringVazia = ""
             const funcionario = {
-                nome: "",
-                cpf: "",
-                telefone: "",
-                salario: "",
+                nome: stringVazia,
+                cpf: stringVazia,
+                telefone: stringVazia,
+                salario: stringVazia,
                 ehCasado: false,
-                genero: "",
+                genero: stringVazia,
                 dataNascimento: Formatter.formatarData(UI5Date.getInstance())
             }
             let modelo = new JSONModel(funcionario);
