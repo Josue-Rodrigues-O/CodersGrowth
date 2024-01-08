@@ -5,8 +5,10 @@ sap.ui.define([
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox",
     "../Model/Formatter",
-    "sap/ui/core/date/UI5Date"
-], function (Controller, History, JSONModel, FuncionarioRepository, MessageBox, Formatter, UI5Date) {
+    "sap/ui/core/date/UI5Date",
+    "../Services/Validacao",
+    "sap/ui/core/ValueState"
+], function (Controller, History, JSONModel, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao, ValueState) {
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
@@ -130,6 +132,14 @@ sap.ui.define([
             rota.navTo(rotaDetalhes, {
                 id: funcionario.id
             });
+        },
+
+        changeNome(evento) {
+            if(!Validacao.nomeValido(evento.getParameter("value"))){
+                evento.getSource().setValueState("Error")
+            }else{
+                evento.getSource().setValueState("Success")
+            }
         }
     })
 });

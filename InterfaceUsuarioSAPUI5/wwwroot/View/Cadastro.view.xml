@@ -34,7 +34,8 @@
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderNome}"
                     id="inputNome"
-                    required="true" />
+                    required="true"
+                    change=".changeNome" />
                 <Label
                     showColon="true"
                     class="sapUiTinyMarginTop"
