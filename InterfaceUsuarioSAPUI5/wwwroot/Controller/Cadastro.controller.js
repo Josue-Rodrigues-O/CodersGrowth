@@ -107,16 +107,12 @@ sap.ui.define([
             const paginaAnterior = -1;
             const historico = History.getInstance();
             const hashAnterior = historico.getPreviousHash();
-            const botaoSim = "botaoSim";
-            const botaoNao = "botaoNao";
-            const textoBotaoSim = this._obterRecursoi18n(botaoSim);
-            const textoBotaoNao = this._obterRecursoi18n(botaoNao);
 
             MessageBox.confirm(mensagem, {
-                actions: [textoBotaoSim, textoBotaoNao],
-                emphasizedAction: textoBotaoSim,
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                emphasizedAction: MessageBox.Action.YES,
                 onClose(acao) {
-                    if (acao == textoBotaoSim) {
+                    if (acao == MessageBox.Action.YES) {
                         if (hashAnterior !== undefined) {
                             window.history.go(paginaAnterior);
                         } else {
