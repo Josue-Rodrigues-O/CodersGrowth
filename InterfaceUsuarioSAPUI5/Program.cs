@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<IRepositorio, RepositorioBD>();
+builder.Services.AddScoped<IRepositorio, Repositorio>();
 
 var app = builder.Build();
 
@@ -16,7 +16,7 @@ app.UseDefaultFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
+    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
 ),
 
     ContentTypeProvider = new FileExtensionContentTypeProvider

@@ -1,56 +1,83 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "../Model/formatter",
-    "../Repositorios/FuncionarioRepository"
-], function (Controller, JSONModel, formatter, FuncionarioRepository) {
+    "../Model/Formatter",
+    "../Repositorios/FuncionarioRepository",
+    "sap/m/MessageBox"
+], function (Controller, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
     "use strict";
 
-    const nameSpace = "controle.funcionarios.Controller.Listagem";
+    const NAMESPACE = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
-    const ROTA_CRIAR = "criar";
-    const ROTA_DETALHES = "detalhes";
-    const ROTA_LISTAGEM = "listagem"
+    const STATUS_OK = 200
 
-    return Controller.extend(nameSpace, {
+    return Controller.extend(NAMESPACE, {
 
-        formatter: formatter,
+        formatter: Formatter,
 
         onInit() {
+            const rotaListagem = "listagem"
             let rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(ROTA_LISTAGEM).attachPatternMatched(this._aoCoincidirRota, this);
+            rota.getRoute(rotaListagem).attachPatternMatched(this._aoCoincidirRota, this);
         },
 
         _aoCoincidirRota() {
-            FuncionarioRepository.obterTodos().then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
+            this._obterFuncionarios()
         },
 
-        _pesquisarFiltrarFuncionarios(condicao) {
-            const parametroQuery = "query";
-            const stringCondicao = condicao.getParameter(parametroQuery);
-            FuncionarioRepository.obterTodos(stringCondicao).then(funcionarios => this.getView().setModel(new JSONModel(funcionarios), MODELO_TABELA));
+        _obterFuncionarios(condicao) {
+            try {
+                FuncionarioRepository.obterTodos(condicao)
+                    .then(response => {
+                        if (response.status == STATUS_OK) {
+                            return response.json()
+                        }
+                        else {
+                            return Promise.reject(response)
+                        }
+                    })
+                    .then(response => this.getView().setModel(new JSONModel(response), MODELO_TABELA))
+                    .catch(async erro => MessageBox.warning(await erro.text()));
+            } catch (erro) {
+                MessageBox.warning(erro.message)
+            }
+        },
+
+        aoPesquisarFiltrarFuncionarios(condicao) {
+            try {
+                const parametroQuery = "query";
+                const stringCondicao = condicao.getParameter(parametroQuery);
+                this._obterFuncionarios(stringCondicao)
+            } catch (erro) {
+                MessageBox.warning(erro.message)
+            }
         },
 
         aoClicarAbreTelaDeCadastro() {
-            const rota = this.getOwnerComponent().getRouter();
-            rota.navTo(ROTA_CRIAR);
+            try {
+                const rotaCadastro = "cadastro";
+                const rota = this.getOwnerComponent().getRouter();
+                rota.navTo(rotaCadastro);
+            }
+            catch (erro) {
+                MessageBox.warning(erro.message)
+            }
         },
 
         aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
-            const recursosLinhaSelecionada = linhaSelecionada.getSource();
+            try {
+                const idFuncionario = "id"
+                const rotaDetalhes = "detalhes";
+                const recursosLinhaSelecionada = linhaSelecionada.getSource();
 
-            const indexLinhaSelecionada = window.encodeURIComponent(recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getPath().substr(1));
+                const rota = this.getOwnerComponent().getRouter();
 
-            const listaDeFuncionarios = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).oModel.oData;
-
-            const funcionario = listaDeFuncionarios[indexLinhaSelecionada];
-
-            const rota = this.getOwnerComponent().getRouter();
-
-
-            rota.navTo(ROTA_DETALHES, {
-                id: window.encodeURIComponent(funcionario.id)
-            });
+                rota.navTo(rotaDetalhes, {
+                    id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)
+                });
+            } catch (erro) {
+                MessageBox.warning(erro.message)
+            }
         }
     });
 });

@@ -1,17 +1,32 @@
 sap.ui.define([], () => {
   "use strict";
 
+  const URL = "/api/Funcionario"
+
   return {
-    async obterPorId(id) {
-      const url = `/api/Funcionario/${id}`
-
-      return fetch(url).then(funcionarios => funcionarios.json()).catch(erro => console.log(erro));
+    obterPorId(id) {
+      return fetch(`${URL}/${id}`)
     },
 
-    async obterTodos(condicao="") {
-      const url = `/api/Funcionario?condicao=${condicao}`
-      
-      return fetch(url).then(funcionarios => funcionarios.json()).catch(erro => console.log(erro));
+    obterTodos(condicao) {
+      const uri = `?condicao=${condicao}`
+      let query = URL;
+      if (condicao != (undefined || null)) {
+        query += uri
+      }
+      return fetch(query);
     },
+
+    criar(funcionario) {
+      let configuracaoFetch = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(funcionario)
+      }
+
+      return fetch(URL, configuracaoFetch)
+    }
   }
 })

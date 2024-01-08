@@ -23,7 +23,6 @@
             "minUI5Version": "1.108.0",
             "libs": {
                 "sap.ui.core": {},
-                "sap.uxap": {} ,
                 "sap.m": {}
             }
         },
@@ -61,9 +60,9 @@
                     "target": "listagem"
                 },
                 {
-                    "pattern": "criar",
-                    "name": "criar",
-                    "target": "criar"
+                    "pattern": "cadastro",
+                    "name": "cadastro",
+                    "target": "cadastro"
                 },
                 {
                     "pattern": "funcionario/{id}",
@@ -76,9 +75,9 @@
                     "id": "listagem",
                     "name": "Listagem"
                 },
-                "criar": {
-                    "id": "criar",
-                    "name": "Criar"
+                "cadastro": {
+                    "id": "cadastro",
+                    "name": "Cadastro"
                 },
                 "detalhes": {
                     "id": "detalhes",

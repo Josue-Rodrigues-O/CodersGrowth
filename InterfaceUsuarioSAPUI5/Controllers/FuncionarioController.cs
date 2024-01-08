@@ -23,7 +23,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             {
                 Validacoes validacoes = new();
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
-                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
+                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento, (int)funcionario.Genero);
                 _repositorio.Criar(funcionario);
                 return Created(funcionario.Id.ToString(), funcionario);
             }
@@ -86,7 +86,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             {
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
                 Validacoes validacoes = new();
-                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento);
+                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento, (int)funcionario.Genero);
                 _repositorio.Atualizar(funcionario);
                 return NoContent();
             }
