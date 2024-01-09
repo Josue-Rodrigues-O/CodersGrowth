@@ -26,58 +26,67 @@
         <HBox class="sapUiMediumMargin">
             <VBox class="sapUiMediumMargin" width="100%">
                 <Label
+                    design="Bold"
                     showColon="true"
                     text="{i18n>TituloColunaNome}"
                     labelFor="inputNome" />
                 <Input
-                    value="{/nome}"
+                    value="{funcionario>/nome}"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderNome}"
                     id="inputNome"
                     required="true"
                     change=".changeNome" />
                 <Label
+                    design="Bold"
                     showColon="true"
                     class="sapUiTinyMarginTop"
                     text="{i18n>TituloColunaCpf}"
                     labelFor="inputCpf" />
                 <MaskInput
-                    value="{/cpf}"
+                    value="{funcionario>/cpf}"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderCpf}"
                     id="inputCpf"
                     required="true"
                     mask="999.999.999-99"
-                    width="100%" />
+                    width="100%"
+                    change=".changeCpf" />
                 <Label
+                    design="Bold"
                     showColon="true"
                     class="sapUiTinyMarginTop"
                     text="{i18n>TituloColunaTelefone}"
                     labelFor="inputTelefone" />
                 <MaskInput
-                    value="{/telefone}"
+                    value="{funcionario>/telefone}"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderTelefone}"
                     id="inputTelefone"
                     required="true"
                     mask="(99) 9 9999-9999"
-                    width="100%" />
+                    width="100%"
+                    change=".changeTelefone" />
                 <Label
+                    design="Bold"
                     showColon="true"
                     class="sapUiTinyMarginTop"
                     text="{i18n>TituloColunaSalario}"
                     labelFor="inputSalario" />
                 <Input
-                    value="{/salario}"
+                    value="{funcionario>/salario}"
                     type="Number"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderSalario}"
                     id="inputSalario"
-                    required="true" />
+                    required="true"
+                    change=".changeSalario" />
                 <HBox>
                     <VBox
                         width="63%">
                         <Label
+                            class="sapUiTinyMarginTop"
+                            design="Bold"
                             showColon="true"
                             text="{i18n>TituloColunaGenero}"
                             required="true"
@@ -86,15 +95,16 @@
                             width="100%"
                             class="sapUiTinyMarginTop"
                             id="inputGenero"
-                            selectedKey="{/genero}">
+                            selectedKey="{funcionario>/genero}">
                             <core:Item key="0" text="{i18n>indefinido}" />
                             <core:Item key="1" text="{i18n>masculino}" />
                             <core:Item key="2" text="{i18n>feminino}" />
                         </Select>
                     </VBox>
 
-                    <VBox>
+                    <VBox class="sapUiSmallMarginBegin">
                         <Label
+                            design="Bold"
                             showColon="true"
                             class="sapUiTinyMarginTop"
                             text="{i18n>TituloColunaEstadoCivil}"
@@ -107,7 +117,7 @@
                                 id="solteiro"
                                 text="{i18n>solteiro}" />
                             <RadioButton
-                                selected="{/ehCasado}"
+                                selected="{funcionario>/ehCasado}"
                                 text="{i18n>casado}" />
                         </RadioButtonGroup>
                     </VBox>
@@ -115,6 +125,7 @@
             </VBox>
             <VBox class="sapUiMediumMargin">
                 <Label
+                    design="Bold"
                     required="true"
                     class="sapUiTinyMarginTop"
                     showColon="true"
@@ -122,7 +133,10 @@
                     labelFor="calendarDataNascimento" />
                 <u:Calendar
                     id="calendarDataNascimento"
-                    select="diaSelecionado"/>
+                    select="diaSelecionado"
+                    minDate="{path: 'calendario>/minData'}"
+                    maxDate="{path: 'calendario>/maxData'}"
+                    showWeekNumbers="false" />
             </VBox>
         </HBox>
     </Page>
