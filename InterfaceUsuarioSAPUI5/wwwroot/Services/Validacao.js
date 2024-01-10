@@ -1,41 +1,64 @@
 sap.ui.define([], () => {
     'use strict';
+
+    const stringVazia = ""
+    const todaOcorrenciaDeUnderline = /_/gi
+
     return {
         nomeValido(nome) {
+            const todaOcorrenciaDeEspaco = / /gi
+            const textoErroTamanhoInsuficiente = "erroInputNomeTamanhoInsuficiente"
+            const textoErroCaracteresEspeciais = "erroInputNomeCaracteresEspeciaisRecebidos"
+            const regexNome = "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]"
+            const tamanhoMinino = 3
+
             for (let letra of nome) {
-                if (!letra.match("[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]")) {
-                    throw "O campo nome não pode conter caracteres especiais!"
+                if (!letra.match(regexNome)) {
+                    throw textoErroCaracteresEspeciais
                 }
             }
-            if (nome.replace(/ /gi, "").length < 3) {
-                throw "O nome não pode conter menos de três letras!"
+            if (nome.replace(todaOcorrenciaDeEspaco, stringVazia).length < tamanhoMinino) {
+                throw textoErroTamanhoInsuficiente
             }
         },
 
         cpfValido(cpf) {
-            if (cpf.replace(/_/gi, "").length < 14) {
-                throw "Preencha o campo CPF corretamente!"
+            const textoErroPreenchidoIncorretamente = "erroInputCpfPreenchidoIncorretamente"
+            const tamanhoCorreto = 14
+
+            if (cpf.replace(todaOcorrenciaDeUnderline, stringVazia).length < tamanhoCorreto) {
+                throw textoErroPreenchidoIncorretamente
             }
         },
 
         telefoneValido(telefone) {
-            if (telefone.replace(/_/gi, "").length < 16) {
-                throw "Preencha o campo telefone corretamente!"
+            const textoErroPreenchidoIncorretamente = "erroInputTelefonePreenchidoIncorretamente"
+            const tamanhoCorreto = 16
+
+            if (telefone.replace(todaOcorrenciaDeUnderline, stringVazia).length < tamanhoCorreto) {
+                throw textoErroPreenchidoIncorretamente
             }
         },
 
         salarioValido(salario) {
-            if (Number(salario) <= 0) {
-                throw "O campo salário não pode ficar vazio!"
+            const salarioValorMinimo = 1
+            const salarioValorMAximo = 9999999999.99
+            const textoErroValorInsuficiente = "erroInputSalarioValorInsuficiente"
+            const textoErroValorMuitoAlto = "erroInputSalarioValorMuitoAlto"
+
+            if (Number(salario) < salarioValorMinimo) {
+                throw textoErroValorInsuficiente
             }
-            if (salario.length - 2 > 11) {
-                throw "O campo salário não pode ser maior que 9.999.999.999,99!"
+            if (parseFloat(salario) > salarioValorMAximo) {
+                throw textoErroValorMuitoAlto
             }
         },
 
-        dataNascimentoValido(data) {
-            if(!data){
+        dataNascimentoValida(data) {
+            const textoErroDataNaoInformada = "erroInputCalendarioDataNaoInformada"
 
+            if (!data) {
+                throw textoErroDataNaoInformada
             }
         }
     }
