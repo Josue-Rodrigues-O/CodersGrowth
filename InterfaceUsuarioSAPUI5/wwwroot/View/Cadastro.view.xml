@@ -31,12 +31,13 @@
                     text="{i18n>TituloColunaNome}"
                     labelFor="inputNome" />
                 <Input
+                    maxLength="70"
                     value="{funcionario>/nome}"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderNome}"
                     id="inputNome"
                     required="true"
-                    change=".changeNome" />
+                    change=".aoMudarNome" />
                 <Label
                     design="Bold"
                     showColon="true"
@@ -51,7 +52,7 @@
                     required="true"
                     mask="999.999.999-99"
                     width="100%"
-                    change=".changeCpf" />
+                    change=".aoMudarCpf" />
                 <Label
                     design="Bold"
                     showColon="true"
@@ -66,7 +67,7 @@
                     required="true"
                     mask="(99) 9 9999-9999"
                     width="100%"
-                    change=".changeTelefone" />
+                    change=".aoMudarTelefone" />
                 <Label
                     design="Bold"
                     showColon="true"
@@ -74,13 +75,13 @@
                     text="{i18n>TituloColunaSalario}"
                     labelFor="inputSalario" />
                 <Input
-                    value="{funcionario>/salario}"
                     type="Number"
+                    value="{funcionario>/salario}"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderSalario}"
                     id="inputSalario"
                     required="true"
-                    change=".changeSalario" />
+                    change=".aoMudarSalario" />
                 <HBox>
                     <VBox
                         width="63%">

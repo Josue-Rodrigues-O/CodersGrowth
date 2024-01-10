@@ -1,7 +1,10 @@
-sap.ui.define([], () => {
+sap.ui.define([
+    "../Model/Formatter",
+    "sap/ui/core/date/UI5Date"
+], (Formatter, UI5Date) => {
     'use strict';
 
-    const stringVazia = ""
+    const STRING_VAZIA = ""
     const todaOcorrenciaDeUnderline = /_/gi
 
     return {
@@ -9,7 +12,7 @@ sap.ui.define([], () => {
             const todaOcorrenciaDeEspaco = / /gi
             const textoErroTamanhoInsuficiente = "erroInputNomeTamanhoInsuficiente"
             const textoErroCaracteresEspeciais = "erroInputNomeCaracteresEspeciaisRecebidos"
-            const regexNome = "[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]"
+            const regexNome = "[a-zA-ZáàâãäéèêëíìïóòôõöüúùçñÁÀÂÃÄÉÈÊËÍÌÏÓÒÔÕÖÜÚÙÇÑ ]"
             const tamanhoMinino = 3
 
             for (let letra of nome) {
@@ -17,7 +20,7 @@ sap.ui.define([], () => {
                     throw textoErroCaracteresEspeciais
                 }
             }
-            if (nome.replace(todaOcorrenciaDeEspaco, stringVazia).length < tamanhoMinino) {
+            if (nome.replace(todaOcorrenciaDeEspaco, STRING_VAZIA).length < tamanhoMinino) {
                 throw textoErroTamanhoInsuficiente
             }
         },
@@ -26,7 +29,7 @@ sap.ui.define([], () => {
             const textoErroPreenchidoIncorretamente = "erroInputCpfPreenchidoIncorretamente"
             const tamanhoCorreto = 14
 
-            if (cpf.replace(todaOcorrenciaDeUnderline, stringVazia).length < tamanhoCorreto) {
+            if (cpf.replace(todaOcorrenciaDeUnderline, STRING_VAZIA).length < tamanhoCorreto) {
                 throw textoErroPreenchidoIncorretamente
             }
         },
@@ -35,7 +38,7 @@ sap.ui.define([], () => {
             const textoErroPreenchidoIncorretamente = "erroInputTelefonePreenchidoIncorretamente"
             const tamanhoCorreto = 16
 
-            if (telefone.replace(todaOcorrenciaDeUnderline, stringVazia).length < tamanhoCorreto) {
+            if (telefone.replace(todaOcorrenciaDeUnderline, STRING_VAZIA).length < tamanhoCorreto) {
                 throw textoErroPreenchidoIncorretamente
             }
         },
@@ -55,11 +58,22 @@ sap.ui.define([], () => {
         },
 
         dataNascimentoValida(data) {
+            const textoErroDataInvalida = "erroInputCalendarioEntradaInvalida"
             const textoErroDataNaoInformada = "erroInputCalendarioDataNaoInformada"
-
+            const todaOcorrenciaDoSinalMenos = /-/gi
+            const idadeMinima = 18
+            const dataFormatada = Formatter.formatarData(UI5Date.getInstance((new Date().getFullYear() - idadeMinima).toString()));
+            const DataMaxima = Number(dataFormatada.replace(todaOcorrenciaDoSinalMenos, STRING_VAZIA))
+            const dataRecebida = Number(data.replace(todaOcorrenciaDoSinalMenos, STRING_VAZIA))
+            console.log(DataMaxima + "\n" + dataRecebida)
             if (!data) {
                 throw textoErroDataNaoInformada
             }
+
+            if (dataRecebida > DataMaxima) {
+                throw textoErroDataInvalida
+            }
+
         }
     }
 });

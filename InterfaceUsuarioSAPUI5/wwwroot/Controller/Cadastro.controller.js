@@ -11,13 +11,19 @@ sap.ui.define([
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
-    const DATA_DE_NASCIMENTO_MAXIMA = UI5Date.getInstance((new Date().getFullYear() - 18).toString());
+    const IDADE_MINIMA = 18
+    const DATA_DE_NASCIMENTO_MAXIMA = UI5Date.getInstance((new Date().getFullYear() - IDADE_MINIMA).toString());
     const ID_INPUT_NOME = "inputNome"
     const ID_INPUT_CPF = "inputCpf"
     const ID_INPUT_TELEFONE = "inputTelefone"
     const ID_INPUT_SALARIO = "inputSalario"
     const ID_INPUT_CALENDARIO = "calendarDataNascimento"
     const MODELO_FUNCIONARIO = "funcionario"
+    const STATUS_NULO = "None"
+    const STATUS_ERRO = "Error"
+    const STATUS_SUCESSO = "Success"
+    const PROPRIEDADE_VALUE = "value"
+    const STRING_VAZIA = ""
     let listaDeErros;
 
     return Controller.extend(NAMESPACE, {
@@ -47,16 +53,15 @@ sap.ui.define([
         },
 
         _modeloFuncionario() {
-            const stringVazia = ""
             let funcionario = new JSONModel();
             funcionario.setData({
-                nome: stringVazia,
-                cpf: stringVazia,
-                telefone: stringVazia,
-                salario: stringVazia,
+                nome: STRING_VAZIA,
+                cpf: STRING_VAZIA,
+                telefone: STRING_VAZIA,
+                salario: STRING_VAZIA,
                 ehCasado: false,
-                genero: stringVazia,
-                dataNascimento: stringVazia
+                genero: STRING_VAZIA,
+                dataNascimento: STRING_VAZIA
             })
             this.getView().setModel(funcionario, MODELO_FUNCIONARIO)
         },
@@ -74,8 +79,10 @@ sap.ui.define([
             const textoErroSalarioValorInsuficiente = "erroInputSalarioValorInsuficiente"
             const textoErroCalendarioDataNaoInformada = "erroInputCalendarioDataNaoInformada"
             const idRadioButtonSolteiro = "solteiro"
-            const idCalendario = "calendarDataNascimento"
-            const calendario = this.byId(idCalendario)
+            const calendario = this.byId(ID_INPUT_CALENDARIO)
+
+            calendario.removeAllSelectedDates()
+            calendario.focusDate(DATA_DE_NASCIMENTO_MAXIMA)
 
             listaDeErros = [
                 {
@@ -100,26 +107,23 @@ sap.ui.define([
                 }
             ]
 
-            this.byId(ID_INPUT_NOME).setValueState("None");
-            this.byId(ID_INPUT_CPF).setValueState("None");
-            this.byId(ID_INPUT_TELEFONE).setValueState("None");
-            this.byId(ID_INPUT_SALARIO).setValueState("None");
-            this.byId(ID_INPUT_CALENDARIO).setValueState("None");
+            this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_SALARIO).setValueState(STATUS_NULO);
             this.byId(idRadioButtonSolteiro).setSelected(true)
-
-            calendario.removeAllSelectedDates()
-            calendario.focusDate(DATA_DE_NASCIMENTO_MAXIMA)
         },
 
         diaSelecionado(evento) {
             try {
                 const primeiroArray = 0
-                let data = Formatter.formatarData(evento.getSource().getSelectedDates()[primeiroArray].getStartDate())
-                this.getView().getModel(MODELO_FUNCIONARIO).getData().dataNascimento = data
-                Validacao.dataNascimentoValida(this.getView().getModel(MODELO_FUNCIONARIO).getData().dataNascimento)
-                this.removerErrosDaLista(ID_INPUT_CALENDARIO)
+                let data = evento.getSource().getSelectedDates()[primeiroArray].getStartDate()
+                let dataFormatada = Formatter.formatarData(data)
+                Validacao.dataNascimentoValida(dataFormatada)
+                this.getView().getModel(MODELO_FUNCIONARIO).getData().dataNascimento = dataFormatada
+                this._removerErrosDaLista(ID_INPUT_CALENDARIO)
             } catch (erro) {
-                this.adicionarErroNaLista(ID_INPUT_CALENDARIO, erro)
+                this._adicionarErroNaLista(ID_INPUT_CALENDARIO, erro)
             }
         },
 
@@ -146,22 +150,22 @@ sap.ui.define([
 
         aoClicarEmSalvar() {
             try {
+                const duasCasasDecimais = 2
+                const quebraDeLinha = "\n"
                 if (listaDeErros.length) {
-                    let erros = ""
+                    let erros = STRING_VAZIA
                     listaDeErros.forEach((elemento) => {
                         if (elemento.id != ID_INPUT_CALENDARIO) {
-                            this.byId(elemento.id).setValueState("Error").setValueStateText(elemento.erro);
+                            this.byId(elemento.id).setValueState(STATUS_ERRO).setValueStateText(elemento.erro);
                         }
-                        erros += elemento.erro + "\n"
+                        erros += elemento.erro + quebraDeLinha
                     })
                     throw erros
-
-                } else {
-                    let modelo = this.getView().getModel(MODELO_FUNCIONARIO).getData()
-                    modelo.genero = Number(modelo.genero)
-                    modelo.salario = parseFloat(modelo.salario).toFixed(2)
-                    this._criar(modelo, this)
                 }
+                let modelo = this.getView().getModel(MODELO_FUNCIONARIO).getData()
+                modelo.genero = Number(modelo.genero)
+                modelo.salario = Number(modelo.salario).toFixed(duasCasasDecimais)
+                this._criar(modelo, this)
 
             } catch (erro) {
                 MessageBox.warning(erro)
@@ -210,7 +214,7 @@ sap.ui.define([
             });
         },
 
-        adicionarErroNaLista(id, erro) {
+        _adicionarErroNaLista(id, erro) {
             if (listaDeErros.find(x => x.id == id)) {
                 let index = listaDeErros.findIndex(x => x.id == id)
                 listaDeErros[index].erro = this._obterRecursoi18n(erro)
@@ -222,54 +226,55 @@ sap.ui.define([
             }
         },
 
-        removerErrosDaLista(id) {
+        _removerErrosDaLista(id) {
+            const apenasUmaOcorrencia = 1
             if (listaDeErros.find(x => x.id == id)) {
                 let index = listaDeErros.findIndex(x => x.id == id)
-                listaDeErros.splice(index, 1);
+                listaDeErros.splice(index, apenasUmaOcorrencia);
             }
         },
 
-        changeNome(evento) {
+        aoMudarNome(evento) {
             try {
-                Validacao.nomeValido(evento.getParameter("value"))
-                evento.getSource().setValueState("Success")
-                this.removerErrosDaLista(ID_INPUT_NOME)
+                Validacao.nomeValido(evento.getParameter(PROPRIEDADE_VALUE))
+                evento.getSource().setValueState(STATUS_SUCESSO)
+                this._removerErrosDaLista(ID_INPUT_NOME)
             } catch (erro) {
-                this.adicionarErroNaLista(ID_INPUT_NOME, erro)
-                evento.getSource().setValueState("Error").setValueStateText(this._obterRecursoi18n(erro));
+                this._adicionarErroNaLista(ID_INPUT_NOME, erro)
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
             }
         },
 
-        changeCpf(evento) {
+        aoMudarCpf(evento) {
             try {
-                Validacao.cpfValido(evento.getParameter("value"))
-                evento.getSource().setValueState("Success")
-                this.removerErrosDaLista(ID_INPUT_CPF)
+                Validacao.cpfValido(evento.getParameter(PROPRIEDADE_VALUE))
+                evento.getSource().setValueState(STATUS_SUCESSO)
+                this._removerErrosDaLista(ID_INPUT_CPF)
             } catch (erro) {
-                this.adicionarErroNaLista(ID_INPUT_CPF, erro)
-                evento.getSource().setValueState("Error").setValueStateText(this._obterRecursoi18n(erro));
+                this._adicionarErroNaLista(ID_INPUT_CPF, erro)
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
             }
         },
 
-        changeTelefone(evento) {
+        aoMudarTelefone(evento) {
             try {
-                Validacao.telefoneValido(evento.getParameter("value"))
-                evento.getSource().setValueState("Success")
-                this.removerErrosDaLista(ID_INPUT_TELEFONE)
+                Validacao.telefoneValido(evento.getParameter(PROPRIEDADE_VALUE))
+                evento.getSource().setValueState(STATUS_SUCESSO)
+                this._removerErrosDaLista(ID_INPUT_TELEFONE)
             } catch (erro) {
-                this.adicionarErroNaLista(ID_INPUT_TELEFONE, erro)
-                evento.getSource().setValueState("Error").setValueStateText(this._obterRecursoi18n(erro));
+                this._adicionarErroNaLista(ID_INPUT_TELEFONE, erro)
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
             }
         },
 
-        changeSalario(evento) {
+        aoMudarSalario(evento) {
             try {
-                Validacao.salarioValido(evento.getParameter("value"))
-                evento.getSource().setValueState("Success")
-                this.removerErrosDaLista(ID_INPUT_SALARIO)
+                Validacao.salarioValido(evento.getParameter(PROPRIEDADE_VALUE))
+                evento.getSource().setValueState(STATUS_SUCESSO)
+                this._removerErrosDaLista(ID_INPUT_SALARIO)
             } catch (erro) {
-                this.adicionarErroNaLista(ID_INPUT_SALARIO, erro)
-                evento.getSource().setValueState("Error").setValueStateText(this._obterRecursoi18n(erro));
+                this._adicionarErroNaLista(ID_INPUT_SALARIO, erro)
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
             }
         }
     })

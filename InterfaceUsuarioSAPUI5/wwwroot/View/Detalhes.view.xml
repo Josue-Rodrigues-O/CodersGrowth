@@ -65,11 +65,8 @@
                     <HBox class="sapUiSmallMargin">
                         <ObjectIdentifier
                             title="{
-                                parts: ['/salario'],
-                                type: 'sap.ui.model.type.Currency',
-                                formatOptions: {
-                                    style : 'short'
-                                }
+                                path: '/salario',
+                                formatter: '.formatter.salarioText'
                             }" />
                     </HBox>
                     <HBox class="sapUiSmallMargin">

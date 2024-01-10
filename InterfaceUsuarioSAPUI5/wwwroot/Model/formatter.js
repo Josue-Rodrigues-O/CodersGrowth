@@ -1,6 +1,7 @@
 sap.ui.define([
-    "sap/ui/core/format/DateFormat"
-], (DateFormat) => {
+    "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/NumberFormat"
+], (DateFormat, NumberFormat) => {
     "use strict";
 
     const MODELO_I18N = "i18n";
@@ -31,6 +32,14 @@ sap.ui.define([
 
             const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
             return ehCasado ? recursos_i18n.getText(estadoCivilCasado) : recursos_i18n.getText(estadoCivilSolteiro);
+        },
+
+        salarioText(salario){
+            var formatoSalarioOpcoes = {
+                decimals: 2
+            };
+            var formatarSalario = NumberFormat.getFloatInstance(formatoSalarioOpcoes);
+            return formatarSalario.format(Number(salario))
         },
 
         formatarData(data){

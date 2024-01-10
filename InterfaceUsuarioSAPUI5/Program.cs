@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<IRepositorio, Repositorio>();
+builder.Services.AddScoped<IRepositorio, RepositorioLinqToDb>();
 
 var app = builder.Build();
 
