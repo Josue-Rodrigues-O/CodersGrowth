@@ -5,7 +5,7 @@ sap.ui.define([
     'use strict';
 
     const STRING_VAZIA = ""
-    const todaOcorrenciaDeUnderline = /_/gi
+    const TODA_OCORRENCIA_DE_UNDERLINE = /_/gi
 
     return {
         nomeValido(nome) {
@@ -29,7 +29,7 @@ sap.ui.define([
             const textoErroPreenchidoIncorretamente = "erroInputCpfPreenchidoIncorretamente"
             const tamanhoCorreto = 14
 
-            if (cpf.replace(todaOcorrenciaDeUnderline, STRING_VAZIA).length < tamanhoCorreto) {
+            if (cpf.replace(TODA_OCORRENCIA_DE_UNDERLINE, STRING_VAZIA).length < tamanhoCorreto) {
                 throw textoErroPreenchidoIncorretamente
             }
         },
@@ -38,7 +38,7 @@ sap.ui.define([
             const textoErroPreenchidoIncorretamente = "erroInputTelefonePreenchidoIncorretamente"
             const tamanhoCorreto = 16
 
-            if (telefone.replace(todaOcorrenciaDeUnderline, STRING_VAZIA).length < tamanhoCorreto) {
+            if (telefone.replace(TODA_OCORRENCIA_DE_UNDERLINE, STRING_VAZIA).length < tamanhoCorreto) {
                 throw textoErroPreenchidoIncorretamente
             }
         },
@@ -48,12 +48,19 @@ sap.ui.define([
             const salarioValorMAximo = 9999999999.99
             const textoErroValorInsuficiente = "erroInputSalarioValorInsuficiente"
             const textoErroValorMuitoAlto = "erroInputSalarioValorMuitoAlto"
-
-            if (Number(salario) < salarioValorMinimo) {
+            const textoErroValorInvalido = "erroInputSalarioValorInvalido"
+            const regexSalario = "[0-9,.]"
+            
+            if (parseFloat(salario) < salarioValorMinimo) {
                 throw textoErroValorInsuficiente
             }
             if (parseFloat(salario) > salarioValorMAximo) {
                 throw textoErroValorMuitoAlto
+            }
+            for (let digito of salario) {
+                if (!digito.match(regexSalario)) {
+                    throw textoErroValorInvalido
+                }
             }
         },
 

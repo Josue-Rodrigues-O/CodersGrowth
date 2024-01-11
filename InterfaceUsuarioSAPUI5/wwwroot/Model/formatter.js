@@ -39,7 +39,7 @@ sap.ui.define([
                 decimals: 2
             };
             var formatarSalario = NumberFormat.getFloatInstance(formatoSalarioOpcoes);
-            return formatarSalario.format(Number(salario))
+            return formatarSalario.format(parseFloat(salario))
         },
 
         formatarData(data){

@@ -24,6 +24,11 @@ sap.ui.define([
     const STATUS_SUCESSO = "Success"
     const PROPRIEDADE_VALUE = "value"
     const STRING_VAZIA = ""
+    const duasCasasDecimais = 2
+    const TODA_OCORRENCIA_DE_PONTO = /\./g
+    const VIRGULA = ","
+    let regexSalario = "[0-9.,]"
+
     let listaDeErros;
 
     return Controller.extend(NAMESPACE, {
@@ -150,8 +155,10 @@ sap.ui.define([
 
         aoClicarEmSalvar() {
             try {
-                const duasCasasDecimais = 2
+
                 const quebraDeLinha = "\n"
+                let salarioSemPontos;
+                let modelo;
                 if (listaDeErros.length) {
                     let erros = STRING_VAZIA
                     listaDeErros.forEach((elemento) => {
@@ -162,9 +169,10 @@ sap.ui.define([
                     })
                     throw erros
                 }
-                let modelo = this.getView().getModel(MODELO_FUNCIONARIO).getData()
+                modelo = this.getView().getModel(MODELO_FUNCIONARIO).getData()
+                salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA)
                 modelo.genero = Number(modelo.genero)
-                modelo.salario = Number(modelo.salario).toFixed(duasCasasDecimais)
+                modelo.salario = Number(salarioSemPontos.replace(/,/gi, ".")).toFixed(duasCasasDecimais)
                 this._criar(modelo, this)
 
             } catch (erro) {
@@ -268,13 +276,41 @@ sap.ui.define([
         },
 
         aoMudarSalario(evento) {
+            window.arr = evento
             try {
-                Validacao.salarioValido(evento.getParameter(PROPRIEDADE_VALUE))
+                let texto = evento.getSource().getValue()
+                if (texto.match(/\./)) {
+                    texto = texto.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA)
+                }
+
+                console.log(texto)
+                evento.getSource().setValue(Formatter.salarioText(parseFloat(texto.replace(/,/g, ".")).toFixed(duasCasasDecimais)))
+
+
+                Validacao.salarioValido(texto)
                 evento.getSource().setValueState(STATUS_SUCESSO)
                 this._removerErrosDaLista(ID_INPUT_SALARIO)
+
             } catch (erro) {
                 this._adicionarErroNaLista(ID_INPUT_SALARIO, erro)
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
+            }
+        },
+
+        aoDigitarSalario(evento) {
+            window.arr = evento
+            let texto = evento.getSource().getValue()
+            const ultimoDigito = texto[texto.length - 1]
+            let numeroDeVirgulas = 0
+
+            if (!ultimoDigito.match(regexSalario)) {
+                evento.getSource().setValue(texto.slice(0, -1))
+            }
+
+            for (let elemento of texto) {
+                if (elemento.match(",")) {
+                    numeroDeVirgulas++
+                }
             }
         }
     })
