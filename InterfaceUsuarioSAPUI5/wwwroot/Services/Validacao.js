@@ -50,8 +50,11 @@ sap.ui.define([
             const textoErroValorMuitoAlto = "erroInputSalarioValorMuitoAlto"
             const textoErroValorInvalido = "erroInputSalarioValorInvalido"
             const regexSalario = "[0-9,.]"
-            
-            if (parseFloat(salario) < salarioValorMinimo) {
+            const todaOcorrenciaDeVirgula = /,/g
+
+            let salarioSemVirgula = salario.replace(todaOcorrenciaDeVirgula, STRING_VAZIA)
+
+            if (!salarioSemVirgula ||parseFloat(salarioSemVirgula) < salarioValorMinimo) {
                 throw textoErroValorInsuficiente
             }
             if (parseFloat(salario) > salarioValorMAximo) {

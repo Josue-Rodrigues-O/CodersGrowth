@@ -20,8 +20,7 @@
 						class="sapUi-Std-PaddingS">
 						<Button
 							icon="sap-icon://add"
-							type="Transparent"
-							text="{i18n>botaoAdicionar}"
+							type="Emphasized"
 							press=".aoClicarAbreTelaDeCadastro" />
 						<ToolbarSpacer />
 						<SearchField

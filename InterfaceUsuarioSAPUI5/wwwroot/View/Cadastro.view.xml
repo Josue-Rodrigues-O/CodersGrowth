@@ -12,15 +12,15 @@
                 <Title text="{i18n>tituloPaginaCriacao}" />
                 <ToolbarSpacer />
                 <Button
-                    icon="sap-icon://save"
-                    text="{i18n>botaoSalvar}"
-                    type="Transparent"
-                    press=".aoClicarEmSalvar" />
-                <Button
                     icon="sap-icon://decline"
                     text="{i18n>botaoCancelar}"
                     type="Transparent"
                     press=".aoClicarEmCancelar" />
+                <Button
+                    icon="sap-icon://save"
+                    text="{i18n>botaoSalvar}"
+                    type="Emphasized"
+                    press=".aoClicarEmSalvar" />
             </Toolbar>
         </customHeader>
         <HBox class="sapUiMediumMargin">
