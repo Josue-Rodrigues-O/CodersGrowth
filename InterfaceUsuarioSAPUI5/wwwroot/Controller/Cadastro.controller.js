@@ -36,6 +36,7 @@ sap.ui.define([
             const rotaCadastro = "cadastro"
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(rotaCadastro).attachPatternMatched(this._aoCoincidirRota, this);
+            Validacao.definirI18n(this.getOwnerComponent().getModel("i18n").getResourceBundle())
         },
 
         _aoCoincidirRota() {
@@ -173,7 +174,6 @@ sap.ui.define([
                 modelo.genero = Number(modelo.genero)
                 modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais)
                 this._criar(modelo, this)
-
             } catch (erro) {
                 MessageBox.warning(erro)
             }
@@ -200,8 +200,6 @@ sap.ui.define([
                 emphasizedAction: MessageBox.Action.YES,
                 onClose(acao) {
                     if (acao == MessageBox.Action.YES) {
-
-
                         if (hashAnterior !== undefined) {
                             window.history.go(paginaAnterior);
                         } else {
@@ -224,11 +222,11 @@ sap.ui.define([
         _adicionarErroNaLista(id, erro) {
             if (listaDeErros.find(x => x.id == id)) {
                 let index = listaDeErros.findIndex(x => x.id == id)
-                listaDeErros[index].erro = this._obterRecursoi18n(erro)
+                listaDeErros[index].erro = erro
             } else {
                 listaDeErros.push({
                     id: id,
-                    erro: this._obterRecursoi18n(erro)
+                    erro: erro
                 })
             }
         },
@@ -248,7 +246,7 @@ sap.ui.define([
                 this._removerErrosDaLista(ID_INPUT_NOME)
             } catch (erro) {
                 this._adicionarErroNaLista(ID_INPUT_NOME, erro)
-                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
 
@@ -259,7 +257,7 @@ sap.ui.define([
                 this._removerErrosDaLista(ID_INPUT_CPF)
             } catch (erro) {
                 this._adicionarErroNaLista(ID_INPUT_CPF, erro)
-                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
 
@@ -270,7 +268,7 @@ sap.ui.define([
                 this._removerErrosDaLista(ID_INPUT_TELEFONE)
             } catch (erro) {
                 this._adicionarErroNaLista(ID_INPUT_TELEFONE, erro)
-                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
 
@@ -289,7 +287,7 @@ sap.ui.define([
 
             } catch (erro) {
                 this._adicionarErroNaLista(ID_INPUT_SALARIO, erro)
-                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(this._obterRecursoi18n(erro));
+                evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         }
     })

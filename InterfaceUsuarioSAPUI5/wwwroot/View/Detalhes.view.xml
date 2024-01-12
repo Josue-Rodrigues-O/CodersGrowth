@@ -23,45 +23,47 @@
 
         </customHeader>
         <Panel>
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{/nome}"/>
+                </OverflowToolbar>
+            </headerToolbar>
             <VBox
                 class="sapUiMediumMargin">
-                <HBox class="sapUiSmallMargin">
-                    <ObjectIdentifier title="{/nome}" />
-                </HBox>
                 <FlexBox
                     direction="Row">
                     <HBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMarginTop">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <ObjectIdentifier title="{i18n>TituloColunaId}:" />
                             </HBox>
-                            <HBox class="sapUiSmallMargin">
+                            <HBox>
                                 <ObjectIdentifier title="{i18n>TituloColunaCpf}:" />
                             </HBox>
                         </VBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <Text text="{/id}" />
                             </HBox>
-                            <HBox class="sapUiSmallMargin">
+                            <HBox>
                                 <Text text="{/cpf}" />
                             </HBox>
                         </VBox>
                     </HBox>
                     <HBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMarginTop sapUiLargeMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <ObjectIdentifier title="{i18n>TituloColunaTelefone}:" />
                             </HBox>
-                            <HBox class="sapUiSmallMargin">
+                            <HBox>
                                 <ObjectIdentifier title="{i18n>TituloColunaSalario}:" />
                             </HBox>
                         </VBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <Text text="{/telefone}" />
                             </HBox>
-                            <HBox class="sapUiSmallMargin">
+                            <HBox>
                                 <Text
                                     text="{
                                             path: '/salario',
@@ -71,23 +73,23 @@
                         </VBox>
                     </HBox>
                     <HBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMarginTop sapUiLargeMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <ObjectIdentifier title="{i18n>TituloColunaEstadoCivil}:" />
                             </HBox>
-                            <HBox class="sapUiSmallMargin">
+                            <HBox>
                                 <ObjectIdentifier title="{i18n>TituloColunaGenero}:" />
                             </HBox>
                         </VBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <Text
                                     text="{
                                             path: '/ehCasado',
                                             formatter: '.formatter.estadoCivilText'
                                         }" />
                             </HBox>
-                            <HBox class="sapUiSmallMargin">
+                            <HBox>
                                 <Text
                                     text="{
                                             path: '/genero',
@@ -96,16 +98,16 @@
                             </HBox>
                         </VBox>
                     </HBox>
-    
-    
+
+
                     <HBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMarginTop sapUiLargeMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <ObjectIdentifier title="{i18n>TituloColunaDataNascimento}:" />
                             </HBox>
                         </VBox>
-                        <VBox>
-                            <HBox class="sapUiSmallMargin">
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
                                 <Text
                                     text="{
                                         path: '/dataNascimento',

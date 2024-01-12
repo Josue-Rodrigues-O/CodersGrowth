@@ -75,7 +75,6 @@
                     text="{i18n>TituloColunaSalario}"
                     labelFor="inputSalario" />
                 <Input
-                    liveChange=".aoDigitarSalario"
                     value="{funcionario>/salario}"
                     class="sapUiTinyMarginTop"
                     placeholder="{i18n>placeholderSalario}"
