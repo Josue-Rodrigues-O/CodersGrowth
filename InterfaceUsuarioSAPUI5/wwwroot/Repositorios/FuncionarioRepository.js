@@ -1,18 +1,18 @@
 sap.ui.define([], () => {
   "use strict";
 
-  const URL = "/api/Funcionario"
+  const URL = "/api/Funcionario";
 
   return {
     obterPorId(id) {
-      return fetch(`${URL}/${id}`)
+      return fetch(`${URL}/${id}`);
     },
 
     obterTodos(condicao) {
-      const uri = `?condicao=${condicao}`
+      const uri = `?condicao=${condicao}`;
       let query = URL;
       if (condicao != (undefined || null)) {
-        query += uri
+        query += uri;
       }
       return fetch(query);
     },
@@ -24,9 +24,9 @@ sap.ui.define([], () => {
           'Content-Type': 'application/json; charset=UTF-8'
         },
         body: JSON.stringify(funcionario)
-      }
+      };
 
-      return fetch(URL, configuracaoFetch)
+      return fetch(URL, configuracaoFetch);
     }
   }
 })

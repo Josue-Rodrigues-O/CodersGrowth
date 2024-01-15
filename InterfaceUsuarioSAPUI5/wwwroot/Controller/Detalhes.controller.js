@@ -23,29 +23,29 @@ sap.ui.define([
             try {
                 const parametroArgumentos = "arguments";
                 const idFuncionario = evento.getParameter(parametroArgumentos).id;
-                this._obterPorId(idFuncionario)
+                this._obterPorId(idFuncionario);
             } catch (erro) {
-                MessageBox.warning(erro.message)
+                MessageBox.warning(erro.message);
             }
         },
 
         _obterPorId(id) {
             try {
-                const statusOk = 200
+                const statusOk = 200;
                 FuncionarioRepository.obterPorId(id)
                     .then(response => {
                         if (response.status == statusOk) {
-                            return response.json()
+                            return response.json();
                         } else {
-                            return Promise.reject(response)
+                            return Promise.reject(response);
                         }
                     })
                     .then(response => {
                         this.getView()
-                            .setModel(new JSONModel(response))
+                            .setModel(new JSONModel(response));
                     }).catch(async erro => MessageBox.warning(await erro.text()));
-            } catch (error) {
-                MessageBox.warning(erro.message)
+            } catch (erro) {
+                MessageBox.warning(erro.message);
             }
         },
 
@@ -59,11 +59,11 @@ sap.ui.define([
 
         aoClicarVoltarParaPaginaAnterior() {
             try {
-                const rotaListagem = "listagem"
+                const rotaListagem = "listagem";
                 const rota = this.getOwnerComponent().getRouter();
                 rota.navTo(rotaListagem, {}, true);
             } catch (erro) {
-                MessageBox.warning(erro.message)
+                MessageBox.warning(erro.message);
             }
         }
     });

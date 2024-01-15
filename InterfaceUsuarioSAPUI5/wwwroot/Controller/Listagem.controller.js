@@ -9,20 +9,20 @@ sap.ui.define([
 
     const NAMESPACE = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
-    const STATUS_OK = 200
+    const STATUS_OK = 200;
 
     return Controller.extend(NAMESPACE, {
 
         formatter: Formatter,
 
         onInit() {
-            const rotaListagem = "listagem"
+            const rotaListagem = "listagem";
             let rota = this.getOwnerComponent().getRouter();
             rota.getRoute(rotaListagem).attachPatternMatched(this._aoCoincidirRota, this);
         },
 
         _aoCoincidirRota() {
-            this._obterFuncionarios()
+            this._obterFuncionarios();
         },
 
         _obterFuncionarios(condicao) {
@@ -30,16 +30,16 @@ sap.ui.define([
                 FuncionarioRepository.obterTodos(condicao)
                     .then(response => {
                         if (response.status == STATUS_OK) {
-                            return response.json()
+                            return response.json();
                         }
                         else {
-                            return Promise.reject(response)
+                            return Promise.reject(response);
                         }
                     })
                     .then(response => this.getView().setModel(new JSONModel(response), MODELO_TABELA))
                     .catch(async erro => MessageBox.warning(await erro.text()));
             } catch (erro) {
-                MessageBox.warning(erro.message)
+                MessageBox.warning(erro.message);
             }
         },
 
@@ -47,9 +47,9 @@ sap.ui.define([
             try {
                 const parametroQuery = "query";
                 const stringCondicao = condicao.getParameter(parametroQuery);
-                this._obterFuncionarios(stringCondicao)
+                this._obterFuncionarios(stringCondicao);
             } catch (erro) {
-                MessageBox.warning(erro.message)
+                MessageBox.warning(erro.message);
             }
         },
 
@@ -60,13 +60,13 @@ sap.ui.define([
                 rota.navTo(rotaCadastro);
             }
             catch (erro) {
-                MessageBox.warning(erro.message)
+                MessageBox.warning(erro.message);
             }
         },
 
         aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
             try {
-                const idFuncionario = "id"
+                const idFuncionario = "id";
                 const rotaDetalhes = "detalhes";
                 const recursosLinhaSelecionada = linhaSelecionada.getSource();
 
@@ -76,7 +76,7 @@ sap.ui.define([
                     id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)
                 });
             } catch (erro) {
-                MessageBox.warning(erro.message)
+                MessageBox.warning(erro.message);
             }
         }
     });
