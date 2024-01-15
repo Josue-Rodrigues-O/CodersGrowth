@@ -51,9 +51,6 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                     in _repositorio.ObterTodos()
                     where funcionario.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase)
                     || funcionario.Cpf.Contains(condicao, StringComparison.OrdinalIgnoreCase)
-                    || funcionario.Telefone.Contains(condicao, StringComparison.OrdinalIgnoreCase)
-                    || funcionario.Salario.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
-                    || funcionario.DataNascimento.ToString().Contains(condicao, StringComparison.OrdinalIgnoreCase)
                     select funcionario;
                 }
                 return Ok(listaFiltrada);

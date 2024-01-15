@@ -1,6 +1,7 @@
 sap.ui.define([
-    "sap/ui/core/format/DateFormat"
-], (DateFormat) => {
+    "sap/ui/core/format/DateFormat",
+    "sap/ui/core/format/NumberFormat"
+], (DateFormat, NumberFormat) => {
     "use strict";
 
     const MODELO_I18N = "i18n";
@@ -8,9 +9,9 @@ sap.ui.define([
     return {
 
         generoText(genero) {
-            const generoIndefinido = "indefinido"
-            const generoMasculino = "masculino"
-            const generoFeminino = "feminino"
+            const generoIndefinido = "indefinido";
+            const generoMasculino = "masculino";
+            const generoFeminino = "feminino";
 
             const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
             switch (genero) {
@@ -26,19 +27,27 @@ sap.ui.define([
         },
 
         estadoCivilText(ehCasado) {
-            const estadoCivilCasado = "casado"
-            const estadoCivilSolteiro = "solteiro"
+            const estadoCivilCasado = "casado";
+            const estadoCivilSolteiro = "solteiro";
 
             const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
             return ehCasado ? recursos_i18n.getText(estadoCivilCasado) : recursos_i18n.getText(estadoCivilSolteiro);
         },
 
+        salarioText(salario){
+            var formatoSalarioOpcoes = {
+                decimals: 2
+            };
+            var formatarSalario = NumberFormat.getFloatInstance(formatoSalarioOpcoes);
+            return formatarSalario.format(parseFloat(salario));
+        },
+
         formatarData(data){
-            const formatoData = "yyyy-MM-dd"
+            const formatoData = "yyyy-MM-dd";
             let formatador = DateFormat.getDateInstance({
                 pattern: formatoData
-            })
-            return formatador.format(data)
+            });
+            return formatador.format(data);
         }
     }
 });

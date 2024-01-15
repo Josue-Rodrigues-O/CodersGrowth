@@ -20,11 +20,11 @@
 						class="sapUi-Std-PaddingS">
 						<Button
 							icon="sap-icon://add"
-							type="Transparent"
-							text="{i18n>botaoAdicionar}"
+							type="Emphasized"
 							press=".aoClicarAbreTelaDeCadastro" />
 						<ToolbarSpacer />
 						<SearchField
+							placeholder="{i18n>placeholderFiltro}"
 							width="40%"
 							search=".aoPesquisarFiltrarFuncionarios" />
 					</Toolbar>
@@ -98,11 +98,8 @@
 								<Text text="{modeloTabelaFuncionarios>telefone}" />
 								<Text
 									text="{
-											parts: ['modeloTabelaFuncionarios>salario'],
-											type: 'sap.ui.model.type.Currency',
-											formatOptions: {
-												style : 'short'
-											}
+										path: 'modeloTabelaFuncionarios>salario',
+										formatter: '.formatter.salarioText'
 										}" />
 								<Text
 									text="{
