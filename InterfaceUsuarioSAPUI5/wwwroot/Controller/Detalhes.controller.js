@@ -50,11 +50,19 @@ sap.ui.define([
         },
 
         aoClicarAbreTelaDeEdicao() {
-
+            try {
+                const rotaEdicao = "edicao"
+                const rota = this.getOwnerComponent().getRouter()
+                rota.navTo(rotaEdicao, {
+                    id: this.getView().getModel().getData().id
+                })
+            } catch (erro) {
+                MessageBox.warning(erro.message);
+            }
         },
 
         aoClicarRemoveFuncionario() {
-
+            window.arr = this.getView()
         },
 
         aoClicarVoltarParaPaginaAnterior() {

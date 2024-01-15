@@ -29,14 +29,16 @@ sap.ui.define([
     const TODA_OCORRENCIA_DE_VIRGULA = /,/g;
     const STRING_PONTO = ".";
     const MODELO_I18N = "i18n";
-    let listaDeErros;
+    let listaDeErros = [];
 
     return Controller.extend(NAMESPACE, {
 
         onInit() {
             const rotaCadastro = "cadastro";
+            const rotaEdicao = "edicao"
             const rota = this.getOwnerComponent().getRouter();
             rota.getRoute(rotaCadastro).attachPatternMatched(this._aoCoincidirRota, this);
+            rota.getRoute(rotaEdicao).attachPatternMatched(this._aoCoincidirRotaEdicao, this);
             Validacao.definirI18n(this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle());
         },
 
@@ -44,6 +46,16 @@ sap.ui.define([
             this._modeloFuncionario();
             this._modeloData();
             this._limparTela();
+        },
+
+        _aoCoincidirRotaEdicao(evento) {
+            FuncionarioRepository.obterPorId(evento.getParameter("arguments").id)
+                .then(response => response.json())
+                .then(response => {
+                    this._modeloFuncionario(response);
+                    this._modeloData();
+                    this._limparTelaEdicao(response);
+                })
         },
 
         _modeloData() {
@@ -58,24 +70,46 @@ sap.ui.define([
             this.getView().setModel(calendario, modeloCalendario);
         },
 
-        _modeloFuncionario() {
+        _modeloFuncionario(func) {
             let funcionario = new JSONModel();
-            funcionario.setData({
-                nome: STRING_VAZIA,
-                cpf: STRING_VAZIA,
-                telefone: STRING_VAZIA,
-                salario: STRING_VAZIA,
-                ehCasado: false,
-                genero: STRING_VAZIA,
-                dataNascimento: STRING_VAZIA
-            });
+            if (func == (null || undefined)) {
+                funcionario.setData({
+                    nome: STRING_VAZIA,
+                    cpf: STRING_VAZIA,
+                    telefone: STRING_VAZIA,
+                    salario: STRING_VAZIA,
+                    ehCasado: false,
+                    genero: STRING_VAZIA,
+                    dataNascimento: STRING_VAZIA
+                });
+            }else{
+                funcionario.setData({
+                    id: func.id,
+                    nome: func.nome,
+                    cpf: func.cpf,
+                    telefone: func.telefone,
+                    salario: Formatter.salarioText(func.salario),
+                    ehCasado: func.ehCasado,
+                    genero: func.genero,
+                    dataNascimento: func.dataNascimento
+                });
+            }
             this.getView().setModel(funcionario, MODELO_FUNCIONARIO);
         },
 
         _obterRecursoi18n(nomeVariavelI18n) {
-
             const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
             return recursos_i18n.getText(nomeVariavelI18n);
+        },
+
+        _limparTelaEdicao() {
+            const calendario = this.byId(ID_INPUT_CALENDARIO);
+            calendario.removeAllSelectedDates();
+
+            this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_SALARIO).setValueState(STATUS_NULO);
         },
 
         _limparTela() {
@@ -154,12 +188,33 @@ sap.ui.define([
                 });
         },
 
+        _atualizar(modelo, controller){
+            const statusNoContent = 204;
+            const msgSucesso = "msgSucessoAoAtualizar";
+            FuncionarioRepository.atualizar(modelo)
+                .then(async response => {
+                    if (response.status == statusNoContent) {
+                        let funcionario = await response.json();
+                        MessageBox.success(controller._obterRecursoi18n(msgSucesso), {
+                            onClose() {
+                                controller._irParaTelaDeDetalhes(funcionario);
+                            }
+                        });
+                    } else {
+                        return Promise.reject(response);
+                    }
+                })
+                .catch(async erro => {
+                    MessageBox.warning(await erro.text());
+                });
+        },
+
         aoClicarEmSalvar() {
             try {
                 const quebraDeLinha = "\n";
                 let salarioSemPontos;
                 let modelo;
-                if (listaDeErros.length) {
+                if (listaDeErros.length > 0) {
                     let erros = STRING_VAZIA;
                     listaDeErros.forEach((elemento) => {
                         if (elemento.id != ID_INPUT_CALENDARIO) {
@@ -173,7 +228,16 @@ sap.ui.define([
                 salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA);
                 modelo.genero = Number(modelo.genero);
                 modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais);
-                this._criar(modelo, this);
+debugger
+
+                let a = modelo.hasOwnProperty("id")
+
+
+                if (!a) {
+                    this._criar(modelo, this);
+                }else{
+                    this._atualizar(modelo, this)
+                }
             } catch (erro) {
                 MessageBox.warning(erro);
             }
