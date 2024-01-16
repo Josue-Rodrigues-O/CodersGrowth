@@ -1,17 +1,17 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/model/json/JSONModel",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox"
-], function (Controller, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
+], function (BaseControler, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
     const STATUS_OK = 200;
 
-    return Controller.extend(NAMESPACE, {
+    return BaseControler.extend(NAMESPACE, {
 
         formatter: Formatter,
 

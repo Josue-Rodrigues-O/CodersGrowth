@@ -30,15 +30,19 @@ sap.ui.define([], () => {
     },
 
     atualizar(funcionario) {
-      let configuracaoFetch = {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify(funcionario)
-      };
-
-      return fetch(URL, configuracaoFetch);
+      try {
+        let configuracaoFetch = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: JSON.stringify(funcionario)
+        };
+  
+        return fetch(URL, configuracaoFetch);
+      } catch (erro) {
+        console.log(erro)
+      }
     }
   }
 })

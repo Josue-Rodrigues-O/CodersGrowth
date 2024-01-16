@@ -1,15 +1,15 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/model/json/JSONModel",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox"
-], function (Controller, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
+], function (BaseControler, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.Controller.Detalhes";
 
-    return Controller.extend(NAMESPACE, {
+    return BaseControler.extend(NAMESPACE, {
 
         formatter: Formatter,
 
@@ -31,10 +31,9 @@ sap.ui.define([
 
         _obterPorId(id) {
             try {
-                const statusOk = 200;
                 FuncionarioRepository.obterPorId(id)
                     .then(response => {
-                        if (response.status == statusOk) {
+                        if (response.ok) {
                             return response.json();
                         } else {
                             return Promise.reject(response);
