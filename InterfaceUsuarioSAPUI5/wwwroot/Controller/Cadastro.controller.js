@@ -99,6 +99,8 @@ sap.ui.define([
             const calendario = this.byId(ID_INPUT_CALENDARIO);
             calendario.removeAllSelectedDates();
 
+            ListaErros.iniciarLista([])
+
             this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
@@ -156,9 +158,9 @@ sap.ui.define([
 
                 this.modelo(NOME_MODELO_FUNCIONARIO).dataNascimento = dataFormatada;
 
-                ListaErros._removerErrosDaLista(ID_INPUT_CALENDARIO);
+                ListaErros.removerErrosDaLista(ID_INPUT_CALENDARIO);
             } catch (erro) {
-                ListaErros._adicionarErroNaLista(ID_INPUT_CALENDARIO, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_CALENDARIO, erro);
             }
         },
 
@@ -216,7 +218,7 @@ sap.ui.define([
                 const modelo = this.modelo(NOME_MODELO_FUNCIONARIO);
                 const propriedadeId = "id";
                 
-                ListaErros._verificarListaDeErros(this);
+                ListaErros.verificarListaDeErros(this);
                 this._formatarValoresParaSalvar(modelo);
                 let modeloFuncionarioPossuiAtributoId = modelo.hasOwnProperty(propriedadeId);
 
@@ -258,9 +260,9 @@ sap.ui.define([
             try {
                 Validacao.nomeValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                ListaErros._removerErrosDaLista(ID_INPUT_NOME);
+                ListaErros.removerErrosDaLista(ID_INPUT_NOME);
             } catch (erro) {
-                ListaErros._adicionarErroNaLista(ID_INPUT_NOME, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_NOME, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -269,9 +271,9 @@ sap.ui.define([
             try {
                 Validacao.cpfValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                ListaErros._removerErrosDaLista(ID_INPUT_CPF);
+                ListaErros.removerErrosDaLista(ID_INPUT_CPF);
             } catch (erro) {
-                ListaErros._adicionarErroNaLista(ID_INPUT_CPF, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_CPF, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -280,9 +282,9 @@ sap.ui.define([
             try {
                 Validacao.telefoneValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                ListaErros._removerErrosDaLista(ID_INPUT_TELEFONE);
+                ListaErros.removerErrosDaLista(ID_INPUT_TELEFONE);
             } catch (erro) {
-                ListaErros._adicionarErroNaLista(ID_INPUT_TELEFONE, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_TELEFONE, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -296,12 +298,12 @@ sap.ui.define([
 
                 Validacao.salarioValido(texto);
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                ListaErros._removerErrosDaLista(ID_INPUT_SALARIO);
+                ListaErros.removerErrosDaLista(ID_INPUT_SALARIO);
 
                 evento.getSource().setValue(Formatter.salarioText(parseFloat(texto.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais)));
 
             } catch (erro) {
-                ListaErros._adicionarErroNaLista(ID_INPUT_SALARIO, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_SALARIO, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         }

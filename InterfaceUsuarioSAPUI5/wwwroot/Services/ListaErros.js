@@ -8,7 +8,7 @@ sap.ui.define([], function() {
             LISTA_DE_ERROS = novoValorLista
         },
 
-        _verificarListaDeErros(controller){
+        verificarListaDeErros(controller){
             const stringVazia = ""
             const idCalendario = "calendarDataNascimento";
             const quebraDeLinha = "\n";
@@ -25,7 +25,7 @@ sap.ui.define([], function() {
                 }
         },
 
-        _adicionarErroNaLista(id, erro) {
+        adicionarErroNaLista(id, erro) {
             if (LISTA_DE_ERROS.find(x => x.id == id)) {
                 let index = LISTA_DE_ERROS.findIndex(x => x.id == id);
                 LISTA_DE_ERROS[index].erro = erro;
@@ -37,7 +37,7 @@ sap.ui.define([], function() {
             }
         },
 
-        _removerErrosDaLista(id) {
+        removerErrosDaLista(id) {
             const apenasUmaOcorrencia = 1;
             if (LISTA_DE_ERROS.find(x => x.id == id)) {
                 let index = LISTA_DE_ERROS.findIndex(x => x.id == id);
