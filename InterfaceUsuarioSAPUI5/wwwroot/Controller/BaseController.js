@@ -22,12 +22,11 @@ sap.ui.define([
             rota.navTo(nomeDaRota, parametroDeRota, true)
         },
 
-        definirModelo(objeto, nomeDoModelo) {
+        modelo(nomeDoModelo, objeto) {
+            if (objeto == (undefined || null)) {
+                return this.getView().getModel(nomeDoModelo).getData()
+            }
             this.getView().setModel(new JSONModel(objeto), nomeDoModelo)
-        },
-
-        obterModelo(nomeDoModelo){
-            return this.getView().getModel(nomeDoModelo).getData()
         }
     });
 });

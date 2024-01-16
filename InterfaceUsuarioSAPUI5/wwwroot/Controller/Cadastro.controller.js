@@ -27,17 +27,17 @@ sap.ui.define([
     const TODA_OCORRENCIA_DE_PONTO = /\./g;
     const TODA_OCORRENCIA_DE_VIRGULA = /,/g;
     const STRING_PONTO = ".";
-    const MODELO_I18N = "i18n";
     const ROTA_DETALHES = "detalhes";
 
     return BaseControler.extend(NAMESPACE, {
 
         onInit() {
+            const modeloI18n = "i18n";
             const rotaCadastro = "cadastro";
             const rotaEdicao = "edicao"
             this.vincularRota(rotaCadastro, this._aoCoincidirRotaCriacao)
             this.vincularRota(rotaEdicao, this._aoCoincidirRotaEdicao)
-            Validacao.definirI18n(this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle());
+            Validacao.definirI18n(this.getOwnerComponent().getModel(modeloI18n).getResourceBundle());
         },
 
         _aoCoincidirRotaCriacao() {
@@ -65,7 +65,7 @@ sap.ui.define([
                 maxData: DATA_DE_NASCIMENTO_MAXIMA,
                 minData: DataDeNascimentoMinima
             }
-            this.definirModelo(calendario, modeloCalendario)
+            this.modelo(modeloCalendario, calendario)
         },
 
         _modeloFuncionario(func) {
@@ -92,7 +92,7 @@ sap.ui.define([
                     dataNascimento: func.dataNascimento
                 }
             }
-            this.definirModelo(funcionario, NOME_MODELO_FUNCIONARIO);
+            this.modelo(NOME_MODELO_FUNCIONARIO, funcionario);
         },
 
         _limparTelaEdicao() {
@@ -154,7 +154,7 @@ sap.ui.define([
                 let dataFormatada = Formatter.formatarData(data);
                 Validacao.dataNascimentoValida(dataFormatada);
 
-                this.obterModelo(NOME_MODELO_FUNCIONARIO).dataNascimento = dataFormatada;
+                this.modelo(NOME_MODELO_FUNCIONARIO).dataNascimento = dataFormatada;
 
                 ListaErros._removerErrosDaLista(ID_INPUT_CALENDARIO);
             } catch (erro) {
@@ -213,7 +213,7 @@ sap.ui.define([
 
         aoClicarEmSalvar() {
             try {
-                const modelo = this.obterModelo(NOME_MODELO_FUNCIONARIO);
+                const modelo = this.modelo(NOME_MODELO_FUNCIONARIO);
                 const propriedadeId = "id";
                 
                 ListaErros._verificarListaDeErros(this);
