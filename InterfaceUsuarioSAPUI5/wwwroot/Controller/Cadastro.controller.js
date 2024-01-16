@@ -4,8 +4,9 @@ sap.ui.define([
     "sap/m/MessageBox",
     "../Model/Formatter",
     "sap/ui/core/date/UI5Date",
-    "../Services/Validacao"
-], function (BaseControler, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao,) {
+    "../Services/Validacao",
+    "../Services/ListaErros"
+], function (BaseControler, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao, ListaErros) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
@@ -27,7 +28,6 @@ sap.ui.define([
     const TODA_OCORRENCIA_DE_VIRGULA = /,/g;
     const STRING_PONTO = ".";
     const MODELO_I18N = "i18n";
-    let listaDeErros;
     const ROTA_DETALHES = "detalhes";
 
     return BaseControler.extend(NAMESPACE, {
@@ -99,8 +99,6 @@ sap.ui.define([
             const calendario = this.byId(ID_INPUT_CALENDARIO);
             calendario.removeAllSelectedDates();
 
-            listaDeErros = []
-
             this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
@@ -119,7 +117,7 @@ sap.ui.define([
             calendario.removeAllSelectedDates();
             calendario.focusDate(DATA_DE_NASCIMENTO_MAXIMA);
 
-            listaDeErros = [
+            ListaErros.iniciarLista([
                 {
                     id: ID_INPUT_NOME,
                     erro: this.obterRecursoi18n(textoErroNomeTamanhoInsuficiente)
@@ -140,7 +138,7 @@ sap.ui.define([
                     id: ID_INPUT_CALENDARIO,
                     erro: this.obterRecursoi18n(textoErroCalendarioDataNaoInformada)
                 }
-            ];
+            ]);
 
             this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
@@ -158,9 +156,9 @@ sap.ui.define([
 
                 this.obterModelo(NOME_MODELO_FUNCIONARIO).dataNascimento = dataFormatada;
 
-                this._removerErrosDaLista(ID_INPUT_CALENDARIO);
+                ListaErros._removerErrosDaLista(ID_INPUT_CALENDARIO);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_CALENDARIO, erro);
+                ListaErros._adicionarErroNaLista(ID_INPUT_CALENDARIO, erro);
             }
         },
 
@@ -206,32 +204,24 @@ sap.ui.define([
                 });
         },
 
+        _formatarValoresParaSalvar(modelo) {
+            modelo.genero = Number(modelo.genero);
+
+            let salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA);
+            modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais);
+        },
+
         aoClicarEmSalvar() {
             try {
-                const modelo = this.obterModelo(NOME_MODELO_FUNCIONARIO)
-                const propriedadeId = "id"
-                const quebraDeLinha = "\n";
-                if (listaDeErros.length > 0) {
-                    let erros = STRING_VAZIA;
-                    listaDeErros.forEach((elemento) => {
-                        if (elemento.id != ID_INPUT_CALENDARIO) {
-                            this.byId(elemento.id).setValueState(STATUS_ERRO).setValueStateText(elemento.erro);
-                        }
-                        erros += elemento.erro + quebraDeLinha;
-                    })
-                    throw erros;
-                }
-                modelo.genero = Number(modelo.genero);
+                const modelo = this.obterModelo(NOME_MODELO_FUNCIONARIO);
+                const propriedadeId = "id";
+                
+                ListaErros._verificarListaDeErros(this);
+                this._formatarValoresParaSalvar(modelo);
+                let modeloFuncionarioPossuiAtributoId = modelo.hasOwnProperty(propriedadeId);
 
-                let salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA);
-                modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais);
-
-
-                let modeloFuncionarioPossuiId = modelo.hasOwnProperty(propriedadeId)
-
-
-                if (modeloFuncionarioPossuiId) {
-                    this._atualizar(modelo, this)
+                if (modeloFuncionarioPossuiAtributoId) {
+                    this._atualizar(modelo, this);
                 } else {
                     this._criar(modelo, this);
                 }
@@ -264,33 +254,13 @@ sap.ui.define([
             });
         },
 
-        _adicionarErroNaLista(id, erro) {
-            if (listaDeErros.find(x => x.id == id)) {
-                let index = listaDeErros.findIndex(x => x.id == id);
-                listaDeErros[index].erro = erro;
-            } else {
-                listaDeErros.push({
-                    id: id,
-                    erro: erro
-                });
-            }
-        },
-
-        _removerErrosDaLista(id) {
-            const apenasUmaOcorrencia = 1;
-            if (listaDeErros.find(x => x.id == id)) {
-                let index = listaDeErros.findIndex(x => x.id == id);
-                listaDeErros.splice(index, apenasUmaOcorrencia);
-            }
-        },
-
         aoMudarNome(evento) {
             try {
                 Validacao.nomeValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_NOME);
+                ListaErros._removerErrosDaLista(ID_INPUT_NOME);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_NOME, erro);
+                ListaErros._adicionarErroNaLista(ID_INPUT_NOME, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -299,9 +269,9 @@ sap.ui.define([
             try {
                 Validacao.cpfValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_CPF);
+                ListaErros._removerErrosDaLista(ID_INPUT_CPF);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_CPF, erro);
+                ListaErros._adicionarErroNaLista(ID_INPUT_CPF, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -310,9 +280,9 @@ sap.ui.define([
             try {
                 Validacao.telefoneValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_TELEFONE);
+                ListaErros._removerErrosDaLista(ID_INPUT_TELEFONE);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_TELEFONE, erro);
+                ListaErros._adicionarErroNaLista(ID_INPUT_TELEFONE, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -326,12 +296,12 @@ sap.ui.define([
 
                 Validacao.salarioValido(texto);
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_SALARIO);
+                ListaErros._removerErrosDaLista(ID_INPUT_SALARIO);
 
                 evento.getSource().setValue(Formatter.salarioText(parseFloat(texto.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais)));
 
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_SALARIO, erro);
+                ListaErros._adicionarErroNaLista(ID_INPUT_SALARIO, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         }
