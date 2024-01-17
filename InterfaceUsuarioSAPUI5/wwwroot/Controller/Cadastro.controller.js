@@ -11,8 +11,6 @@ sap.ui.define([
 
     //#region 
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
-    const IDADE_MINIMA = 18;
-    const DATA_DE_NASCIMENTO_MAXIMA = UI5Date.getInstance((new Date().getFullYear() - IDADE_MINIMA).toString());
     const ID_INPUT_NOME = "inputNome";
     const ID_INPUT_CPF = "inputCpf";
     const ID_INPUT_TELEFONE = "inputTelefone";
@@ -50,7 +48,9 @@ sap.ui.define([
         },
 
         _aoCoincidirRotaEdicao(evento) {
-            FuncionarioRepository.obterPorId(evento.getParameter("arguments").id)
+            const parametroArgumentos = "arguments";
+            const idFuncionario = evento.getParameter(parametroArgumentos).id
+            FuncionarioRepository.obterPorId(idFuncionario)
                 .then(response => response.json())
                 .then(response => {
                     this._modeloFuncionario(response);
@@ -61,12 +61,12 @@ sap.ui.define([
 
         _modeloData() {
             const idadeMaxima = 70;
+            const idadeMinima = 18;
             const modeloCalendario = "calendario";
-            const DataDeNascimentoMinima = UI5Date.getInstance((new Date().getFullYear() - idadeMaxima).toString());
 
             const calendario = {
-                maxData: DATA_DE_NASCIMENTO_MAXIMA,
-                minData: DataDeNascimentoMinima
+                maxData: UI5Date.getInstance((new Date().getFullYear() - idadeMinima).toString()),
+                minData: UI5Date.getInstance((new Date().getFullYear() - idadeMaxima).toString())
             }
 
             this.modelo(modeloCalendario, calendario)
@@ -123,7 +123,6 @@ sap.ui.define([
             const dataVazia = "-- / -- / ----";
 
             calendario.removeAllSelectedDates();
-            calendario.focusDate(DATA_DE_NASCIMENTO_MAXIMA);
 
             ListaErros.iniciarLista([
                 {
