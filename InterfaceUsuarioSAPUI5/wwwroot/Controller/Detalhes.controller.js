@@ -50,17 +50,26 @@ sap.ui.define([
 
         _remover(Controller) {
             const msgConfirmacao = "msgConfirmarAcaoRemover"
+            const msgSucesso = "msgSucessoAoRemover"
             const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
             MessageBox.confirm(this.obterRecursoi18n(msgConfirmacao), {
                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                 emphasizedAction: MessageBox.Action.YES,
                 onClose(acao) {
                     if (acao == MessageBox.Action.YES) {
-                        FuncionarioRepository.remover(idFuncionario)
-                        Controller.navegarPara(rotaListagem, {})
+                        Controller._removerFuncionario(idFuncionario)
+                        MessageBox.success(Controller.obterRecursoi18n(msgSucesso), {
+                            onClose() {
+                                Controller.navegarPara(rotaListagem, {})
+                            }
+                        });
                     }
                 }
             });
+        },
+
+        _removerFuncionario(id) {
+            FuncionarioRepository.remover(id)
         },
 
         aoClicarEmEditar() {

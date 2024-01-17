@@ -64,8 +64,8 @@ sap.ui.define([
             try {
                 const propriedadeId = "id";
                 const rotaDetalhes = "detalhes";
-                const idFuncionario = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(propriedadeId)
                 const recursosLinhaSelecionada = linhaSelecionada.getSource();
+                const idFuncionario = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(propriedadeId)
 
                 this.navegarPara(rotaDetalhes, { id: idFuncionario })
             } catch (erro) {
