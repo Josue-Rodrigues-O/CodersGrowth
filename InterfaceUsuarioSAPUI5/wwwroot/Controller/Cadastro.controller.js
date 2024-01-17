@@ -9,7 +9,6 @@ sap.ui.define([
 ], function (BaseController, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao, ListaErros) {
     "use strict";
 
-    //#region Constantes
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
     const ID_INPUT_NOME = "inputNome";
     const ID_INPUT_CPF = "inputCpf";
@@ -29,7 +28,6 @@ sap.ui.define([
     const STRING_PONTO = ".";
     const ROTA_DETALHES = "detalhes";
 
-    //#endregion
 
     return BaseController.extend(NAMESPACE, {
         onInit() {
@@ -41,7 +39,6 @@ sap.ui.define([
             Validacao.definirI18n(this.getOwnerComponent().getModel(modeloI18n).getResourceBundle());
         },
 
-        //#region Modelos
         _modeloData() {
             const idadeMaxima = 70;
             const idadeMinima = 18;
@@ -79,9 +76,7 @@ sap.ui.define([
             }
             this.modelo(NOME_MODELO_FUNCIONARIO, funcionario);
         },
-        //#endregion
 
-        //#region Funções que não realizam consulta no servidor
         _aoCoincidirRotaCriacao() {
             this._modeloFuncionario();
             this._modeloData();
@@ -149,9 +144,7 @@ sap.ui.define([
             let salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA);
             modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais);
         },
-        //#endregion
 
-        //#region Funções que realizam consulta no servidor
         _aoCoincidirRotaEdicao(evento) {
             const parametroArgumentos = "arguments";
             const idFuncionario = evento.getParameter(parametroArgumentos).id
@@ -204,9 +197,7 @@ sap.ui.define([
                     MessageBox.warning(await erro.text());
                 });
         },
-        //#endregion
 
-        //#region Eventos e funções de naveggação
         diaSelecionado(evento) {
             try {
                 const primeiroArray = 0;
@@ -319,6 +310,5 @@ sap.ui.define([
                 }
             });
         },
-        //#endregion
     })
 });

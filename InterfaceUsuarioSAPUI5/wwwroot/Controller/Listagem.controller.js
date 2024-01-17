@@ -18,13 +18,10 @@ sap.ui.define([
             this.vincularRota(rotaListagem, this._aoCoincidirRota)
         },
 
-        //#region funções que não realizam consultas no servidor
         _aoCoincidirRota() {
             this._obterFuncionarios();
         },
-        //#endregion
 
-        //#region Funções que realizam consultas no servidor
         _obterFuncionarios(condicao) {
             try {
                 FuncionarioRepository.obterTodos(condicao)
@@ -42,9 +39,7 @@ sap.ui.define([
                 MessageBox.warning(erro.message);
             }
         },
-        //#endregion
         
-        //#region Eventos e funções de navegação
         aoPesquisar(condicao) {
             try {
                 const parametroQuery = "query";
@@ -76,6 +71,5 @@ sap.ui.define([
                 MessageBox.warning(erro.message);
             }
         }
-        //#endregion
     });
 });

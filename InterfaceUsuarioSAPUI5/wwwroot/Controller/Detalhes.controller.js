@@ -20,7 +20,6 @@ sap.ui.define([
             this.vincularRota(rotaDetalhes, this._aoCoincidirRota)
         },
 
-        //#region Funções que não realizam consulta no servidor
         _aoCoincidirRota(evento) {
             try {
                 const parametroArgumentos = "arguments";
@@ -30,9 +29,7 @@ sap.ui.define([
                 MessageBox.error(erro.message);
             }
         },
-        //#endregion
 
-        //#region Funções que realizam consulta no servidor
         _obterPorId(id) {
             try {
                 FuncionarioRepository.obterPorId(id)
@@ -65,9 +62,7 @@ sap.ui.define([
                 }
             });
         },
-        //#endregion
 
-        //#region Eventos e funcoes de navegação
         aoClicarEmEditar() {
             try {
                 const rotaEdicao = "edicao"
@@ -92,6 +87,5 @@ sap.ui.define([
                 MessageBox.error(erro);
             }
         },
-        //#endregion
     });
 });
