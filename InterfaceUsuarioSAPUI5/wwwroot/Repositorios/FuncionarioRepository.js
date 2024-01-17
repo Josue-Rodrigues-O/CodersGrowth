@@ -27,6 +27,22 @@ sap.ui.define([], () => {
       };
 
       return fetch(URL, configuracaoFetch);
+    },
+
+    atualizar(funcionario) {
+      try {
+        let configuracaoFetch = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: JSON.stringify(funcionario)
+        };
+  
+        return fetch(URL, configuracaoFetch);
+      } catch (erro) {
+        console.log(erro)
+      }
     }
   }
 })

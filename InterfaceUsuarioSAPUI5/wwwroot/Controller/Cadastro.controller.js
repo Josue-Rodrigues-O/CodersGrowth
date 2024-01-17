@@ -1,24 +1,23 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/core/routing/History",
-    "sap/ui/model/json/JSONModel",
+    "./BaseController",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox",
     "../Model/Formatter",
     "sap/ui/core/date/UI5Date",
-    "../Services/Validacao"
-], function (Controller, History, JSONModel, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao,) {
+    "../Services/Validacao",
+    "../Services/ListaErros"
+], function (BaseController, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao, ListaErros) {
     "use strict";
 
+    //#region 
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
-    const IDADE_MINIMA = 18;
-    const DATA_DE_NASCIMENTO_MAXIMA = UI5Date.getInstance((new Date().getFullYear() - IDADE_MINIMA).toString());
     const ID_INPUT_NOME = "inputNome";
     const ID_INPUT_CPF = "inputCpf";
     const ID_INPUT_TELEFONE = "inputTelefone";
     const ID_INPUT_SALARIO = "inputSalario";
     const ID_INPUT_CALENDARIO = "calendarDataNascimento";
-    const MODELO_FUNCIONARIO = "funcionario";
+    const ID_TEXT_DATA = "dataText";
+    const NOME_MODELO_FUNCIONARIO = "funcionario";
     const STATUS_NULO = "None";
     const STATUS_ERRO = "Error";
     const STATUS_SUCESSO = "Success";
@@ -28,54 +27,89 @@ sap.ui.define([
     const TODA_OCORRENCIA_DE_PONTO = /\./g;
     const TODA_OCORRENCIA_DE_VIRGULA = /,/g;
     const STRING_PONTO = ".";
-    const MODELO_I18N = "i18n";
-    let listaDeErros;
+    const ROTA_DETALHES = "detalhes";
 
-    return Controller.extend(NAMESPACE, {
+    //#endregion
 
+    return BaseController.extend(NAMESPACE, {
         onInit() {
+            const modeloI18n = "i18n";
             const rotaCadastro = "cadastro";
-            const rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(rotaCadastro).attachPatternMatched(this._aoCoincidirRota, this);
-            Validacao.definirI18n(this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle());
+            const rotaEdicao = "edicao"
+            this.vincularRota(rotaCadastro, this._aoCoincidirRotaCriacao)
+            this.vincularRota(rotaEdicao, this._aoCoincidirRotaEdicao)
+            Validacao.definirI18n(this.getOwnerComponent().getModel(modeloI18n).getResourceBundle());
         },
 
-        _aoCoincidirRota() {
+        _aoCoincidirRotaCriacao() {
             this._modeloFuncionario();
             this._modeloData();
             this._limparTela();
         },
 
+        _aoCoincidirRotaEdicao(evento) {
+            const parametroArgumentos = "arguments";
+            const idFuncionario = evento.getParameter(parametroArgumentos).id
+            FuncionarioRepository.obterPorId(idFuncionario)
+                .then(response => response.json())
+                .then(response => {
+                    this._modeloFuncionario(response);
+                    this._modeloData();
+                    this._limparTelaEdicao(response);
+                });
+        },
+
         _modeloData() {
             const idadeMaxima = 70;
+            const idadeMinima = 18;
             const modeloCalendario = "calendario";
-            const DataDeNascimentoMinima = UI5Date.getInstance((new Date().getFullYear() - idadeMaxima).toString());
-            const calendario = new JSONModel();
-            calendario.setData({
-                maxData: DATA_DE_NASCIMENTO_MAXIMA,
-                minData: DataDeNascimentoMinima
-            });
-            this.getView().setModel(calendario, modeloCalendario);
+
+            const calendario = {
+                maxData: UI5Date.getInstance((new Date().getFullYear() - idadeMinima).toString()),
+                minData: UI5Date.getInstance((new Date().getFullYear() - idadeMaxima).toString())
+            }
+
+            this.modelo(modeloCalendario, calendario)
         },
 
-        _modeloFuncionario() {
-            let funcionario = new JSONModel();
-            funcionario.setData({
-                nome: STRING_VAZIA,
-                cpf: STRING_VAZIA,
-                telefone: STRING_VAZIA,
-                salario: STRING_VAZIA,
-                ehCasado: false,
-                genero: STRING_VAZIA,
-                dataNascimento: STRING_VAZIA
-            });
-            this.getView().setModel(funcionario, MODELO_FUNCIONARIO);
+        _modeloFuncionario(func) {
+            let funcionario;
+            if (func == (null || undefined)) {
+                funcionario = {
+                    nome: STRING_VAZIA,
+                    cpf: STRING_VAZIA,
+                    telefone: STRING_VAZIA,
+                    salario: STRING_VAZIA,
+                    ehCasado: false,
+                    genero: STRING_VAZIA,
+                    dataNascimento: STRING_VAZIA
+                }
+            } else {
+                funcionario = {
+                    id: func.id,
+                    nome: func.nome,
+                    cpf: func.cpf,
+                    telefone: func.telefone,
+                    salario: Formatter.salarioText(func.salario),
+                    ehCasado: func.ehCasado,
+                    genero: func.genero,
+                    dataNascimento: func.dataNascimento
+                }
+            }
+            this.modelo(NOME_MODELO_FUNCIONARIO, funcionario);
         },
 
-        _obterRecursoi18n(nomeVariavelI18n) {
+        _limparTelaEdicao(func) {
+            const calendario = this.byId(ID_INPUT_CALENDARIO);
+            calendario.removeAllSelectedDates();
 
-            const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
-            return recursos_i18n.getText(nomeVariavelI18n);
+            ListaErros.iniciarLista([]);
+
+            this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
+            this.byId(ID_INPUT_SALARIO).setValueState(STATUS_NULO);
+            this.byId(ID_TEXT_DATA).setText(Formatter.formatarDataParaExibir(new Date(func.dataNascimento)));
         },
 
         _limparTela() {
@@ -86,50 +120,56 @@ sap.ui.define([
             const textoErroCalendarioDataNaoInformada = "erroInputCalendarioDataNaoInformada";
             const idRadioButtonSolteiro = "solteiro";
             const calendario = this.byId(ID_INPUT_CALENDARIO);
+            const dataVazia = "-- / -- / ----";
 
             calendario.removeAllSelectedDates();
-            calendario.focusDate(DATA_DE_NASCIMENTO_MAXIMA);
 
-            listaDeErros = [
+            ListaErros.iniciarLista([
                 {
                     id: ID_INPUT_NOME,
-                    erro: this._obterRecursoi18n(textoErroNomeTamanhoInsuficiente)
+                    erro: this.obterRecursoi18n(textoErroNomeTamanhoInsuficiente)
                 },
                 {
                     id: ID_INPUT_CPF,
-                    erro: this._obterRecursoi18n(textoErroCpfPreenchidoIncorretamente)
+                    erro: this.obterRecursoi18n(textoErroCpfPreenchidoIncorretamente)
                 },
                 {
                     id: ID_INPUT_TELEFONE,
-                    erro: this._obterRecursoi18n(textoErroTelefonePreenchidoIncorretamente)
+                    erro: this.obterRecursoi18n(textoErroTelefonePreenchidoIncorretamente)
                 },
                 {
                     id: ID_INPUT_SALARIO,
-                    erro: this._obterRecursoi18n(textoErroSalarioValorInsuficiente)
+                    erro: this.obterRecursoi18n(textoErroSalarioValorInsuficiente)
                 },
                 {
                     id: ID_INPUT_CALENDARIO,
-                    erro: this._obterRecursoi18n(textoErroCalendarioDataNaoInformada)
+                    erro: this.obterRecursoi18n(textoErroCalendarioDataNaoInformada)
                 }
-            ];
+            ]);
 
             this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_SALARIO).setValueState(STATUS_NULO);
             this.byId(idRadioButtonSolteiro).setSelected(true);
+            this.byId(ID_TEXT_DATA).setText(dataVazia);
         },
 
         diaSelecionado(evento) {
             try {
                 const primeiroArray = 0;
                 let data = evento.getSource().getSelectedDates()[primeiroArray].getStartDate();
-                let dataFormatada = Formatter.formatarData(data);
+                let dataFormatada = Formatter.formatarDataParaSalvar(data);
+
+                this.byId(ID_TEXT_DATA).setText(Formatter.formatarDataParaExibir(data))
+
                 Validacao.dataNascimentoValida(dataFormatada);
-                this.getView().getModel(MODELO_FUNCIONARIO).getData().dataNascimento = dataFormatada;
-                this._removerErrosDaLista(ID_INPUT_CALENDARIO);
+
+                this.modelo(NOME_MODELO_FUNCIONARIO).dataNascimento = dataFormatada;
+
+                ListaErros.removerErrosDaLista(ID_INPUT_CALENDARIO);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_CALENDARIO, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_CALENDARIO, erro);
             }
         },
 
@@ -140,9 +180,9 @@ sap.ui.define([
                 .then(async response => {
                     if (response.status == statusCreated) {
                         let funcionario = await response.json();
-                        MessageBox.success(controller._obterRecursoi18n(msgSucesso), {
+                        MessageBox.success(controller.obterRecursoi18n(msgSucesso), {
                             onClose() {
-                                controller._irParaTelaDeDetalhes(funcionario);
+                                controller.navegarPara(ROTA_DETALHES, { id: funcionario.id })
                             }
                         });
                     } else {
@@ -154,26 +194,48 @@ sap.ui.define([
                 });
         },
 
+        _atualizar(modelo, controller) {
+            const statusNoContent = 204;
+            const msgSucesso = "msgSucessoAoAtualizar";
+
+            FuncionarioRepository.atualizar(modelo)
+                .then(response => {
+                    if (response.status == statusNoContent) {
+                        MessageBox.success(controller.obterRecursoi18n(msgSucesso), {
+                            onClose() {
+                                controller.navegarPara(ROTA_DETALHES, { id: modelo.id })
+                            }
+                        });
+                    } else {
+                        return Promise.reject(response);
+                    }
+                })
+                .catch(async erro => {
+                    MessageBox.warning(await erro.text());
+                });
+        },
+
+        _formatarValoresParaSalvar(modelo) {
+            modelo.genero = Number(modelo.genero);
+
+            let salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA);
+            modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais);
+        },
+
         aoClicarEmSalvar() {
             try {
-                const quebraDeLinha = "\n";
-                let salarioSemPontos;
-                let modelo;
-                if (listaDeErros.length) {
-                    let erros = STRING_VAZIA;
-                    listaDeErros.forEach((elemento) => {
-                        if (elemento.id != ID_INPUT_CALENDARIO) {
-                            this.byId(elemento.id).setValueState(STATUS_ERRO).setValueStateText(elemento.erro);
-                        }
-                        erros += elemento.erro + quebraDeLinha;
-                    })
-                    throw erros;
+                const modelo = this.modelo(NOME_MODELO_FUNCIONARIO);
+                const propriedadeId = "id";
+
+                ListaErros.verificarListaDeErros(this);
+                this._formatarValoresParaSalvar(modelo);
+                let modeloFuncionarioPossuiAtributoId = modelo.hasOwnProperty(propriedadeId);
+
+                if (modeloFuncionarioPossuiAtributoId) {
+                    this._atualizar(modelo, this);
+                } else {
+                    this._criar(modelo, this);
                 }
-                modelo = this.getView().getModel(MODELO_FUNCIONARIO).getData();
-                salarioSemPontos = modelo.salario.replace(TODA_OCORRENCIA_DE_PONTO, STRING_VAZIA);
-                modelo.genero = Number(modelo.genero);
-                modelo.salario = Number(salarioSemPontos.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais);
-                this._criar(modelo, this);
             } catch (erro) {
                 MessageBox.warning(erro);
             }
@@ -181,71 +243,35 @@ sap.ui.define([
 
         aoClicarEmVoltar() {
             const msg_confirmar = "msgConfirmarAcaoVoltar";
-            this._voltarParaPaginaAnterior(this._obterRecursoi18n(msg_confirmar), this);
+            this._navegarParaListagem(this.obterRecursoi18n(msg_confirmar), this);
         },
 
         aoClicarEmCancelar() {
             const msg_confirmar = "msgConfirmarAcaoCancelar";
-            this._voltarParaPaginaAnterior(this._obterRecursoi18n(msg_confirmar), this);
+            this._navegarParaListagem(this.obterRecursoi18n(msg_confirmar), this);
         },
 
-        _voltarParaPaginaAnterior(mensagem, controller) {
+        _navegarParaListagem(mensagem, controller) {
             const rotaListagem = "listagem";
-            const paginaAnterior = -1;
-            const historico = History.getInstance();
-            const hashAnterior = historico.getPreviousHash();
 
             MessageBox.confirm(mensagem, {
                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                 emphasizedAction: MessageBox.Action.YES,
                 onClose(acao) {
                     if (acao == MessageBox.Action.YES) {
-                        if (hashAnterior !== undefined) {
-                            window.history.go(paginaAnterior);
-                        } else {
-                            const rota = controller.getOwnerComponent().getRouter();
-                            rota.navTo(rotaListagem, {}, true);
-                        }
+                        controller.navegarPara(rotaListagem, {})
                     }
                 }
             });
-        },
-
-        _irParaTelaDeDetalhes(funcionario) {
-            const rotaDetalhes = "detalhes";
-            const rota = this.getOwnerComponent().getRouter();
-            rota.navTo(rotaDetalhes, {
-                id: funcionario.id
-            });
-        },
-
-        _adicionarErroNaLista(id, erro) {
-            if (listaDeErros.find(x => x.id == id)) {
-                let index = listaDeErros.findIndex(x => x.id == id);
-                listaDeErros[index].erro = erro;
-            } else {
-                listaDeErros.push({
-                    id: id,
-                    erro: erro
-                });
-            }
-        },
-
-        _removerErrosDaLista(id) {
-            const apenasUmaOcorrencia = 1;
-            if (listaDeErros.find(x => x.id == id)) {
-                let index = listaDeErros.findIndex(x => x.id == id);
-                listaDeErros.splice(index, apenasUmaOcorrencia);
-            }
         },
 
         aoMudarNome(evento) {
             try {
                 Validacao.nomeValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_NOME);
+                ListaErros.removerErrosDaLista(ID_INPUT_NOME);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_NOME, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_NOME, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -254,9 +280,9 @@ sap.ui.define([
             try {
                 Validacao.cpfValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_CPF);
+                ListaErros.removerErrosDaLista(ID_INPUT_CPF);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_CPF, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_CPF, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -265,9 +291,9 @@ sap.ui.define([
             try {
                 Validacao.telefoneValido(evento.getParameter(PROPRIEDADE_VALUE));
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_TELEFONE);
+                ListaErros.removerErrosDaLista(ID_INPUT_TELEFONE);
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_TELEFONE, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_TELEFONE, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         },
@@ -281,12 +307,12 @@ sap.ui.define([
 
                 Validacao.salarioValido(texto);
                 evento.getSource().setValueState(STATUS_SUCESSO);
-                this._removerErrosDaLista(ID_INPUT_SALARIO);
+                ListaErros.removerErrosDaLista(ID_INPUT_SALARIO);
 
                 evento.getSource().setValue(Formatter.salarioText(parseFloat(texto.replace(TODA_OCORRENCIA_DE_VIRGULA, STRING_PONTO)).toFixed(duasCasasDecimais)));
 
             } catch (erro) {
-                this._adicionarErroNaLista(ID_INPUT_SALARIO, erro);
+                ListaErros.adicionarErroNaLista(ID_INPUT_SALARIO, erro);
                 evento.getSource().setValueState(STATUS_ERRO).setValueStateText(erro);
             }
         }
