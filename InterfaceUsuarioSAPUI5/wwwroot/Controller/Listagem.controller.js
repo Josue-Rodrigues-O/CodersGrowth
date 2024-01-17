@@ -39,7 +39,7 @@ sap.ui.define([
                 MessageBox.warning(erro.message);
             }
         },
-        
+
         aoPesquisar(condicao) {
             try {
                 const parametroQuery = "query";
@@ -62,11 +62,12 @@ sap.ui.define([
 
         aoClicarNaLinha(linhaSelecionada) {
             try {
-                const idFuncionario = "id";
+                const propriedadeId = "id";
                 const rotaDetalhes = "detalhes";
+                const idFuncionario = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(propriedadeId)
                 const recursosLinhaSelecionada = linhaSelecionada.getSource();
 
-                this.navegarPara(rotaDetalhes, { id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario) })
+                this.navegarPara(rotaDetalhes, { id: idFuncionario })
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }
