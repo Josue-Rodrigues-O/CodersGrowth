@@ -1,10 +1,9 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/model/json/JSONModel",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox"
-], function (BaseControler, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
+], function (BaseControler, Formatter, FuncionarioRepository, MessageBox) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.Controller.Listagem";
@@ -63,11 +62,12 @@ sap.ui.define([
 
         aoClicarNaLinha(linhaSelecionada) {
             try {
-                const idFuncionario = "id";
+                const propriedadeId = "id";
                 const rotaDetalhes = "detalhes";
                 const recursosLinhaSelecionada = linhaSelecionada.getSource();
+                const idFuncionario = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(propriedadeId)
 
-                this.navegarPara(rotaDetalhes, {id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)})
+                this.navegarPara(rotaDetalhes, { id: idFuncionario })
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }

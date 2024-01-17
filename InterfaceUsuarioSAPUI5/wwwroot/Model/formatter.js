@@ -1,8 +1,7 @@
 sap.ui.define([
     "sap/ui/core/format/DateFormat",
     "sap/ui/core/format/NumberFormat",
-    "sap/ui/core/date/UI5Date"
-], (DateFormat, NumberFormat, UI5Date) => {
+], (DateFormat, NumberFormat) => {
     "use strict";
 
     const MODELO_I18N = "i18n";

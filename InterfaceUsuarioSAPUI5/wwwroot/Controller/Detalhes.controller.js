@@ -7,7 +7,8 @@ sap.ui.define([
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.Controller.Detalhes";
-    const nomeModeloFuncionario = "funcionario"
+    const NOME_MODELO_FUNCIONARIO = "funcionario"
+    const rotaListagem = "listagem";
 
 
     return BaseControler.extend(NAMESPACE, {
@@ -25,7 +26,7 @@ sap.ui.define([
                 const idFuncionario = evento.getParameter(parametroArgumentos).id;
                 this._obterPorId(idFuncionario);
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro.message);
             }
         },
 
@@ -40,33 +41,60 @@ sap.ui.define([
                         }
                     })
                     .then(response => {
-                        this.modelo(nomeModeloFuncionario, response)
+                        this.modelo(NOME_MODELO_FUNCIONARIO, response)
                     }).catch(async erro => MessageBox.warning(await erro.text()));
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro.message);
             }
+        },
+
+        _remover(Controller) {
+            const msgConfirmacao = "msgConfirmarAcaoRemover"
+            const msgSucesso = "msgSucessoAoRemover"
+            const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
+            MessageBox.confirm(this.obterRecursoi18n(msgConfirmacao), {
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                emphasizedAction: MessageBox.Action.YES,
+                onClose(acao) {
+                    if (acao == MessageBox.Action.YES) {
+                        Controller._removerFuncionario(idFuncionario)
+                        MessageBox.success(Controller.obterRecursoi18n(msgSucesso), {
+                            onClose() {
+                                Controller.navegarPara(rotaListagem, {})
+                            }
+                        });
+                    }
+                }
+            });
+        },
+
+        _removerFuncionario(id) {
+            FuncionarioRepository.remover(id)
         },
 
         aoClicarEmEditar() {
             try {
                 const rotaEdicao = "edicao"
-                this.navegarPara(rotaEdicao, { id: this.modelo(nomeModeloFuncionario).id })
+                this.navegarPara(rotaEdicao, { id: this.modelo(NOME_MODELO_FUNCIONARIO).id })
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro.message);
             }
         },
 
         aoClicarEmRemover() {
-            
+            try {
+                this._remover(this)
+            } catch (erro) {
+                MessageBox.error(erro)
+            }
         },
 
         aoClicarEmVoltar() {
             try {
-                const rotaListagem = "listagem";
                 this.navegarPara(rotaListagem, {})
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro);
             }
-        }
+        },
     });
 });
