@@ -21,12 +21,12 @@
 						<Button
 							icon="sap-icon://add"
 							type="Emphasized"
-							press=".aoClicarAbreTelaDeCadastro" />
+							press=".aoClicarEmAdicionar" />
 						<ToolbarSpacer />
 						<SearchField
 							placeholder="{i18n>placeholderFiltro}"
 							width="40%"
-							search=".aoPesquisarFiltrarFuncionarios" />
+							search=".aoPesquisar" />
 					</Toolbar>
 				</headerToolbar>
 				<Table
@@ -91,7 +91,7 @@
 					<items>
 						<ColumnListItem
 							type="Navigation"
-							press=".aoClicarAbreTelaDeDetalhes">
+							press=".aoClicarNaLinha">
 							<cells>
 								<ObjectIdentifier title="{modeloTabelaFuncionarios>nome}" />
 								<ObjectIdentifier title="{modeloTabelaFuncionarios>cpf}" />

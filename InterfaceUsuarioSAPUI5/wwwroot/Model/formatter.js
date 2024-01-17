@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/format/DateFormat",
-    "sap/ui/core/format/NumberFormat"
-], (DateFormat, NumberFormat) => {
+    "sap/ui/core/format/NumberFormat",
+    "sap/ui/core/date/UI5Date"
+], (DateFormat, NumberFormat, UI5Date) => {
     "use strict";
 
     const MODELO_I18N = "i18n";
@@ -9,18 +10,18 @@ sap.ui.define([
     return {
 
         generoText(genero) {
-            const generoIndefinido = "indefinido";
-            const generoMasculino = "masculino";
-            const generoFeminino = "feminino";
+            const generoIndefinido = {id: 0, genero: "indefinido"};
+            const generoMasculino = {id: 1, genero: "masculino"};
+            const generoFeminino = {id: 2, genero: "feminino"};
 
             const recursos_i18n = this.getOwnerComponent().getModel(MODELO_I18N).getResourceBundle();
             switch (genero) {
-                case 0:
-                    return recursos_i18n.getText(generoIndefinido);
-                case 1:
-                    return recursos_i18n.getText(generoMasculino);
-                case 2:
-                    return recursos_i18n.getText(generoFeminino);
+                case generoIndefinido.id:
+                    return recursos_i18n.getText(generoIndefinido.genero);
+                case generoMasculino.id:
+                    return recursos_i18n.getText(generoMasculino.genero);
+                case generoFeminino.id:
+                    return recursos_i18n.getText(generoFeminino.genero);
                 default:
                     return genero;
             }
@@ -35,19 +36,27 @@ sap.ui.define([
         },
 
         salarioText(salario){
-            var formatoSalarioOpcoes = {
+            const formatoSalarioOpcoes = {
                 decimals: 2
             };
-            var formatarSalario = NumberFormat.getFloatInstance(formatoSalarioOpcoes);
+            const formatarSalario = NumberFormat.getFloatInstance(formatoSalarioOpcoes);
             return formatarSalario.format(parseFloat(salario));
         },
 
-        formatarData(data){
+        formatarDataParaSalvar(data){
             const formatoData = "yyyy-MM-dd";
             let formatador = DateFormat.getDateInstance({
                 pattern: formatoData
             });
             return formatador.format(data);
+        },
+
+        formatarDataParaExibir(data){
+            const formatoData = "dd/MM/yyyy";
+            let formatador = DateFormat.getDateInstance({
+                pattern: formatoData
+            });
+            return formatador.format((data));
         }
     }
 });

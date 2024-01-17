@@ -9,7 +9,6 @@ sap.ui.define([
 
     const NAMESPACE = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
-    const STATUS_OK = 200;
 
     return BaseControler.extend(NAMESPACE, {
 
@@ -17,8 +16,7 @@ sap.ui.define([
 
         onInit() {
             const rotaListagem = "listagem";
-            let rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(rotaListagem).attachPatternMatched(this._aoCoincidirRota, this);
+            this.vincularRota(rotaListagem, this._aoCoincidirRota)
         },
 
         _aoCoincidirRota() {
@@ -29,21 +27,21 @@ sap.ui.define([
             try {
                 FuncionarioRepository.obterTodos(condicao)
                     .then(response => {
-                        if (response.status == STATUS_OK) {
+                        if (response.ok) {
                             return response.json();
                         }
                         else {
                             return Promise.reject(response);
                         }
                     })
-                    .then(response => this.getView().setModel(new JSONModel(response), MODELO_TABELA))
+                    .then(response => this.modelo(MODELO_TABELA, response))
                     .catch(async erro => MessageBox.warning(await erro.text()));
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }
         },
 
-        aoPesquisarFiltrarFuncionarios(condicao) {
+        aoPesquisar(condicao) {
             try {
                 const parametroQuery = "query";
                 const stringCondicao = condicao.getParameter(parametroQuery);
@@ -53,28 +51,23 @@ sap.ui.define([
             }
         },
 
-        aoClicarAbreTelaDeCadastro() {
+        aoClicarEmAdicionar() {
             try {
                 const rotaCadastro = "cadastro";
-                const rota = this.getOwnerComponent().getRouter();
-                rota.navTo(rotaCadastro);
+                this.navegarPara(rotaCadastro, {})
             }
             catch (erro) {
                 MessageBox.warning(erro.message);
             }
         },
 
-        aoClicarAbreTelaDeDetalhes(linhaSelecionada) {
+        aoClicarNaLinha(linhaSelecionada) {
             try {
                 const idFuncionario = "id";
                 const rotaDetalhes = "detalhes";
                 const recursosLinhaSelecionada = linhaSelecionada.getSource();
 
-                const rota = this.getOwnerComponent().getRouter();
-
-                rota.navTo(rotaDetalhes, {
-                    id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)
-                });
+                this.navegarPara(rotaDetalhes, {id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)})
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }

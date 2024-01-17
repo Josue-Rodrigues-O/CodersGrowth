@@ -6,9 +6,10 @@ sap.ui.define([
     "sap/ui/core/date/UI5Date",
     "../Services/Validacao",
     "../Services/ListaErros"
-], function (BaseControler, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao, ListaErros) {
+], function (BaseController, FuncionarioRepository, MessageBox, Formatter, UI5Date, Validacao, ListaErros) {
     "use strict";
 
+    //#region 
     const NAMESPACE = "controle.funcionarios.controller.Cadastro";
     const IDADE_MINIMA = 18;
     const DATA_DE_NASCIMENTO_MAXIMA = UI5Date.getInstance((new Date().getFullYear() - IDADE_MINIMA).toString());
@@ -17,6 +18,7 @@ sap.ui.define([
     const ID_INPUT_TELEFONE = "inputTelefone";
     const ID_INPUT_SALARIO = "inputSalario";
     const ID_INPUT_CALENDARIO = "calendarDataNascimento";
+    const ID_TEXT_DATA = "dataText";
     const NOME_MODELO_FUNCIONARIO = "funcionario";
     const STATUS_NULO = "None";
     const STATUS_ERRO = "Error";
@@ -29,8 +31,9 @@ sap.ui.define([
     const STRING_PONTO = ".";
     const ROTA_DETALHES = "detalhes";
 
-    return BaseControler.extend(NAMESPACE, {
+    //#endregion
 
+    return BaseController.extend(NAMESPACE, {
         onInit() {
             const modeloI18n = "i18n";
             const rotaCadastro = "cadastro";
@@ -65,6 +68,7 @@ sap.ui.define([
                 maxData: DATA_DE_NASCIMENTO_MAXIMA,
                 minData: DataDeNascimentoMinima
             }
+
             this.modelo(modeloCalendario, calendario)
         },
 
@@ -95,16 +99,17 @@ sap.ui.define([
             this.modelo(NOME_MODELO_FUNCIONARIO, funcionario);
         },
 
-        _limparTelaEdicao() {
+        _limparTelaEdicao(func) {
             const calendario = this.byId(ID_INPUT_CALENDARIO);
             calendario.removeAllSelectedDates();
 
-            ListaErros.iniciarLista([])
+            ListaErros.iniciarLista([]);
 
             this.byId(ID_INPUT_NOME).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_CPF).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_SALARIO).setValueState(STATUS_NULO);
+            this.byId(ID_TEXT_DATA).setText(Formatter.formatarDataParaExibir(new Date(func.dataNascimento)));
         },
 
         _limparTela() {
@@ -115,6 +120,7 @@ sap.ui.define([
             const textoErroCalendarioDataNaoInformada = "erroInputCalendarioDataNaoInformada";
             const idRadioButtonSolteiro = "solteiro";
             const calendario = this.byId(ID_INPUT_CALENDARIO);
+            const dataVazia = "-- / -- / ----";
 
             calendario.removeAllSelectedDates();
             calendario.focusDate(DATA_DE_NASCIMENTO_MAXIMA);
@@ -147,13 +153,17 @@ sap.ui.define([
             this.byId(ID_INPUT_TELEFONE).setValueState(STATUS_NULO);
             this.byId(ID_INPUT_SALARIO).setValueState(STATUS_NULO);
             this.byId(idRadioButtonSolteiro).setSelected(true);
+            this.byId(ID_TEXT_DATA).setText(dataVazia);
         },
 
         diaSelecionado(evento) {
             try {
                 const primeiroArray = 0;
                 let data = evento.getSource().getSelectedDates()[primeiroArray].getStartDate();
-                let dataFormatada = Formatter.formatarData(data);
+                let dataFormatada = Formatter.formatarDataParaSalvar(data);
+
+                this.byId(ID_TEXT_DATA).setText(Formatter.formatarDataParaExibir(data))
+
                 Validacao.dataNascimentoValida(dataFormatada);
 
                 this.modelo(NOME_MODELO_FUNCIONARIO).dataNascimento = dataFormatada;
@@ -217,7 +227,7 @@ sap.ui.define([
             try {
                 const modelo = this.modelo(NOME_MODELO_FUNCIONARIO);
                 const propriedadeId = "id";
-                
+
                 ListaErros.verificarListaDeErros(this);
                 this._formatarValoresParaSalvar(modelo);
                 let modeloFuncionarioPossuiAtributoId = modelo.hasOwnProperty(propriedadeId);

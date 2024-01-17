@@ -137,6 +137,14 @@
                     minDate="{path: 'calendario>/minData'}"
                     maxDate="{path: 'calendario>/maxData'}"
                     showWeekNumbers="false" />
+                <HBox>
+                    <Label
+                        class="sapUiSmallMarginEnd"
+                        showColon="true"
+                        text="Data selecionada" />
+                    <Text
+                        id="dataText" />
+                </HBox>
             </VBox>
         </HBox>
     </Page>

@@ -1,13 +1,14 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/model/json/JSONModel",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox"
-], function (BaseControler, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
+], function (BaseControler, Formatter, FuncionarioRepository, MessageBox) {
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.Controller.Detalhes";
+    const nomeModeloFuncionario = "funcionario"
+
 
     return BaseControler.extend(NAMESPACE, {
 
@@ -15,8 +16,7 @@ sap.ui.define([
 
         onInit() {
             const rotaDetalhes = "detalhes"
-            const rota = this.getOwnerComponent().getRouter();
-            rota.getRoute(rotaDetalhes).attachPatternMatched(this._aoCoincidirRota, this);
+            this.vincularRota(rotaDetalhes, this._aoCoincidirRota)
         },
 
         _aoCoincidirRota(evento) {
@@ -40,35 +40,30 @@ sap.ui.define([
                         }
                     })
                     .then(response => {
-                        this.getView()
-                            .setModel(new JSONModel(response));
+                        this.modelo(nomeModeloFuncionario, response)
                     }).catch(async erro => MessageBox.warning(await erro.text()));
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }
         },
 
-        aoClicarAbreTelaDeEdicao() {
+        aoClicarEmEditar() {
             try {
                 const rotaEdicao = "edicao"
-                const rota = this.getOwnerComponent().getRouter()
-                rota.navTo(rotaEdicao, {
-                    id: this.getView().getModel().getData().id
-                })
+                this.navegarPara(rotaEdicao, { id: this.modelo(nomeModeloFuncionario).id })
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }
         },
 
-        aoClicarRemoveFuncionario() {
-            window.arr = this.getView()
+        aoClicarEmRemover() {
+            
         },
 
-        aoClicarVoltarParaPaginaAnterior() {
+        aoClicarEmVoltar() {
             try {
                 const rotaListagem = "listagem";
-                const rota = this.getOwnerComponent().getRouter();
-                rota.navTo(rotaListagem, {}, true);
+                this.navegarPara(rotaListagem, {})
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }
