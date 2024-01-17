@@ -18,7 +18,7 @@ sap.ui.define([], () => {
     },
 
     criar(funcionario) {
-      let configuracaoFetch = {
+      const configuracaoFetch = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=UTF-8'
@@ -30,19 +30,23 @@ sap.ui.define([], () => {
     },
 
     atualizar(funcionario) {
-      try {
-        let configuracaoFetch = {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
-          },
-          body: JSON.stringify(funcionario)
-        };
-  
-        return fetch(URL, configuracaoFetch);
-      } catch (erro) {
-        console.log(erro)
+      const configuracaoFetch = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(funcionario)
+      };
+
+      return fetch(URL, configuracaoFetch);
+    },
+
+    remover(id) {
+      const configuracaoFetch = {
+        method: 'DELETE'
       }
+
+      return fetch(`${URL}/${id}`, configuracaoFetch);
     }
   }
 })

@@ -1,10 +1,9 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/model/json/JSONModel",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
     "sap/m/MessageBox"
-], function (BaseControler, JSONModel, Formatter, FuncionarioRepository, MessageBox) {
+], function (BaseControler, Formatter, FuncionarioRepository, MessageBox) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.Controller.Listagem";
@@ -19,10 +18,13 @@ sap.ui.define([
             this.vincularRota(rotaListagem, this._aoCoincidirRota)
         },
 
+        //#region funções que não realizam consultas no servidor
         _aoCoincidirRota() {
             this._obterFuncionarios();
         },
+        //#endregion
 
+        //#region Funções que realizam consultas no servidor
         _obterFuncionarios(condicao) {
             try {
                 FuncionarioRepository.obterTodos(condicao)
@@ -40,7 +42,9 @@ sap.ui.define([
                 MessageBox.warning(erro.message);
             }
         },
-
+        //#endregion
+        
+        //#region Eventos e funções de navegação
         aoPesquisar(condicao) {
             try {
                 const parametroQuery = "query";
@@ -67,10 +71,11 @@ sap.ui.define([
                 const rotaDetalhes = "detalhes";
                 const recursosLinhaSelecionada = linhaSelecionada.getSource();
 
-                this.navegarPara(rotaDetalhes, {id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario)})
+                this.navegarPara(rotaDetalhes, { id: recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(idFuncionario) })
             } catch (erro) {
                 MessageBox.warning(erro.message);
             }
         }
+        //#endregion
     });
 });

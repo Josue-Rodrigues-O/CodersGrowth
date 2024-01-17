@@ -7,7 +7,8 @@ sap.ui.define([
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.Controller.Detalhes";
-    const nomeModeloFuncionario = "funcionario"
+    const NOME_MODELO_FUNCIONARIO = "funcionario"
+    const rotaListagem = "listagem";
 
 
     return BaseControler.extend(NAMESPACE, {
@@ -19,16 +20,19 @@ sap.ui.define([
             this.vincularRota(rotaDetalhes, this._aoCoincidirRota)
         },
 
+        //#region Funções que não realizam consulta no servidor
         _aoCoincidirRota(evento) {
             try {
                 const parametroArgumentos = "arguments";
                 const idFuncionario = evento.getParameter(parametroArgumentos).id;
                 this._obterPorId(idFuncionario);
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro.message);
             }
         },
+        //#endregion
 
+        //#region Funções que realizam consulta no servidor
         _obterPorId(id) {
             try {
                 FuncionarioRepository.obterPorId(id)
@@ -40,33 +44,54 @@ sap.ui.define([
                         }
                     })
                     .then(response => {
-                        this.modelo(nomeModeloFuncionario, response)
+                        this.modelo(NOME_MODELO_FUNCIONARIO, response)
                     }).catch(async erro => MessageBox.warning(await erro.text()));
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro.message);
             }
         },
 
+        _remover(Controller) {
+            const msgConfirmacao = "msgConfirmarAcaoRemover"
+            const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
+            MessageBox.confirm(this.obterRecursoi18n(msgConfirmacao), {
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                emphasizedAction: MessageBox.Action.YES,
+                onClose(acao) {
+                    if (acao == MessageBox.Action.YES) {
+                        FuncionarioRepository.remover(idFuncionario)
+                        Controller.navegarPara(rotaListagem, {})
+                    }
+                }
+            });
+        },
+        //#endregion
+
+        //#region Eventos e funcoes de navegação
         aoClicarEmEditar() {
             try {
                 const rotaEdicao = "edicao"
-                this.navegarPara(rotaEdicao, { id: this.modelo(nomeModeloFuncionario).id })
+                this.navegarPara(rotaEdicao, { id: this.modelo(NOME_MODELO_FUNCIONARIO).id })
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro.message);
             }
         },
 
         aoClicarEmRemover() {
-            
+            try {
+                this._remover(this)
+            } catch (erro) {
+                MessageBox.error(erro)
+            }
         },
 
         aoClicarEmVoltar() {
             try {
-                const rotaListagem = "listagem";
                 this.navegarPara(rotaListagem, {})
             } catch (erro) {
-                MessageBox.warning(erro.message);
+                MessageBox.error(erro);
             }
-        }
+        },
+        //#endregion
     });
 });

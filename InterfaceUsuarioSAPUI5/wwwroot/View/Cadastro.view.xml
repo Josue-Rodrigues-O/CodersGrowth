@@ -141,7 +141,7 @@
                     <Label
                         class="sapUiSmallMarginEnd"
                         showColon="true"
-                        text="Data selecionada" />
+                        text="{i18n>LabelDataTelaCadastro}" />
                     <Text
                         id="dataText" />
                 </HBox>
