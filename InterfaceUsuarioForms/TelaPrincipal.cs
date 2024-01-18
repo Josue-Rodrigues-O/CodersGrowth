@@ -69,10 +69,10 @@ namespace InterfaceUsuarioForms
             }
         }
 
-        private static uint ObterIdDaLinha()
+        private static int ObterIdDaLinha()
         {
             const string ID = "ID";
-            return (uint)TelaListagem.CurrentRow.Cells[ID].Value;
+            return (int)TelaListagem.CurrentRow.Cells[ID].Value;
         }
     }
 }

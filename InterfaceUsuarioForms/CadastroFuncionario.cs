@@ -1,7 +1,6 @@
 ﻿using Dominio;
 using Dominio.Constantes;
 using Dominio.Enums;
-using Infraestrutura;
 using Infraestrutura.Repositorios;
 using InterfaceUsuarioForms.Constantes;
 using System.Text.RegularExpressions;
@@ -17,7 +16,7 @@ namespace InterfaceUsuarioForms
             InitializeComponent();
             _repositorio = repositorio;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
-            Calendario.MaxDate = new DateTime(DateTime.Now.Year - (int)ValoresValidacaoEnum.IdadeMinima, DateTime.Now.Month, DateTime.Now.Day);
+            Calendario.MaxDate = new DateTime(DateTime.Now.Year - (int)ValoresValidacao.IdadeMinima, DateTime.Now.Month, DateTime.Now.Day);
 
             if (funcionario != null)
             {
@@ -128,8 +127,10 @@ namespace InterfaceUsuarioForms
             const byte SegundoValorVetor = 1;
             bool PossuiVirgula = TxtSalario.Text.Contains(Virgula);
 
-            if ((Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_SALARIO) || (!PossuiVirgula && e.KeyChar.Equals(Virgula)))
-                && !(PossuiVirgula && TxtSalario.Text.Split(Virgula)[SegundoValorVetor].Length == (int)ValoresValidacaoEnum.QuantidadeCasasDecimaisSalario)
+            if (
+                !(PossuiVirgula && e.KeyChar.Equals(Virgula)) && Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_SALARIO)
+                
+                && !(PossuiVirgula && TxtSalario.Text.Split(Virgula)[SegundoValorVetor].Length == (int)ValoresValidacao.QuantidadeCasasDecimaisSalario)
                 || (int)e.KeyChar == (int)Keys.Back)
             {
                 e.Handled = false;

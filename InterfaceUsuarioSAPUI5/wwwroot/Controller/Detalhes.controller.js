@@ -74,7 +74,6 @@ sap.ui.define([
 
         aoClicarEmEditar() {
             try {
-                const rotaEdicao = "edicao"
                 this.navegarPara(rotaEdicao, { id: this.modelo(NOME_MODELO_FUNCIONARIO).id })
             } catch (erro) {
                 MessageBox.error(erro.message);

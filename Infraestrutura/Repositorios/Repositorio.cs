@@ -25,7 +25,7 @@ namespace Infraestrutura.Repositorios
             }
         }
 
-        public Funcionario ObterPorId(uint id)
+        public Funcionario ObterPorId(int id)
         {
             try
             {

@@ -55,7 +55,7 @@ namespace Infraestrutura.Repositorios
                 throw new Exception(message: Excessoes.ERRO_AO_CADASTRAR_FUNCIONARIO);
             }
         }
-        public Funcionario ObterPorId(uint id)
+        public Funcionario ObterPorId(int id)
         {
             try
             {
