@@ -1,6 +1,4 @@
-﻿using Dominio;
-
-namespace InterfaceUsuarioForms.Constantes
+﻿namespace Dominio.Constantes
 {
     public class MensagensDoMessageBox
     {

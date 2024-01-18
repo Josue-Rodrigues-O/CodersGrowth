@@ -1,5 +1,5 @@
 using Infraestrutura.Repositorios;
-using InterfaceUsuarioForms.Constantes;
+using Dominio.Constantes;
 
 namespace InterfaceUsuarioForms
 {
@@ -71,8 +71,8 @@ namespace InterfaceUsuarioForms
 
         private static int ObterIdDaLinha()
         {
-            const string ID = "ID";
-            return (int)TelaListagem.CurrentRow.Cells[ID].Value;
+            const string colunaId = "ID";
+            return (int)TelaListagem.CurrentRow.Cells[colunaId].Value;
         }
     }
 }

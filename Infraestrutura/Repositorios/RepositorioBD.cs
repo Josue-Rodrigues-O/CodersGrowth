@@ -9,7 +9,10 @@ namespace Infraestrutura.Repositorios
     public class RepositorioBD : IRepositorio
     {
         private const string NomeDaConexao = "ConexaoBD";
-        private static readonly string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings[NomeDaConexao].ConnectionString;
+        private static readonly string connectionString = System.Configuration
+            .ConfigurationManager
+            .ConnectionStrings[NomeDaConexao]
+            .ConnectionString;
         private static SqlConnection Connection()
         {
             SqlConnection connection = new(connectionString);
@@ -20,14 +23,14 @@ namespace Infraestrutura.Repositorios
         {
             Funcionario funcionario = new()
             {
-                Id = Convert.ToInt32(reader["Id"]),
-                Nome = reader["Nome"].ToString(),
-                Cpf = reader["Cpf"].ToString(),
-                Telefone = reader["Telefone"].ToString(),
-                Salario = Convert.ToDecimal(reader["Salario"]),
-                DataNascimento = Convert.ToDateTime(reader["DataNascimento"]),
-                EhCasado = Convert.ToBoolean(reader["EhCasado"]),
-                Genero = (GeneroEnum)Enum.Parse(typeof(GeneroEnum), reader["Genero"].ToString())
+                Id = Convert.ToInt32(reader[CamposTabelaBD.COLUNA_ID]),
+                Nome = reader[CamposTabelaBD.COLUNA_NOME].ToString(),
+                Cpf = reader[CamposTabelaBD.COLUNA_CPF].ToString(),
+                Telefone = reader[CamposTabelaBD.COLUNA_TELEFONE].ToString(),
+                Salario = Convert.ToDecimal(reader[CamposTabelaBD.COLUNA_SALARIO]),
+                DataNascimento = Convert.ToDateTime(reader[CamposTabelaBD.COLUNA_DATA_NASCIMENTO]),
+                EhCasado = Convert.ToBoolean(reader[CamposTabelaBD.COLUNA_EHCASADO]),
+                Genero = (GeneroEnum)Enum.Parse(typeof(GeneroEnum), reader[CamposTabelaBD.COLUNA_GENERO].ToString())
             };
             return funcionario;
         }
@@ -35,20 +38,27 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-
-                using (var conn = Connection())
-                {
-                    SqlCommand cmd = new($@"INSERT INTO TabFuncionarios (Nome,Cpf,Telefone,Salario,DataNascimento,EhCasado,Genero) 
-                                    VALUES (
+                string query = $@"INSERT INTO {CamposTabelaBD.NOME_DA_TABELA} (
+                                    {CamposTabelaBD.COLUNA_NOME},
+                                    {CamposTabelaBD.COLUNA_CPF},
+                                    {CamposTabelaBD.COLUNA_TELEFONE},
+                                    {CamposTabelaBD.COLUNA_SALARIO},
+                                    {CamposTabelaBD.COLUNA_DATA_NASCIMENTO},
+                                    {CamposTabelaBD.COLUNA_EHCASADO},
+                                    {CamposTabelaBD.COLUNA_GENERO}
+                                ) 
+                                VALUES (
                                     '{funcionario.Nome}',
                                     '{funcionario.Cpf}',
                                     '{funcionario.Telefone}',
                                     {funcionario.Salario.ToString().Replace(",", ".")},
                                     '{funcionario.DataNascimento.Date:yyyy-MM-dd}',
                                     {Convert.ToByte(funcionario.EhCasado)},
-                                    '{funcionario.Genero}'); SELECT SCOPE_IDENTITY()", conn);
-                    funcionario.Id = Convert.ToInt32(cmd.ExecuteScalar());
-                }
+                                    '{funcionario.Genero}'
+                                ); SELECT SCOPE_IDENTITY()";
+                using var conn = Connection();
+                SqlCommand cmd = new(query, conn);
+                funcionario.Id = Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch
             {
@@ -59,17 +69,18 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                Funcionario funcionario = null;
+                Funcionario funcionario = new();
+                string query = $"SELECT * FROM {CamposTabelaBD.NOME_DA_TABELA} WHERE Id={id}";
                 using (var conn = Connection())
                 {
-                    SqlCommand cmd = new($"SELECT * FROM TabFuncionarios WHERE Id={id}", conn);
+                    SqlCommand cmd = new(query, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
                         funcionario = NovoFuncionario(reader);
                     }
                 }
-                if (funcionario is null)
+                if (funcionario.Id == uint.MinValue)
                 {
                     throw new Exception(message: Excessoes.ERRO_AO_PESQUISAR_FUNCIONARIO);
                 }
@@ -84,10 +95,11 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
+                string query = $"SELECT * FROM {CamposTabelaBD.NOME_DA_TABELA}";
                 List<Funcionario> lista = new();
                 using (var conn = Connection())
                 {
-                    SqlCommand cmd = new("SELECT * FROM TabFuncionarios", conn);
+                    SqlCommand cmd = new(query, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
@@ -105,17 +117,19 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
+                string query = $@"UPDATE {CamposTabelaBD.NOME_DA_TABELA} SET 
+                                {CamposTabelaBD.COLUNA_NOME}='{funcionario.Nome}',
+                                {CamposTabelaBD.COLUNA_CPF}='{funcionario.Cpf}',
+                                {CamposTabelaBD.COLUNA_TELEFONE}='{funcionario.Telefone}',
+                                {CamposTabelaBD.COLUNA_SALARIO}={funcionario.Salario.ToString().Replace(",", ".")},
+                                {CamposTabelaBD.COLUNA_DATA_NASCIMENTO}='{funcionario.DataNascimento.Date:yyyy-MM-dd}',
+                                {CamposTabelaBD.COLUNA_EHCASADO}={Convert.ToByte(funcionario.EhCasado)},
+                                {CamposTabelaBD.COLUNA_GENERO}='{funcionario.Genero}' 
+                                WHERE {CamposTabelaBD.COLUNA_ID}={funcionario.Id}";
+
                 using (var conn = Connection())
                 {
-                    SqlCommand cmd = new($@"UPDATE TabFuncionarios SET 
-                                    Nome='{funcionario.Nome}',
-                                    Cpf='{funcionario.Cpf}',
-                                    Telefone='{funcionario.Telefone}',
-                                    Salario={funcionario.Salario.ToString().Replace(",", ".")},
-                                    DataNascimento='{funcionario.DataNascimento.Date:yyyy-MM-dd}',
-                                    EhCasado={Convert.ToByte(funcionario.EhCasado)},
-                                    Genero='{funcionario.Genero}' 
-                                    WHERE Id={funcionario.Id}", conn);
+                    SqlCommand cmd = new(query, conn);
                     cmd.ExecuteReader();
                 }
             }
@@ -128,11 +142,11 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                using (var conn = Connection())
-                {
-                    SqlCommand cmd = new($"DELETE FROM TabFuncionarios WHERE id={funcionario.Id}", conn);
-                    cmd.ExecuteReader();
-                }
+                string query = $@"DELETE FROM {CamposTabelaBD.NOME_DA_TABELA} 
+                                WHERE {CamposTabelaBD.COLUNA_ID}={funcionario.Id}";
+                using var conn = Connection();
+                SqlCommand cmd = new(query, conn);
+                cmd.ExecuteReader();
             }
             catch
             {

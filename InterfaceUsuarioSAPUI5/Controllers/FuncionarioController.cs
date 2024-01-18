@@ -62,7 +62,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult ObterPorId(uint id)
+        public IActionResult ObterPorId(int id)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Remover(uint id)
+        public IActionResult Remover(int id)
         {
             try
             {

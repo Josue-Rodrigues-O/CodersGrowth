@@ -5,19 +5,12 @@ namespace Infraestrutura.Repositorios
 {
     public class Repositorio : IRepositorio
     {
-        protected List<Funcionario> _listaFuncionarios;
-
-        public Repositorio()
-        {
-            _listaFuncionarios = Singleton.ListaFuncionario();
-        }
-
         public void Criar(Funcionario funcionario)
         {
             try
             {
                 funcionario.Id = Singleton.IncrementarId();
-                _listaFuncionarios.Add(funcionario);
+                Singleton.ListaFuncionario().Add(funcionario);
             }
             catch
             {
@@ -29,7 +22,7 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                return _listaFuncionarios.FirstOrDefault(x => x.Id == id);
+                return Singleton.ListaFuncionario().FirstOrDefault(x => x.Id == id);
             }
             catch
             {
@@ -41,7 +34,7 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                return _listaFuncionarios;
+                return Singleton.ListaFuncionario();
             }
             catch
             {
@@ -53,8 +46,8 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                var indice = _listaFuncionarios.FindIndex(func => func.Id == funcionario.Id);
-                _listaFuncionarios[indice] = funcionario;
+                var indice = Singleton.ListaFuncionario().FindIndex(func => func.Id == funcionario.Id);
+                Singleton.ListaFuncionario()[indice] = funcionario;
             }
             catch
             {
@@ -66,7 +59,7 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                _listaFuncionarios.Remove(funcionario);
+                Singleton.ListaFuncionario().Remove(funcionario);
             }
             catch
             {

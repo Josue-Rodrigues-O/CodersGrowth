@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using Dominio.Constantes;
 
 namespace Infraestrutura.Migrations
 {
@@ -7,20 +8,20 @@ namespace Infraestrutura.Migrations
     {
         public override void Up()
         {
-            Create.Table("TabFuncionarios")
-                .WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
-                .WithColumn("Nome").AsString().NotNullable()
-                .WithColumn("Cpf").AsString().NotNullable()
-                .WithColumn("Telefone").AsString().NotNullable()
-                .WithColumn("Salario").AsDecimal().NotNullable()
-                .WithColumn("EhCasado").AsBoolean().NotNullable()
-                .WithColumn("DataNascimento").AsDate().NotNullable()
-                .WithColumn("Genero").AsString().NotNullable();
+            Create.Table(CamposTabelaBD.NOME_DA_TABELA)
+                .WithColumn(CamposTabelaBD.COLUNA_ID).AsInt64().NotNullable().PrimaryKey().Identity()
+                .WithColumn(CamposTabelaBD.COLUNA_NOME).AsString().NotNullable()
+                .WithColumn(CamposTabelaBD.COLUNA_CPF).AsString().NotNullable()
+                .WithColumn(CamposTabelaBD.COLUNA_TELEFONE).AsString().NotNullable()
+                .WithColumn(CamposTabelaBD.COLUNA_SALARIO).AsDecimal().NotNullable()
+                .WithColumn(CamposTabelaBD.COLUNA_EHCASADO).AsBoolean().NotNullable()
+                .WithColumn(CamposTabelaBD.COLUNA_DATA_NASCIMENTO).AsDate().NotNullable()
+                .WithColumn(CamposTabelaBD.COLUNA_GENERO).AsString().NotNullable();
         }
 
         public override void Down()
         {
-            Delete.Table("TabFuncionarios");
+            Delete.Table(CamposTabelaBD.NOME_DA_TABELA);
         }
     }
 }

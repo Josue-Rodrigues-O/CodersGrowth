@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using Dominio.Constantes;
 
 namespace Infraestrutura.Migrations
 {
@@ -7,12 +8,17 @@ namespace Infraestrutura.Migrations
     {
         public override void Up()
         {
-            Alter.Table("TabFuncionarios").AlterColumn("Salario").AsDecimal(12, 2).NotNullable();
+            const int tamanhoMaximo = 12;
+            const int precisao = 2;
+            Alter.Table(CamposTabelaBD.NOME_DA_TABELA)
+                .AlterColumn(CamposTabelaBD.COLUNA_SALARIO)
+                .AsDecimal(tamanhoMaximo, precisao)
+                .NotNullable();
         }
 
         public override void Down()
         {
-            Delete.Table("TabFuncionarios");
+            Delete.Table(CamposTabelaBD.NOME_DA_TABELA);
         }
     }
 }

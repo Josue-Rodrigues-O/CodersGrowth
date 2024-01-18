@@ -9,6 +9,7 @@ namespace Dominio.Constantes
     public class CamposTabelaBD
     {
         public const string NOME_DA_TABELA = "TabFuncionarios";
+        public const string COLUNA_ID = "Id";
         public const string COLUNA_NOME = "Nome";
         public const string COLUNA_CPF = "Cpf";
         public const string COLUNA_TELEFONE = "Telefone";
