@@ -4,10 +4,6 @@ sap.ui.define([], function() {
     let LISTA_DE_ERROS = []
     
     return {
-        iniciarLista(novoValorLista) {
-            LISTA_DE_ERROS = novoValorLista
-        },
-
         verificarListaDeErros(controller){
             const stringVazia = ""
             const idCalendario = "calendarDataNascimento";

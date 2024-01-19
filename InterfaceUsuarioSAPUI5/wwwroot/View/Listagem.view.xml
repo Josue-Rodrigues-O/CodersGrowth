@@ -18,15 +18,15 @@
 					<Toolbar
 						style="Clear"
 						class="sapUi-Std-PaddingS">
-						<Button
-							icon="sap-icon://add"
-							type="Emphasized"
-							press=".aoClicarEmAdicionar" />
 						<ToolbarSpacer />
 						<SearchField
 							placeholder="{i18n>placeholderFiltro}"
 							width="40%"
 							search=".aoPesquisar" />
+						<Button
+							icon="sap-icon://add"
+							type="Emphasized"
+							press=".aoClicarEmAdicionar" />
 					</Toolbar>
 				</headerToolbar>
 				<Table

@@ -67,7 +67,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             try
             {
                 var funcionario = _repositorio.ObterPorId(id);
-                if (funcionario is null) throw new Exception(message: Excessoes.ID_NULO);
+                if (funcionario is null) { throw new Exception(message: Excessoes.ID_NULO); }
                 return Ok(funcionario);
             }
             catch (Exception ex)
@@ -99,7 +99,11 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             try
             {
                 var funcionario = _repositorio.ObterPorId(id);
-                if (funcionario is null) throw new Exception(message: Excessoes.ID_NULO);
+                if (funcionario is null)
+                {
+                    throw new Exception(message: Excessoes.ID_NULO);
+                }
+
                 _repositorio.Remover(funcionario);
                 return NoContent();
             }

@@ -133,7 +133,7 @@
                     labelFor="calendarDataNascimento" />
                 <u:Calendar
                     id="calendarDataNascimento"
-                    select="diaSelecionado"
+                    select="aoSelecionarUmaData"
                     minDate="{path: 'calendario>/minData'}"
                     maxDate="{path: 'calendario>/maxData'}"
                     showWeekNumbers="false" />
