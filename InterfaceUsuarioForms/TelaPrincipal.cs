@@ -58,15 +58,13 @@ namespace InterfaceUsuarioForms
         {
             const byte SoUmaLinha = 1;
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == SoUmaLinha)
-            {
-                return true;
-            }
-            else
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) != SoUmaLinha)
             {
                 MessageBox.Show(MensagensDoMessageBox.SELECIONE_UMA_LINHA, MensagensDoMessageBox.ATENCAO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
+           
+            return true;
         }
 
         private static int ObterIdDaLinha()

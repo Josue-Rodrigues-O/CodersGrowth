@@ -12,11 +12,13 @@ namespace InterfaceUsuarioForms
         private readonly IRepositorio _repositorio;
         public CadastroFuncionario(IRepositorio repositorio, Funcionario? funcionario = null)
         {
-            int AnoMaximoDataNascimento = DateTime.Now.Year - (int)ValoresValidacao.IdadeMinima;
             InitializeComponent();
+            int AnoMaximoDataNascimento = DateTime.Now.Year - ValoresValidacao.IDADE_MINIMA;
+            int AnoMinimoDataNascimento = DateTime.Now.Year - ValoresValidacao.IDADE_MAXIMA;
             _repositorio = repositorio;
             ComboGenero.DataSource = Enum.GetValues(typeof(GeneroEnum));
             Calendario.MaxDate = new DateTime(AnoMaximoDataNascimento, DateTime.Now.Month, DateTime.Now.Day);
+            Calendario.MinDate = new DateTime(AnoMinimoDataNascimento, DateTime.Now.Month, DateTime.Now.Day);
 
             if (funcionario != null)
             {
@@ -95,8 +97,8 @@ namespace InterfaceUsuarioForms
 
         private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
         {
-            bool EhBackspace = (int)e.KeyChar == (int)Keys.Back;
-            bool EhEspaco = (int)e.KeyChar == (int)Keys.Space;
+            bool EhBackspace = e.KeyChar == (int)Keys.Back;
+            bool EhEspaco = e.KeyChar == (int)Keys.Space;
             bool EhDigitoValido = Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_NOME);
 
             e.Handled = !(EhDigitoValido || EhBackspace || EhEspaco);
@@ -109,16 +111,16 @@ namespace InterfaceUsuarioForms
             bool CampoVazio = TxtSalario.Text.Length == uint.MinValue;
             bool PossuiVirgula = TxtSalario.Text.Contains(Virgula);
             bool EhDigitoValido = Regex.IsMatch(e.KeyChar.ToString(), ExpressoesRegex.REGEX_SALARIO);
-            bool EhBackspace = (int)e.KeyChar == (int)Keys.Back;
+            bool EhBackspace = e.KeyChar == (int)Keys.Back;
             bool EhVirgula = e.KeyChar.Equals(Virgula);
-            bool PossuiDuasCasasDecimais = PossuiVirgula && TxtSalario.Text.Split(Virgula)[SegundoValorVetor].Length == (int)ValoresValidacao.QuantidadeCasasDecimaisSalario;
+            bool PossuiDuasCasasDecimais = PossuiVirgula && TxtSalario.Text.Split(Virgula)[SegundoValorVetor].Length == ValoresValidacao.QUANTIDADE_CASAS_DECIMAIS_SALARIO;
 
-            e.Handled = !(
-                !(PossuiVirgula && EhVirgula)
-                && EhDigitoValido
-                && !(PossuiVirgula && PossuiDuasCasasDecimais)
-                && !(CampoVazio && EhVirgula)
-                || EhBackspace);
+            e.Handled = (
+                (PossuiVirgula && EhVirgula)
+                || !EhDigitoValido
+                || (PossuiVirgula && PossuiDuasCasasDecimais)
+                || (CampoVazio && EhVirgula)) 
+                && !EhBackspace;
         }
     }
 }

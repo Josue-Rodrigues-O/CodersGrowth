@@ -12,7 +12,6 @@ sap.ui.define([
 
 
     return BaseControler.extend(NAMESPACE, {
-
         formatter: Formatter,
 
         onInit() {
@@ -24,21 +23,17 @@ sap.ui.define([
             try {
                 const parametroArgumentos = "arguments";
                 const idFuncionario = evento.getParameter(parametroArgumentos).id;
-                this._obterPorId(idFuncionario);
+                this._obterFuncionario(idFuncionario);
             } catch (erro) {
                 MessageBox.error(erro.message);
             }
         },
 
-        _obterPorId(id) {
+        _obterFuncionario(id) {
             try {
                 FuncionarioRepository.obterPorId(id)
                     .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            return Promise.reject(response);
-                        }
+                        return response.ok ? response.json() : Promise.reject(response);
                     })
                     .then(response => {
                         this.modelo(NOME_MODELO_FUNCIONARIO, response)
@@ -48,7 +43,7 @@ sap.ui.define([
             }
         },
 
-        _remover(Controller) {
+        _remover(controller) {
             const msgConfirmacao = "msgConfirmarAcaoRemover"
             const msgSucesso = "msgSucessoAoRemover"
             const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
@@ -57,10 +52,10 @@ sap.ui.define([
                 emphasizedAction: MessageBox.Action.YES,
                 onClose(acao) {
                     if (acao == MessageBox.Action.YES) {
-                        Controller._removerFuncionario(idFuncionario)
-                        MessageBox.success(Controller.obterRecursoi18n(msgSucesso), {
+                        controller._removerFuncionario(idFuncionario)
+                        MessageBox.success(controller.obterRecursoi18n(msgSucesso), {
                             onClose() {
-                                Controller.navegarPara(rotaListagem, {})
+                                controller.navegarPara(rotaListagem, {})
                             }
                         });
                     }

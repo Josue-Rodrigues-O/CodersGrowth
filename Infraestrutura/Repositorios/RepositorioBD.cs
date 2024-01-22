@@ -9,7 +9,8 @@ namespace Infraestrutura.Repositorios
     public class RepositorioBD : IRepositorio
     {
         private const string NomeDaConexao = "ConexaoBD";
-        private static readonly string connectionString = System.Configuration
+        private static readonly string connectionString = System
+            .Configuration
             .ConfigurationManager
             .ConnectionStrings[NomeDaConexao]
             .ConnectionString;
@@ -21,7 +22,7 @@ namespace Infraestrutura.Repositorios
         }
         private static Funcionario NovoFuncionario(SqlDataReader reader)
         {
-            Funcionario funcionario = new()
+            return new Funcionario
             {
                 Id = Convert.ToInt32(reader[CamposTabelaBD.COLUNA_ID]),
                 Nome = reader[CamposTabelaBD.COLUNA_NOME].ToString(),
@@ -32,7 +33,6 @@ namespace Infraestrutura.Repositorios
                 EhCasado = Convert.ToBoolean(reader[CamposTabelaBD.COLUNA_EHCASADO]),
                 Genero = (GeneroEnum)Enum.Parse(typeof(GeneroEnum), reader[CamposTabelaBD.COLUNA_GENERO].ToString())
             };
-            return funcionario;
         }
         public void Criar(Funcionario funcionario)
         {
@@ -70,7 +70,7 @@ namespace Infraestrutura.Repositorios
             try
             {
                 Funcionario funcionario = new();
-                string query = $"SELECT * FROM {CamposTabelaBD.NOME_DA_TABELA} WHERE Id={id}";
+                string query = $"SELECT * FROM {CamposTabelaBD.NOME_DA_TABELA} WHERE {CamposTabelaBD.COLUNA_ID}={id}";
                 using (var conn = Connection())
                 {
                     SqlCommand cmd = new(query, conn);
@@ -110,6 +110,7 @@ namespace Infraestrutura.Repositorios
             }
             catch
             {
+
                 throw new Exception(message: Excessoes.ERRO_AO_RECUPERAR_DADOS_DO_BANCO_DE_DADOS);
             }
         }
@@ -118,14 +119,14 @@ namespace Infraestrutura.Repositorios
             try
             {
                 string query = $@"UPDATE {CamposTabelaBD.NOME_DA_TABELA} SET 
-                                {CamposTabelaBD.COLUNA_NOME}='{funcionario.Nome}',
-                                {CamposTabelaBD.COLUNA_CPF}='{funcionario.Cpf}',
-                                {CamposTabelaBD.COLUNA_TELEFONE}='{funcionario.Telefone}',
-                                {CamposTabelaBD.COLUNA_SALARIO}={funcionario.Salario.ToString().Replace(",", ".")},
-                                {CamposTabelaBD.COLUNA_DATA_NASCIMENTO}='{funcionario.DataNascimento.Date:yyyy-MM-dd}',
-                                {CamposTabelaBD.COLUNA_EHCASADO}={Convert.ToByte(funcionario.EhCasado)},
-                                {CamposTabelaBD.COLUNA_GENERO}='{funcionario.Genero}' 
-                                WHERE {CamposTabelaBD.COLUNA_ID}={funcionario.Id}";
+                                {CamposTabelaBD.COLUNA_NOME} = '{funcionario.Nome}',
+                                {CamposTabelaBD.COLUNA_CPF} = '{funcionario.Cpf}',
+                                {CamposTabelaBD.COLUNA_TELEFONE} = '{funcionario.Telefone}',
+                                {CamposTabelaBD.COLUNA_SALARIO} = {funcionario.Salario.ToString().Replace(",", ".")},
+                                {CamposTabelaBD.COLUNA_DATA_NASCIMENTO} = '{funcionario.DataNascimento.Date:yyyy-MM-dd}',
+                                {CamposTabelaBD.COLUNA_EHCASADO} = {Convert.ToByte(funcionario.EhCasado)},
+                                {CamposTabelaBD.COLUNA_GENERO} = '{funcionario.Genero}' 
+                                WHERE {CamposTabelaBD.COLUNA_ID} = {funcionario.Id}";
 
                 using (var conn = Connection())
                 {
@@ -143,7 +144,7 @@ namespace Infraestrutura.Repositorios
             try
             {
                 string query = $@"DELETE FROM {CamposTabelaBD.NOME_DA_TABELA} 
-                                WHERE {CamposTabelaBD.COLUNA_ID}={funcionario.Id}";
+                                WHERE {CamposTabelaBD.COLUNA_ID} = {funcionario.Id}";
                 using var conn = Connection();
                 SqlCommand cmd = new(query, conn);
                 cmd.ExecuteReader();

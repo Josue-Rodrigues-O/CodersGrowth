@@ -102,7 +102,7 @@ sap.ui.define([
                 const textoErroDataInvalida = "erroInputCalendarioEntradaInvalida";
                 const textoErroDataNaoInformada = "erroInputCalendarioDataNaoInformada";
                 const todaOcorrenciaDoSinalMenos = /-/gi;
-                const idadeMinima = 18;
+                const idadeMinima = 14;
                 const dataFormatada = Formatter.formatarDataParaSalvar(UI5Date.getInstance((new Date().getFullYear() - idadeMinima).toString()));
                 const DataMaxima = Number(dataFormatada.replace(todaOcorrenciaDoSinalMenos, STRING_VAZIA));
                 const dataRecebida = Number(data.replace(todaOcorrenciaDoSinalMenos, STRING_VAZIA));

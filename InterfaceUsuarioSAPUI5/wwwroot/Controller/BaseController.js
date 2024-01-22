@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
+], function (Controller, JSONModel, MessageBox) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.Controller.BaseController"

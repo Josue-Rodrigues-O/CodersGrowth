@@ -29,15 +29,15 @@ namespace Dominio
         }
         public void ValidarNome(string nome)
         {
-            if (String.IsNullOrWhiteSpace(nome) || string.IsNullOrEmpty(nome))
+            if (string.IsNullOrWhiteSpace(nome))
             {
                 ListaErros.Add(Excessoes.NOME_NULO);
             }
-            if (nome.Trim().Length < (int)ValoresValidacao.TamanhoMinNome)
+            if (nome.Trim().Length < ValoresValidacao.TAMANHO_MINIMO_NOME)
             {
                 ListaErros.Add(Excessoes.TAMANHO_NOME_INCOMPATIVEL);
             }
-            if (nome.Length >= (int)ValoresValidacao.TamanhoMaxNome)
+            if (nome.Length >= ValoresValidacao.TAMANHO_MAXIMO_NOME)
             {
                 ListaErros.Add(Excessoes.TAMANHO_MAX_NOME_INCOMPATIVEL);
             }
@@ -52,14 +52,14 @@ namespace Dominio
         }
         public void ValidarCpf(string cpf)
         {
-            if (cpf.Length < (int)ValoresValidacao.TamanhoCorretoCpf || string.IsNullOrEmpty(cpf))
+            if (cpf.Length < ValoresValidacao.TAMANHO_CORRETO_CPF || string.IsNullOrEmpty(cpf))
             {
                 ListaErros.Add(Excessoes.CPF_PREENCHIDO_INCORRETAMENTE);
             }
         }
         public void ValidarTelefone(string telefone)
         {
-            if (telefone.Length < (int)ValoresValidacao.TamanhoCorretoTelefone || string.IsNullOrEmpty(telefone))
+            if (telefone.Length < ValoresValidacao.TAMANHO_CORRETO_TELEFONE || string.IsNullOrEmpty(telefone))
             {
                 ListaErros.Add(Excessoes.TELEFONE_PREENCHIDO_INCORRETAMENTE);
             }
@@ -71,24 +71,21 @@ namespace Dominio
             const byte ParteDecimalSalario = 1;
             byte contVirgula = byte.MinValue;
 
-            if (string.IsNullOrEmpty(salario) || string.IsNullOrWhiteSpace(salario))
+            if (string.IsNullOrWhiteSpace(salario))
             {
                 ListaErros.Add(Excessoes.SALARIO_NULO);
             }
-            else
+            else if (Convert.ToDecimal(salario) < ValoresValidacao.TAMANHO_MINIMO_SALARIO)
             {
-                if (Convert.ToDecimal(salario) < (int)ValoresValidacao.TamanhoMinSalario)
-                {
-                    ListaErros.Add(Excessoes.SALARIO_INVALIDO);
-                }
+                ListaErros.Add(Excessoes.SALARIO_INVALIDO);
             }
+
             if (!salario.Contains(Virgula)
-                || (salario.Split(Virgula)[ParteDecimalSalario].Length < (int)ValoresValidacao.QuantidadeCasasDecimaisSalario)
-                || (salario.Split(Virgula)[ParteDecimalSalario].Length > (int)ValoresValidacao.QuantidadeCasasDecimaisSalario))
+                || (salario.Split(Virgula)[ParteDecimalSalario].Length != ValoresValidacao.QUANTIDADE_CASAS_DECIMAIS_SALARIO))
             {
                 ListaErros.Add(Excessoes.NUMERO_INCORRETO_DE_CASAS_DECIMAIS);
             }
-            if (salario.Length > (int)ValoresValidacao.TamanhoMaxSalario)
+            if (salario.Length > ValoresValidacao.TAMANHO_MAXIMO_SALARIO)
             {
                 ListaErros.Add(Excessoes.VALOR_DO_SALARIO_MUITO_ALTO);
             }
@@ -99,7 +96,7 @@ namespace Dominio
                     contVirgula++;
                 }
             }
-            if (contVirgula > (int)ValoresValidacao.QuantidadeDeVirgulaMax)
+            if (contVirgula > ValoresValidacao.QUANTIDADE_MAXIMA_DE_VIRGULA)
             {
                 ListaErros.Add(Excessoes.QUANTIDADE_DE_VIRGULAS_INVALIDAS);
             }
@@ -112,8 +109,7 @@ namespace Dominio
                     break;
                 }
             }
-            if (String.IsNullOrWhiteSpace(salario.Split(Virgula)[ParteInteiraSalario])
-                || String.IsNullOrEmpty(salario.Split(Virgula)[ParteInteiraSalario]))
+            if (String.IsNullOrWhiteSpace(salario.Split(Virgula)[ParteInteiraSalario]))
             {
                 ListaErros.Add(Excessoes.SALARIO_INVALIDO);
             }
@@ -121,7 +117,7 @@ namespace Dominio
         public void ValidarDataNascimento(DateTime dataNascimento)
         {
             int anos = DateTime.Now.Year - dataNascimento.Date.Year;
-            if (anos < (int)ValoresValidacao.IdadeMinima)
+            if (anos < ValoresValidacao.IDADE_MINIMA)
             {
                 ListaErros.Add(Excessoes.IDADE_INVALIDA);
             }

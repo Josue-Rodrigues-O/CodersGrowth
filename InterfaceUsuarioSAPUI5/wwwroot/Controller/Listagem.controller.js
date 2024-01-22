@@ -26,12 +26,7 @@ sap.ui.define([
             try {
                 FuncionarioRepository.obterTodos(condicao)
                     .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        else {
-                            return Promise.reject(response);
-                        }
+                        return response.ok ? response.json() : Promise.reject(response);
                     })
                     .then(response => this.modelo(MODELO_TABELA, response))
                     .catch(async erro => MessageBox.warning(await erro.text()));
@@ -64,8 +59,8 @@ sap.ui.define([
             try {
                 const propriedadeId = "id";
                 const rotaDetalhes = "detalhes";
-                const recursosLinhaSelecionada = linhaSelecionada.getSource();
-                const idFuncionario = recursosLinhaSelecionada.getBindingContext(MODELO_TABELA).getProperty(propriedadeId)
+                const recursosLinhaSelecionada = linhaSelecionada.getSource().getBindingContext(MODELO_TABELA);
+                const idFuncionario = recursosLinhaSelecionada.getProperty(propriedadeId)
 
                 this.navegarPara(rotaDetalhes, { id: idFuncionario })
             } catch (erro) {
