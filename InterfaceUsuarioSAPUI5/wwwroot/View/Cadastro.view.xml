@@ -114,9 +114,10 @@
                             id="grupoEstadoCivil"
                             columns="2">
                             <RadioButton
-                                id="solteiro"
+                                id="idRadioButtonSolteiro"
                                 text="{i18n>solteiro}" />
                             <RadioButton
+                                id="idRadioButtonCasado"
                                 selected="{funcionario>/ehCasado}"
                                 text="{i18n>casado}" />
                         </RadioButtonGroup>

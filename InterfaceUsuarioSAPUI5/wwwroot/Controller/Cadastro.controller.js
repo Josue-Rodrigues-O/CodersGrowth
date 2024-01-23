@@ -81,16 +81,22 @@ sap.ui.define([
 
         _limparTela(func) {
             const calendario = this.byId(ID_INPUT_CALENDARIO);
-            this._definirValueStateComoNone()
+            this._limparValueStateDosCampos();
             calendario.removeAllSelectedDates();
-            const idRadioButtonSolteiro = "solteiro";
-            this.byId(idRadioButtonSolteiro).setSelected(true);
-            func
-                ? this._definirTextData(func.dataNascimento)
-                : this._definirTextData();
+            const idRadioButtonSolteiro = "idRadioButtonSolteiro";
+            const idRadioButtonCasado = "idRadioButtonCasado";
+            if (func) {
+                this._definirTextData(func.dataNascimento)
+                this.byId(idRadioButtonSolteiro).setSelected(!func.ehCasado);
+                this.byId(idRadioButtonCasado).setSelected(func.ehCasado);
+            } else {
+                this.byId(idRadioButtonSolteiro).setSelected(true);
+                this.byId(idRadioButtonCasado).setSelected(false);
+                this._definirTextData();
+            }
         },
 
-        _definirValueStateComoNone() {
+        _limparValueStateDosCampos() {
             const STATUS_NENHUM = "None";
             this.byId(ID_INPUT_NOME).setValueState(STATUS_NENHUM);
             this.byId(ID_INPUT_CPF).setValueState(STATUS_NENHUM);
@@ -213,14 +219,14 @@ sap.ui.define([
         aoClicarEmVoltar() {
             ProcessadorDeEventos.processarEvento(() => {
                 const msg_confirmar = "msgConfirmarAcaoVoltar";
-                this._navegarParaTelaListagem(this.obterRecursoi18n(msg_confirmar));
+                this._MessageBoxConfirmacao(this.obterRecursoi18n(msg_confirmar), () => { this._navegarParaTelaListagem() })
             });
         },
 
         aoClicarEmCancelar() {
             ProcessadorDeEventos.processarEvento(() => {
                 const msg_confirmar = "msgConfirmarAcaoCancelar";
-                this._navegarParaTelaListagem(this.obterRecursoi18n(msg_confirmar));
+                this._MessageBoxConfirmacao(this.obterRecursoi18n(msg_confirmar), () => { this._navegarParaTelaListagem() })
             });
         },
 
@@ -268,14 +274,18 @@ sap.ui.define([
             });
         },
 
-        _navegarParaTelaListagem(mensagem) {
+        _navegarParaTelaListagem() {
             const rotaListagem = "listagem";
+            this.navegarPara(rotaListagem, {})
+        },
+
+        _MessageBoxConfirmacao(mensagem, metodo) {
             MessageBox.confirm(mensagem, {
                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                 emphasizedAction: MessageBox.Action.YES,
                 onClose: (acao) => {
                     if (acao == MessageBox.Action.YES) {
-                        this.navegarPara(rotaListagem, {})
+                        metodo();
                     }
                 }
             });

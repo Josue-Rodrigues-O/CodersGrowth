@@ -2,8 +2,9 @@ sap.ui.define([
     "./BaseController",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
-    "sap/m/MessageBox"
-], function (BaseControler, Formatter, FuncionarioRepository, MessageBox) {
+    "sap/m/MessageBox",
+    "../Services/ProcessadorDeEventos"
+], function (BaseControler, Formatter, FuncionarioRepository, MessageBox, ProcessadorDeEventos) {
     'use strict';
 
     const NAMESPACE = "controle.funcionarios.Controller.Detalhes";
@@ -20,13 +21,11 @@ sap.ui.define([
         },
 
         _aoCoincidirRota(evento) {
-            try {
+            ProcessadorDeEventos.processarEvento(() => {
                 const parametroArgumentos = "arguments";
                 const idFuncionario = evento.getParameter(parametroArgumentos).id;
                 this._obterFuncionario(idFuncionario);
-            } catch (erro) {
-                MessageBox.error(erro.message);
-            }
+            })
         },
 
         _obterFuncionario(id) {
@@ -43,53 +42,47 @@ sap.ui.define([
             }
         },
 
-        _remover(controller) {
-            const msgConfirmacao = "msgConfirmarAcaoRemover"
-            const msgSucesso = "msgSucessoAoRemover"
-            const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
-            MessageBox.confirm(this.obterRecursoi18n(msgConfirmacao), {
-                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-                emphasizedAction: MessageBox.Action.YES,
-                onClose(acao) {
-                    if (acao == MessageBox.Action.YES) {
-                        controller._removerFuncionario(idFuncionario)
-                        MessageBox.success(controller.obterRecursoi18n(msgSucesso), {
-                            onClose() {
-                                controller.navegarPara(rotaListagem, {})
-                            }
-                        });
-                    }
-                }
-            });
-        },
-
         _removerFuncionario(id) {
-            FuncionarioRepository.remover(id)
+            try {
+                FuncionarioRepository.remover(id)
+            } catch (error) {
+                MessageBox.error(error.message)
+            }
         },
 
         aoClicarEmEditar() {
-            try {
+            ProcessadorDeEventos.processarEvento(() => {
                 const rotaEdicao = "edicao"
                 this.navegarPara(rotaEdicao, { id: this.modelo(NOME_MODELO_FUNCIONARIO).id })
-            } catch (erro) {
-                MessageBox.error(erro.message);
-            }
+            });
         },
 
         aoClicarEmRemover() {
-            try {
-                this._remover(this)
-            } catch (erro) {
-                MessageBox.error(erro)
-            }
+            ProcessadorDeEventos.processarEvento(() => {
+                const msgConfirmacao = "msgConfirmarAcaoRemover"
+                const msgSucesso = "msgSucessoAoRemover"
+                const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
+                MessageBox.confirm(this.obterRecursoi18n(msgConfirmacao), {
+                    actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                    emphasizedAction: MessageBox.Action.YES,
+                    onClose: (acao) => {
+                        if (acao == MessageBox.Action.YES) {
+                            this._removerFuncionario(idFuncionario)
+                            MessageBox.success(this.obterRecursoi18n(msgSucesso), {
+                                onClose: () => {
+                                    this.navegarPara(rotaListagem, {})
+                                }
+                            });
+                        }
+                    }
+                });
+            });
         },
 
         aoClicarEmVoltar() {
-            try {
+            ProcessadorDeEventos.processarEvento(() => {
                 this.navegarPara(rotaListagem, {})
-            } catch (erro) {
-                MessageBox.error(erro);
-            }
-        },
+            });
+        }
     });
 });
