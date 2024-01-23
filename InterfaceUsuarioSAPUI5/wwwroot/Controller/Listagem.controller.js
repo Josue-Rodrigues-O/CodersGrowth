@@ -2,20 +2,20 @@ sap.ui.define([
     "./BaseController",
     "../Model/Formatter",
     "../Repositorios/FuncionarioRepository",
-    "sap/m/MessageBox"
-], function (BaseControler, Formatter, FuncionarioRepository, MessageBox) {
+    "sap/m/MessageBox",
+    "../Services/ProcessadorDeEventos"
+], function (BaseControler, Formatter, FuncionarioRepository, MessageBox, ProcessadorDeEventos) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.Controller.Listagem";
     const MODELO_TABELA = "modeloTabelaFuncionarios";
 
     return BaseControler.extend(NAMESPACE, {
-
         formatter: Formatter,
 
         onInit() {
             const rotaListagem = "listagem";
-            this.vincularRota(rotaListagem, this._aoCoincidirRota)
+            this.vincularRota(rotaListagem, this._aoCoincidirRota);
         },
 
         _aoCoincidirRota() {
@@ -30,42 +30,35 @@ sap.ui.define([
                     })
                     .then(response => this.modelo(MODELO_TABELA, response))
                     .catch(async erro => MessageBox.warning(await erro.text()));
-            } catch (erro) {
-                MessageBox.warning(erro.message);
+            } catch (error) {
+                MessageBox.error(error.message);
             }
         },
 
         aoPesquisar(condicao) {
-            try {
+            ProcessadorDeEventos.processarEvento(() => {
                 const parametroQuery = "query";
                 const stringCondicao = condicao.getParameter(parametroQuery);
                 this._obterFuncionarios(stringCondicao);
-            } catch (erro) {
-                MessageBox.warning(erro.message);
-            }
+            });
         },
 
         aoClicarEmAdicionar() {
-            try {
+            ProcessadorDeEventos.processarEvento(() => {
                 const rotaCadastro = "cadastro";
                 this.navegarPara(rotaCadastro, {})
-            }
-            catch (erro) {
-                MessageBox.warning(erro.message);
-            }
+            });
         },
 
         aoClicarNaLinha(linhaSelecionada) {
-            try {
+            ProcessadorDeEventos.processarEvento(() => {
                 const propriedadeId = "id";
                 const rotaDetalhes = "detalhes";
                 const recursosLinhaSelecionada = linhaSelecionada.getSource().getBindingContext(MODELO_TABELA);
                 const idFuncionario = recursosLinhaSelecionada.getProperty(propriedadeId)
 
                 this.navegarPara(rotaDetalhes, { id: idFuncionario })
-            } catch (erro) {
-                MessageBox.warning(erro.message);
-            }
+            });
         }
     });
 });

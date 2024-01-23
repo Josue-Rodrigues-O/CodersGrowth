@@ -4,10 +4,17 @@ sap.ui.define([], () => {
   const URL = "/api/Funcionario";
 
   return {
-    obterPorId(id) {
-      return fetch(`${URL}/${id}`);
+    criar(funcionario) {
+      const configuracaoFetch = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(funcionario)
+      };
+      return fetch(URL, configuracaoFetch);
     },
-
+    
     obterTodos(condicao) {
       const uri = `?condicao=${condicao}`;
       let query = URL;
@@ -17,16 +24,8 @@ sap.ui.define([], () => {
       return fetch(query);
     },
 
-    criar(funcionario) {
-      const configuracaoFetch = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify(funcionario)
-      };
-
-      return fetch(URL, configuracaoFetch);
+    obterPorId(id) {
+      return fetch(`${URL}/${id}`);
     },
 
     atualizar(funcionario) {
@@ -37,7 +36,6 @@ sap.ui.define([], () => {
         },
         body: JSON.stringify(funcionario)
       };
-
       return fetch(URL, configuracaoFetch);
     },
 
@@ -45,7 +43,6 @@ sap.ui.define([], () => {
       const configuracaoFetch = {
         method: 'DELETE'
       }
-
       return fetch(`${URL}/${id}`, configuracaoFetch);
     }
   }
