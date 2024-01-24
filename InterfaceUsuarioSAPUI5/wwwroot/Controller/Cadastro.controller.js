@@ -61,11 +61,11 @@ sap.ui.define([
         },
 
         _limparTela(func) {
+            const idRadioButtonSolteiro = "idRadioButtonSolteiro";
+            const idRadioButtonCasado = "idRadioButtonCasado";
             const calendario = this.byId(ID_INPUT_CALENDARIO);
             this._limparValueStateDosCampos();
             calendario.removeAllSelectedDates();
-            const idRadioButtonSolteiro = "idRadioButtonSolteiro";
-            const idRadioButtonCasado = "idRadioButtonCasado";
             if (func) {
                 this._definirDataDeExibicao(func.dataNascimento)
                 this.byId(idRadioButtonSolteiro).setSelected(!func.ehCasado);
@@ -194,7 +194,6 @@ sap.ui.define([
             ProcessadorDeEventos.processarEvento(() => {
                 const modelo = this.modelo(NOME_MODELO_FUNCIONARIO);
                 const propriedadeId = "id";
-
                 const erros = this._validarTodosOsCampos(modelo);
 
                 if (erros) {

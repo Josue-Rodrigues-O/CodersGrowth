@@ -31,10 +31,10 @@ sap.ui.define([
             }
         },
 
-        aoPesquisar(condicao) {
+        aoPesquisar(filtroNome) {
             ProcessadorDeEventos.processarEvento(() => {
                 const parametroQuery = "query";
-                const stringCondicao = condicao.getParameter(parametroQuery);
+                const stringCondicao = filtroNome.getParameter(parametroQuery);
                 this._obterFuncionarios(stringCondicao);
             });
         },

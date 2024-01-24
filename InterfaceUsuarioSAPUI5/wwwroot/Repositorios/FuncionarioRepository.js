@@ -15,10 +15,10 @@ sap.ui.define([], () => {
       return fetch(URL, configuracaoFetch);
     },
     
-    obterTodos(condicao) {
-      const uri = `?condicao=${condicao}`;
+    obterTodos(filtroNome) {
+      const uri = `?filtroNome=${filtroNome}`;
       let query = URL;
-      if (condicao != (undefined || null)) {
+      if (filtroNome != (undefined || null)) {
         query += uri;
       }
       return fetch(query);

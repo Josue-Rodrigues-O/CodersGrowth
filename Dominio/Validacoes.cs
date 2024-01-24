@@ -19,7 +19,7 @@ namespace Dominio
 
             if (ListaErros.Any())
             {
-                string erros = String.Empty;
+                string erros = string.Empty;
                 foreach (string index in ListaErros)
                 {
                     erros += index + quebraDeLinha;
