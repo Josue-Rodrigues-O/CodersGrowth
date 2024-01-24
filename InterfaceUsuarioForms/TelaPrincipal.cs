@@ -48,10 +48,6 @@ namespace InterfaceUsuarioForms
                     AtualizarDataGrid();
                     MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_REMOVIDO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
-                {
-                    MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             }
         }
         private static bool LinhaValida()

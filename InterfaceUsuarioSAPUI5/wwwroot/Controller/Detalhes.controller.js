@@ -20,14 +20,6 @@ sap.ui.define([
             this.vincularRota(rotaDetalhes, this._aoCoincidirRota)
         },
 
-        _aoCoincidirRota(evento) {
-            ProcessadorDeEventos.processarEvento(() => {
-                const parametroArgumentos = "arguments";
-                const idFuncionario = evento.getParameter(parametroArgumentos).id;
-                this._obterFuncionario(idFuncionario);
-            })
-        },
-
         _obterFuncionario(id) {
             try {
                 FuncionarioRepository.obterPorId(id)
@@ -62,19 +54,13 @@ sap.ui.define([
                 const msgConfirmacao = "msgConfirmarAcaoRemover"
                 const msgSucesso = "msgSucessoAoRemover"
                 const idFuncionario = this.modelo(NOME_MODELO_FUNCIONARIO).id;
-                MessageBox.confirm(this.obterRecursoi18n(msgConfirmacao), {
-                    actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-                    emphasizedAction: MessageBox.Action.YES,
-                    onClose: (acao) => {
-                        if (acao == MessageBox.Action.YES) {
-                            this._removerFuncionario(idFuncionario)
-                            MessageBox.success(this.obterRecursoi18n(msgSucesso), {
-                                onClose: () => {
-                                    this.navegarPara(rotaListagem, {})
-                                }
-                            });
+                this.messageBoxConfirmacao(this.obterRecursoi18n(msgConfirmacao), () => {
+                    this._removerFuncionario(idFuncionario)
+                    MessageBox.success(this.obterRecursoi18n(msgSucesso), {
+                        onClose: () => {
+                            this.navegarPara(rotaListagem, {})
                         }
-                    }
+                    });
                 });
             });
         },
@@ -83,6 +69,14 @@ sap.ui.define([
             ProcessadorDeEventos.processarEvento(() => {
                 this.navegarPara(rotaListagem, {})
             });
-        }
+        },
+
+        _aoCoincidirRota(evento) {
+            ProcessadorDeEventos.processarEvento(() => {
+                const parametroArgumentos = "arguments";
+                const idFuncionario = evento.getParameter(parametroArgumentos).id;
+                this._obterFuncionario(idFuncionario);
+            })
+        },
     });
 });

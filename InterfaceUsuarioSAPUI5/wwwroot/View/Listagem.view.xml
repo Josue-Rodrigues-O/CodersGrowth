@@ -99,12 +99,12 @@
 								<Text
 									text="{
 										path: 'modeloTabelaFuncionarios>salario',
-										formatter: '.formatter.salarioText'
+										formatter: '.formatter.formatarSalario'
 										}" />
 								<Text
 									text="{
 										path: 'modeloTabelaFuncionarios>ehCasado',
-										formatter: '.formatter.estadoCivilText'
+										formatter: '.formatter.formatarCivilText'
 									}" />
 								<Text
 									text="{

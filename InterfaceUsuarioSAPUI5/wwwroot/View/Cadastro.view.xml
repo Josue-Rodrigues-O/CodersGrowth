@@ -9,7 +9,8 @@
             <Toolbar>
                 <Button type="Back" press=".aoClicarEmVoltar" />
                 <ToolbarSpacer />
-                <Title text="{i18n>tituloPaginaCriacao}" />
+                <Title 
+                id="idTituloPagina" />
                 <ToolbarSpacer />
                 <Button
                     icon="sap-icon://decline"

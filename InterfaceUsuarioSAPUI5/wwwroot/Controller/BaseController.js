@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
+], function (Controller, JSONModel, MessageBox) {
     "use strict";
 
     const NAMESPACE = "controle.funcionarios.Controller.BaseController"
@@ -27,6 +28,18 @@ sap.ui.define([
                 return this.getView().getModel(nomeDoModelo).getData()
             }
             this.getView().setModel(new JSONModel(objeto), nomeDoModelo)
-        }
+        },
+
+        messageBoxConfirmacao(mensagem, metodo) {
+            MessageBox.confirm(mensagem, {
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                emphasizedAction: MessageBox.Action.YES,
+                onClose: (acao) => {
+                    if (acao == MessageBox.Action.YES) {
+                        metodo();
+                    }
+                }
+            });
+        },
     });
 });

@@ -18,10 +18,6 @@ sap.ui.define([
             this.vincularRota(rotaListagem, this._aoCoincidirRota);
         },
 
-        _aoCoincidirRota() {
-            this._obterFuncionarios();
-        },
-
         _obterFuncionarios(condicao) {
             try {
                 FuncionarioRepository.obterTodos(condicao)
@@ -59,6 +55,10 @@ sap.ui.define([
 
                 this.navegarPara(rotaDetalhes, { id: idFuncionario })
             });
+        },
+
+        _aoCoincidirRota() {
+            this._obterFuncionarios();
         }
     });
 });

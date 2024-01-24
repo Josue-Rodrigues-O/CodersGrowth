@@ -71,7 +71,7 @@
             TxtNome.Name = "TxtNome";
             TxtNome.Size = new Size(366, 23);
             TxtNome.TabIndex = 1;
-            TxtNome.KeyPress += TxtNome_KeyPress;
+            TxtNome.KeyPress += Ao_Digitar_Campo_Nome;
             // 
             // LblCpf
             // 
@@ -188,7 +188,7 @@
             TxtSalario.Name = "TxtSalario";
             TxtSalario.Size = new Size(366, 23);
             TxtSalario.TabIndex = 4;
-            TxtSalario.KeyPress += TxtSalario_KeyPress;
+            TxtSalario.KeyPress += Ao_Digitar_Campo_Salario;
             // 
             // tableLayoutEstadoCivil
             // 

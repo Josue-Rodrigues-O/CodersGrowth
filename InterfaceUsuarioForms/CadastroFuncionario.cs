@@ -90,12 +90,11 @@ namespace InterfaceUsuarioForms
             cancelar = MessageBox.Show(MensagensDoMessageBox.CANCELAR_OPERACAO, MensagensDoMessageBox.TEM_CERTEZA, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (cancelar.Equals(DialogResult.Yes))
             {
-                MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }
 
-        private void TxtNome_KeyPress(object sender, KeyPressEventArgs e)
+        private void Ao_Digitar_Campo_Nome(object sender, KeyPressEventArgs e)
         {
             bool EhBackspace = e.KeyChar == (int)Keys.Back;
             bool EhEspaco = e.KeyChar == (int)Keys.Space;
@@ -104,7 +103,7 @@ namespace InterfaceUsuarioForms
             e.Handled = !(EhDigitoValido || EhBackspace || EhEspaco);
         }
 
-        private void TxtSalario_KeyPress(object sender, KeyPressEventArgs e)
+        private void Ao_Digitar_Campo_Salario(object sender, KeyPressEventArgs e)
         {
             const char Virgula = ',';
             const byte SegundoValorVetor = 1;
@@ -119,7 +118,7 @@ namespace InterfaceUsuarioForms
                 (PossuiVirgula && EhVirgula)
                 || !EhDigitoValido
                 || (PossuiVirgula && PossuiDuasCasasDecimais)
-                || (CampoVazio && EhVirgula)) 
+                || (CampoVazio && EhVirgula))
                 && !EhBackspace;
         }
     }

@@ -1,8 +1,6 @@
 sap.ui.define([
-    "../Model/Formatter",
-    "sap/ui/core/date/UI5Date",
     "../Services/ListaErros"
-], (Formatter, UI5Date, ListaErros) => {
+], (ListaErros) => {
     'use strict';
 
     const STRING_VAZIA = "";
@@ -14,7 +12,7 @@ sap.ui.define([
             I18N = valor;
         },
 
-        nomeValido(nome, id) {
+        validarNome(nome, id) {
             try {
                 const todaOcorrenciaDeEspaco = / /gi;
                 const textoErroTamanhoInsuficiente = "erroInputNomeTamanhoInsuficiente";
@@ -37,7 +35,7 @@ sap.ui.define([
             }
         },
 
-        cpfValido(cpf, id) {
+        validarCpf(cpf, id) {
             try {
                 const textoErroPreenchidoIncorretamente = "erroInputCpfPreenchidoIncorretamente";
                 const tamanhoCorreto = 14;
@@ -52,7 +50,7 @@ sap.ui.define([
             }
         },
 
-        telefoneValido(telefone, id) {
+        validarTelefone(telefone, id) {
             try {
                 const textoErroPreenchidoIncorretamente = "erroInputTelefonePreenchidoIncorretamente";
                 const tamanhoCorreto = 16;
@@ -67,22 +65,21 @@ sap.ui.define([
             }
         },
 
-        salarioValido(salario, id) {
+        validarSalario(salario, id) {
             try {
-                const salarioValorMinimo = 1;
-                const salarioValorMAximo = 9999999999.99;
+                const salarioValorMinimo = 0;
+                const salarioValorMaximo = 9999999999.99;
                 const textoErroValorInsuficiente = "erroInputSalarioValorInsuficiente";
                 const textoErroValorMuitoAlto = "erroInputSalarioValorMuitoAlto";
                 const textoErroValorInvalido = "erroInputSalarioValorInvalido";
                 const regexSalario = "[0-9,.]";
-                const todaOcorrenciaDeVirgula = /,/g;
 
-                let salarioSemVirgula = salario.replace(todaOcorrenciaDeVirgula, STRING_VAZIA);
+                let salarioSemPonto = salario.replace(/\./g, "");
 
-                if (!salarioSemVirgula || parseFloat(salarioSemVirgula) < salarioValorMinimo) {
+                if (!salario || parseFloat(salario) <= salarioValorMinimo) {
                     throw I18N.getText(textoErroValorInsuficiente);
                 }
-                if (parseFloat(salario) > salarioValorMAximo) {
+                if (parseFloat(salarioSemPonto) > salarioValorMaximo) {
                     throw I18N.getText(textoErroValorMuitoAlto);
                 }
                 for (let digito of salario) {
@@ -97,20 +94,12 @@ sap.ui.define([
             }
         },
 
-        dataNascimentoValida(data, id) {
+        validarDataNascimento(data, id) {
             try {
-                const textoErroDataInvalida = "erroInputCalendarioEntradaInvalida";
                 const textoErroDataNaoInformada = "erroInputCalendarioDataNaoInformada";
-                const todaOcorrenciaDoSinalMenos = /-/gi;
-                const idadeMinima = 14;
-                const dataFormatada = Formatter.formatarDataParaSalvar(UI5Date.getInstance((new Date().getFullYear() - idadeMinima).toString()));
-                const DataMaxima = Number(dataFormatada.replace(todaOcorrenciaDoSinalMenos, STRING_VAZIA));
-                const dataRecebida = Number(data.replace(todaOcorrenciaDoSinalMenos, STRING_VAZIA));
+
                 if (!data) {
                     throw I18N.getText(textoErroDataNaoInformada);
-                }
-                if (dataRecebida > DataMaxima) {
-                    throw I18N.getText(textoErroDataInvalida);
                 }
                 ListaErros.removerErrosDaLista(id);
             } catch (erro) {
