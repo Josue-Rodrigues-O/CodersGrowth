@@ -1,0 +1,132 @@
+<mvc:View
+	controllerName="controle.funcionarios.controller.Listagem"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true">
+
+	<Page
+		title="{i18n>tituloTelaListagem}"
+		titleAlignment="Center">
+		<content>
+			<Panel
+				stickyHeader="true"
+				class="sapUiResponsiveMargin"
+				width="auto"
+				accessibleRole="Region">
+				<headerToolbar>
+					<Toolbar
+						style="Clear"
+						class="sapUi-Std-PaddingS">
+						<ToolbarSpacer />
+						<SearchField
+							placeholder="{i18n>placeholderFiltro}"
+							width="40%"
+							search=".aoPesquisar" />
+						<Button
+							icon="sap-icon://add"
+							type="Emphasized"
+							press=".aoClicarEmAdicionar" />
+					</Toolbar>
+				</headerToolbar>
+				<Table
+					alternateRowColors="true"
+					growing="true"
+					growingThreshold="11"
+					growingScrollToLoad="true"
+					showSeparators="Inner"
+					id="IdTabelaFuncionarios"
+					width="auto"
+					items="{
+							path : 'modeloTabelaFuncionarios>/',
+							sorter : {
+								path : 'id',
+								group : false
+							}
+						}">
+					<columns>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaNome}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaCpf}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaTelefone}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaSalario}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaEstadoCivil}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaGenero}" />
+							</header>
+						</Column>
+						<Column
+							hAlign="Center">
+							<header>
+								<Text text="{i18n>TituloColunaDataNascimento}" />
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem
+							type="Navigation"
+							press=".aoClicarNaLinha">
+							<cells>
+								<ObjectIdentifier title="{modeloTabelaFuncionarios>nome}" />
+								<ObjectIdentifier title="{modeloTabelaFuncionarios>cpf}" />
+								<Text text="{modeloTabelaFuncionarios>telefone}" />
+								<Text
+									text="{
+										path: 'modeloTabelaFuncionarios>salario',
+										formatter: '.formatter.formatarSalario'
+										}" />
+								<Text
+									text="{
+										path: 'modeloTabelaFuncionarios>ehCasado',
+										formatter: '.formatter.formatarCivilText'
+									}" />
+								<Text
+									text="{
+										path: 'modeloTabelaFuncionarios>genero',
+										formatter: '.formatter.generoText'
+									}" />
+								<Text
+									text="{
+										path: 'modeloTabelaFuncionarios>dataNascimento',
+										type: 'sap.ui.model.type.DateTime',
+										formatOptions: {
+											pattern: 'dd/MM/yyyy',
+											source: {
+												pattern: 'yyyy-MM-dd'
+											}
+										}
+									}" />
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</content>
+	</Page>
+</mvc:View>

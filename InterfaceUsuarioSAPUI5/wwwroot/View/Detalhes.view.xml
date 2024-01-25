@@ -1,0 +1,129 @@
+<mvc:View
+    controllerName="controle.funcionarios.Controller.Detalhes"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page>
+        <customHeader>
+            <Toolbar>
+                <Button type="Back" press="aoClicarEmVoltar" />
+                <ToolbarSpacer />
+                <Title text="{i18n>tituloPaginaDetalhes}" />
+                <ToolbarSpacer />
+                <Button
+                    icon="sap-icon://edit"
+                    text="{i18n>botaoEditar}"
+                    type="Emphasized"
+                    press="aoClicarEmEditar" />
+                <Button
+                    icon="sap-icon://delete"
+                    text="{i18n>botaoRemover}"
+                    type="Emphasized"
+                    press="aoClicarEmRemover" />
+            </Toolbar>
+
+        </customHeader>
+        <Panel>
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title text="{funcionario>/nome}"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <VBox
+                class="sapUiMediumMargin">
+                <FlexBox
+                    direction="Row">
+                    <HBox>
+                        <VBox class="sapUiSmallMarginTop">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <ObjectIdentifier title="{i18n>TituloColunaId}:" />
+                            </HBox>
+                            <HBox>
+                                <ObjectIdentifier title="{i18n>TituloColunaCpf}:" />
+                            </HBox>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <Text text="{funcionario>/id}" />
+                            </HBox>
+                            <HBox>
+                                <Text text="{funcionario>/cpf}" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                    <HBox>
+                        <VBox class="sapUiSmallMarginTop sapUiLargeMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <ObjectIdentifier title="{i18n>TituloColunaTelefone}:" />
+                            </HBox>
+                            <HBox>
+                                <ObjectIdentifier title="{i18n>TituloColunaSalario}:" />
+                            </HBox>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <Text text="{funcionario>/telefone}" />
+                            </HBox>
+                            <HBox>
+                                <Text
+                                    text="{
+                                            path: 'funcionario>/salario',
+                                            formatter: '.formatter.formatarSalario'
+                                        }" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                    <HBox>
+                        <VBox class="sapUiSmallMarginTop sapUiLargeMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <ObjectIdentifier title="{i18n>TituloColunaEstadoCivil}:" />
+                            </HBox>
+                            <HBox>
+                                <ObjectIdentifier title="{i18n>TituloColunaGenero}:" />
+                            </HBox>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <Text
+                                    text="{
+                                            path: 'funcionario>/ehCasado',
+                                            formatter: '.formatter.formatarCivilText'
+                                        }" />
+                            </HBox>
+                            <HBox>
+                                <Text
+                                    text="{
+                                            path: 'funcionario>/genero',
+                                            formatter: '.formatter.generoText'
+                                        }" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+
+
+                    <HBox>
+                        <VBox class="sapUiSmallMarginTop sapUiLargeMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <ObjectIdentifier title="{i18n>TituloColunaDataNascimento}:" />
+                            </HBox>
+                        </VBox>
+                        <VBox class="sapUiSmallMargin sapUiTinyMarginBegin">
+                            <HBox class="sapUiSmallMarginBottom">
+                                <Text
+                                    text="{
+                                        path: 'funcionario>/dataNascimento',
+                                        type: 'sap.ui.model.type.DateTime',
+                                        formatOptions: {
+                                            pattern: 'dd/MM/yyyy',
+                                            source: {
+                                                pattern: 'yyyy-MM-dd'
+                                            }
+                                        }
+                                    }" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </FlexBox>
+            </VBox>
+        </Panel>
+    </Page>
+</mvc:View>

@@ -1,10 +1,11 @@
 using FluentMigrator.Runner;
 using Infraestrutura.Extensoes;
 using Infraestrutura.Repositorios;
+using InterfaceUsuarioForms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace InterfaceUsuario
+namespace InterfaceUsuarioForms
 {
     internal class Program
     {
@@ -16,7 +17,7 @@ namespace InterfaceUsuario
             var builder = CriaHostBuilder();
             using var build = builder.Build();
             var servicesProvider = build.Services;
-            
+
             UpdateDataBase(servicesProvider);
 
             var forms = servicesProvider.GetService<TelaPrincipal>();
@@ -37,7 +38,7 @@ namespace InterfaceUsuario
                 .ConfigureContainer<IServiceCollection>((context, services) =>
                 {
                     services.AddScoped<TelaPrincipal>();
-                    services.AddScoped<IRepositorio, RepositorioLinqToDb>();
+                    services.AddScoped<IRepositorio, RepositorioBD>();
                     services.ExecutarMigracoes();
                 });
         }

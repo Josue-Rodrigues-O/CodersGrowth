@@ -1,0 +1,153 @@
+<mvc:View
+    controllerName="controle.funcionarios.controller.Cadastro"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page>
+        <customHeader>
+            <Toolbar>
+                <Button type="Back" press=".aoClicarEmVoltar" />
+                <ToolbarSpacer />
+                <Title 
+                id="idTituloPagina" />
+                <ToolbarSpacer />
+                <Button
+                    icon="sap-icon://decline"
+                    text="{i18n>botaoCancelar}"
+                    type="Transparent"
+                    press=".aoClicarEmCancelar" />
+                <Button
+                    icon="sap-icon://save"
+                    text="{i18n>botaoSalvar}"
+                    type="Emphasized"
+                    press=".aoClicarEmSalvar" />
+            </Toolbar>
+        </customHeader>
+        <HBox class="sapUiMediumMargin">
+            <VBox class="sapUiMediumMargin" width="100%">
+                <Label
+                    design="Bold"
+                    showColon="true"
+                    text="{i18n>TituloColunaNome}"
+                    labelFor="inputNome" />
+                <Input
+                    maxLength="70"
+                    value="{funcionario>/nome}"
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderNome}"
+                    id="inputNome"
+                    required="true"
+                    change=".aoMudarNome" />
+                <Label
+                    design="Bold"
+                    showColon="true"
+                    class="sapUiTinyMarginTop"
+                    text="{i18n>TituloColunaCpf}"
+                    labelFor="inputCpf" />
+                <MaskInput
+                    value="{funcionario>/cpf}"
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderCpf}"
+                    id="inputCpf"
+                    required="true"
+                    mask="999.999.999-99"
+                    width="100%"
+                    change=".aoMudarCpf" />
+                <Label
+                    design="Bold"
+                    showColon="true"
+                    class="sapUiTinyMarginTop"
+                    text="{i18n>TituloColunaTelefone}"
+                    labelFor="inputTelefone" />
+                <MaskInput
+                    value="{funcionario>/telefone}"
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderTelefone}"
+                    id="inputTelefone"
+                    required="true"
+                    mask="(99) 9 9999-9999"
+                    width="100%"
+                    change=".aoMudarTelefone" />
+                <Label
+                    design="Bold"
+                    showColon="true"
+                    class="sapUiTinyMarginTop"
+                    text="{i18n>TituloColunaSalario}"
+                    labelFor="inputSalario" />
+                <Input
+                    value="{funcionario>/salario}"
+                    class="sapUiTinyMarginTop"
+                    placeholder="{i18n>placeholderSalario}"
+                    id="inputSalario"
+                    required="true"
+                    change=".aoMudarSalario" />
+                <HBox>
+                    <VBox
+                        width="63%">
+                        <Label
+                            class="sapUiTinyMarginTop"
+                            design="Bold"
+                            showColon="true"
+                            text="{i18n>TituloColunaGenero}"
+                            required="true"
+                            labelFor="inputGenero" />
+                        <Select
+                            width="100%"
+                            class="sapUiTinyMarginTop"
+                            id="inputGenero"
+                            selectedKey="{funcionario>/genero}">
+                            <core:Item key="0" text="{i18n>indefinido}" />
+                            <core:Item key="1" text="{i18n>masculino}" />
+                            <core:Item key="2" text="{i18n>feminino}" />
+                        </Select>
+                    </VBox>
+
+                    <VBox class="sapUiSmallMarginBegin">
+                        <Label
+                            design="Bold"
+                            showColon="true"
+                            class="sapUiTinyMarginTop"
+                            text="{i18n>TituloColunaEstadoCivil}"
+                            labelFor="grupoEstadoCivil"
+                            required="true" />
+                        <RadioButtonGroup
+                            id="grupoEstadoCivil"
+                            columns="2">
+                            <RadioButton
+                                id="idRadioButtonSolteiro"
+                                text="{i18n>solteiro}" />
+                            <RadioButton
+                                id="idRadioButtonCasado"
+                                selected="{funcionario>/ehCasado}"
+                                text="{i18n>casado}" />
+                        </RadioButtonGroup>
+                    </VBox>
+                </HBox>
+            </VBox>
+            <VBox class="sapUiMediumMargin">
+                <Label
+                    design="Bold"
+                    required="true"
+                    class="sapUiTinyMarginTop"
+                    showColon="true"
+                    text="{i18n>TituloColunaDataNascimento}"
+                    labelFor="calendarDataNascimento" />
+                <u:Calendar
+                    id="calendarDataNascimento"
+                    select="aoSelecionarUmaData"
+                    minDate="{path: 'calendario>/minData'}"
+                    maxDate="{path: 'calendario>/maxData'}"
+                    showWeekNumbers="false" />
+                <HBox>
+                    <Label
+                        class="sapUiSmallMarginEnd"
+                        showColon="true"
+                        text="{i18n>LabelDataTelaCadastro}" />
+                    <Text
+                        id="dataText" />
+                </HBox>
+            </VBox>
+        </HBox>
+    </Page>
+</mvc:View>

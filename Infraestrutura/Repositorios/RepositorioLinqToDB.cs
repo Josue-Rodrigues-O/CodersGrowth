@@ -10,26 +10,28 @@ namespace Infraestrutura.Repositorios
     {
         private DataConnection Conexao()
         {
+            const string NomeDaConexao = "ConexaoBD";
             return new(new DataOptions()
-            .UseSqlServer(System.Configuration.ConfigurationManager.ConnectionStrings["ConexaoBD"].ConnectionString));
+            .UseSqlServer(System.Configuration
+            .ConfigurationManager
+            .ConnectionStrings[NomeDaConexao]
+            .ConnectionString));
         }
         public void Criar(Funcionario funcionario)
         {
             try
             {
-                using (var conn = Conexao())
+                using var conn = Conexao();
+                funcionario.Id = conn.InsertWithInt32Identity(new Funcionario
                 {
-                    conn.Insert(new Funcionario
-                    {
-                        Nome = funcionario.Nome,
-                        Cpf = funcionario.Cpf,
-                        DataNascimento = funcionario.DataNascimento,
-                        EhCasado = funcionario.EhCasado,
-                        Genero = funcionario.Genero,
-                        Salario = funcionario.Salario,
-                        Telefone = funcionario.Telefone
-                    });
-                }
+                    Nome = funcionario.Nome,
+                    Cpf = funcionario.Cpf,
+                    DataNascimento = funcionario.DataNascimento,
+                    EhCasado = funcionario.EhCasado,
+                    Genero = funcionario.Genero,
+                    Salario = funcionario.Salario,
+                    Telefone = funcionario.Telefone
+                });
             }
             catch
             {
@@ -37,14 +39,12 @@ namespace Infraestrutura.Repositorios
             }
         }
 
-        public Funcionario ObterPorId(uint id)
+        public Funcionario ObterPorId(int id)
         {
             try
             {
-                using (var conn = Conexao())
-                {
-                    return conn.GetTable<Funcionario>().First(x => x.Id == id);
-                }
+                using var conn = Conexao();
+                return conn.GetTable<Funcionario>().FirstOrDefault(x => x.Id == id);
             }
             catch
             {
@@ -56,10 +56,8 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                using (var conn = Conexao())
-                {
-                    return conn.GetTable<Funcionario>().ToList();
-                }
+                using var conn = Conexao();
+                return conn.GetTable<Funcionario>().ToList();
             }
             catch
             {
@@ -71,10 +69,8 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                using (var conn = Conexao())
-                {
-                    conn.Update(funcionario);
-                }
+                using var conn = Conexao();
+                conn.Update(funcionario);
             }
             catch
             {
@@ -86,10 +82,8 @@ namespace Infraestrutura.Repositorios
         {
             try
             {
-                using (var conn = Conexao())
-                {
-                    conn.Delete(funcionario);
-                }
+                using var conn = Conexao();
+                conn.Delete(funcionario);
             }
             catch
             {
