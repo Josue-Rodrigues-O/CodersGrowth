@@ -9,7 +9,8 @@
             <Toolbar>
                 <Button type="Back" press=".aoClicarEmVoltar" />
                 <ToolbarSpacer />
-                <Title text="{i18n>tituloPaginaCriacao}" />
+                <Title 
+                id="idTituloPagina" />
                 <ToolbarSpacer />
                 <Button
                     icon="sap-icon://decline"
@@ -114,9 +115,10 @@
                             id="grupoEstadoCivil"
                             columns="2">
                             <RadioButton
-                                id="solteiro"
+                                id="idRadioButtonSolteiro"
                                 text="{i18n>solteiro}" />
                             <RadioButton
+                                id="idRadioButtonCasado"
                                 selected="{funcionario>/ehCasado}"
                                 text="{i18n>casado}" />
                         </RadioButtonGroup>
@@ -133,7 +135,7 @@
                     labelFor="calendarDataNascimento" />
                 <u:Calendar
                     id="calendarDataNascimento"
-                    select="diaSelecionado"
+                    select="aoSelecionarUmaData"
                     minDate="{path: 'calendario>/minData'}"
                     maxDate="{path: 'calendario>/maxData'}"
                     showWeekNumbers="false" />

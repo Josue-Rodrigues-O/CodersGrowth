@@ -67,7 +67,7 @@
                                 <Text
                                     text="{
                                             path: 'funcionario>/salario',
-                                            formatter: '.formatter.salarioText'
+                                            formatter: '.formatter.formatarSalario'
                                         }" />
                             </HBox>
                         </VBox>
@@ -86,7 +86,7 @@
                                 <Text
                                     text="{
                                             path: 'funcionario>/ehCasado',
-                                            formatter: '.formatter.estadoCivilText'
+                                            formatter: '.formatter.formatarCivilText'
                                         }" />
                             </HBox>
                             <HBox>

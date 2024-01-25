@@ -4,19 +4,6 @@ sap.ui.define([], () => {
   const URL = "/api/Funcionario";
 
   return {
-    obterPorId(id) {
-      return fetch(`${URL}/${id}`);
-    },
-
-    obterTodos(condicao) {
-      const uri = `?condicao=${condicao}`;
-      let query = URL;
-      if (condicao != (undefined || null)) {
-        query += uri;
-      }
-      return fetch(query);
-    },
-
     criar(funcionario) {
       const configuracaoFetch = {
         method: 'POST',
@@ -25,8 +12,20 @@ sap.ui.define([], () => {
         },
         body: JSON.stringify(funcionario)
       };
-
       return fetch(URL, configuracaoFetch);
+    },
+    
+    obterTodos(filtroNome) {
+      const uri = `?filtroNome=${filtroNome}`;
+      let query = URL;
+      if (filtroNome != (undefined || null)) {
+        query += uri;
+      }
+      return fetch(query);
+    },
+
+    obterPorId(id) {
+      return fetch(`${URL}/${id}`);
     },
 
     atualizar(funcionario) {
@@ -37,7 +36,6 @@ sap.ui.define([], () => {
         },
         body: JSON.stringify(funcionario)
       };
-
       return fetch(URL, configuracaoFetch);
     },
 
@@ -45,7 +43,6 @@ sap.ui.define([], () => {
       const configuracaoFetch = {
         method: 'DELETE'
       }
-
       return fetch(`${URL}/${id}`, configuracaoFetch);
     }
   }

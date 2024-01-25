@@ -23,7 +23,12 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             {
                 Validacoes validacoes = new();
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
-                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento, (int)funcionario.Genero);
+                validacoes.ValidarCampos(funcionario.Nome,
+                    funcionario.Cpf,
+                    funcionario.Telefone,
+                    funcionario.Salario.ToString(),
+                    funcionario.DataNascimento,
+                    (int)funcionario.Genero);
                 _repositorio.Criar(funcionario);
                 return Created(funcionario.Id.ToString(), funcionario);
             }
@@ -34,13 +39,13 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet]
-        public IActionResult ObterTodos([FromQuery] string? condicao)
+        public IActionResult ObterTodos([FromQuery] string? filtroNome)
         {
             try
             {
                 IEnumerable<Funcionario> listaFiltrada;
 
-                if (string.IsNullOrEmpty(condicao))
+                if (string.IsNullOrEmpty(filtroNome))
                 {
                     listaFiltrada = _repositorio.ObterTodos();
                 }
@@ -49,8 +54,7 @@ namespace InterfaceUsuarioSAPUI5.Controllers
                     listaFiltrada =
                     from funcionario
                     in _repositorio.ObterTodos()
-                    where funcionario.Nome.Contains(condicao, StringComparison.OrdinalIgnoreCase)
-                    || funcionario.Cpf.Contains(condicao, StringComparison.OrdinalIgnoreCase)
+                    where funcionario.Nome.Contains(filtroNome, StringComparison.OrdinalIgnoreCase)
                     select funcionario;
                 }
                 return Ok(listaFiltrada);
@@ -62,12 +66,12 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult ObterPorId(uint id)
+        public IActionResult ObterPorId(int id)
         {
             try
             {
                 var funcionario = _repositorio.ObterPorId(id);
-                if (funcionario is null) throw new Exception(message: Excessoes.ID_NULO);
+                if (funcionario is null) { throw new Exception(message: Excessoes.ID_NULO); }
                 return Ok(funcionario);
             }
             catch (Exception ex)
@@ -83,7 +87,12 @@ namespace InterfaceUsuarioSAPUI5.Controllers
             {
                 if (funcionario == null) { throw new Exception(message: Excessoes.OBJETO_NULO); }
                 Validacoes validacoes = new();
-                validacoes.ValidarCampos(funcionario.Nome, funcionario.Cpf, funcionario.Telefone, funcionario.Salario.ToString(), funcionario.DataNascimento, (int)funcionario.Genero);
+                validacoes.ValidarCampos(funcionario.Nome,
+                    funcionario.Cpf,
+                    funcionario.Telefone,
+                    funcionario.Salario.ToString(),
+                    funcionario.DataNascimento,
+                    (int)funcionario.Genero);
                 _repositorio.Atualizar(funcionario);
                 return NoContent();
             }
@@ -94,12 +103,16 @@ namespace InterfaceUsuarioSAPUI5.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Remover(uint id)
+        public IActionResult Remover(int id)
         {
             try
             {
                 var funcionario = _repositorio.ObterPorId(id);
-                if (funcionario is null) throw new Exception(message: Excessoes.ID_NULO);
+                if (funcionario is null)
+                {
+                    throw new Exception(message: Excessoes.ID_NULO);
+                }
+
                 _repositorio.Remover(funcionario);
                 return NoContent();
             }

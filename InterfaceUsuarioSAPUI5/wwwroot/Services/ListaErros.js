@@ -1,28 +1,24 @@
-sap.ui.define([], function() {
+sap.ui.define([], function () {
     "use strict";
-    
-    let LISTA_DE_ERROS = []
-    
-    return {
-        iniciarLista(novoValorLista) {
-            LISTA_DE_ERROS = novoValorLista
-        },
 
-        verificarListaDeErros(controller){
+    let LISTA_DE_ERROS = [];
+
+    return {
+        verificarListaDeErros(controller) {
             const stringVazia = ""
             const idCalendario = "calendarDataNascimento";
             const quebraDeLinha = "\n";
             const statusErro = "Error"
-                if (LISTA_DE_ERROS.length > 0) {
-                    let erros = stringVazia;
-                    LISTA_DE_ERROS.forEach((elemento) => {
-                        if (elemento.id != idCalendario) {
-                            controller.byId(elemento.id).setValueState(statusErro).setValueStateText(elemento.erro);
-                        }
-                        erros += elemento.erro + quebraDeLinha;
-                    })
-                    throw erros;
+            let erros = stringVazia;
+
+            LISTA_DE_ERROS.forEach((elemento) => {
+                if (elemento.id != idCalendario) {
+                    controller.byId(elemento.id).setValueState(statusErro).setValueStateText(elemento.erro);
                 }
+                erros += elemento.erro + quebraDeLinha;
+            })
+
+            return erros;
         },
 
         adicionarErroNaLista(id, erro) {

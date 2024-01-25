@@ -1,5 +1,5 @@
 using Infraestrutura.Repositorios;
-using InterfaceUsuarioForms.Constantes;
+using Dominio.Constantes;
 
 namespace InterfaceUsuarioForms
 {
@@ -48,31 +48,25 @@ namespace InterfaceUsuarioForms
                     AtualizarDataGrid();
                     MessageBox.Show(MensagensDoMessageBox.FUNCIONARIO_REMOVIDO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                else
-                {
-                    MessageBox.Show(MensagensDoMessageBox.CANCELADO_COM_SUCESSO, MensagensDoMessageBox.SUCESSO, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             }
         }
         private static bool LinhaValida()
         {
             const byte SoUmaLinha = 1;
 
-            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) == SoUmaLinha)
-            {
-                return true;
-            }
-            else
+            if (TelaListagem.Rows.GetRowCount(DataGridViewElementStates.Selected) != SoUmaLinha)
             {
                 MessageBox.Show(MensagensDoMessageBox.SELECIONE_UMA_LINHA, MensagensDoMessageBox.ATENCAO, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
+           
+            return true;
         }
 
-        private static uint ObterIdDaLinha()
+        private static int ObterIdDaLinha()
         {
-            const string ID = "ID";
-            return (uint)TelaListagem.CurrentRow.Cells[ID].Value;
+            const string colunaId = "ID";
+            return (int)TelaListagem.CurrentRow.Cells[colunaId].Value;
         }
     }
 }
